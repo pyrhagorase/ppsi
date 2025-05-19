@@ -5,11 +5,25 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ResetPasswordController;
+use App\Http\Controllers\AdminController;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Hash;
+
+
+Route::get('/', function () {
+    return view('auth.choose-login');
+})->name('choose.login');
+
+// Rute untuk login user
+Route::get('/login/user', [LoginController::class, 'login'])->name('login.user');
+Route::post('/login/user', [LoginController::class, 'actionlogin'])->name('actionlogin');
+
+// Rute untuk login admin
+Route::get('/login/admin', [LoginController::class, 'adminLogin'])->name('login.admin');
+Route::post('/login/admin', [LoginController::class, 'actionAdminLogin'])->name('actionlogin.admin');
 
 Route::get('/welcome', function () {
     return view('welcome');
@@ -22,8 +36,16 @@ Route::post('actionlogin', [LoginController::class, 'actionlogin'])->name('actio
 Route::get('register', [RegisterController::class, 'register'])->name('register');
 Route::post('actionregister', [RegisterController::class, 'actionregister'])->name('actionregister');
 
-Route::get('home', [HomeController::class, 'index'])->name('home')->middleware('auth');
-Route::get('actionlogout', [LoginController::class, 'actionlogout'])->name('actionlogout')->middleware('auth');
+// Home Routes dengan middleware auth
+Route::middleware(['auth'])->group(function () {
+    Route::get('home', [HomeController::class, 'index'])->name('home');
+    Route::get('actionlogout', [LoginController::class, 'actionlogout'])->name('actionlogout');
+});
+
+// Admin Routes dengan middleware auth dan admin
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+});
 
 Route::get('/forgot-password', function () {
     return view('auth.forgot-password');
