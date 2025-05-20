@@ -24,7 +24,8 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    overflow: hidden;
+    overflow-x: hidden; /* ubah overflow agar tidak menyembunyikan scroll */
+    padding: 20px; /* beri padding agar tidak terlalu mentok di layar kecil */
 }
 
 .background {
@@ -341,4 +342,55 @@ body {
 
 .login-link:hover {
     text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .login-card {
+        padding: 30px 25px;
+        max-width: 100%;
+    }
+
+    .logo-icon {
+        font-size: 2.2rem;
+    }
+
+    .logo-text {
+        font-size: 1.6rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .input-with-icon input {
+        padding: 12px 12px 12px 40px;
+        font-size: 0.85rem;
+    }
+
+    .login-button {
+        padding: 12px;
+        font-size: 0.9rem;
+    }
+
+    .form-group label {
+        font-size: 0.85rem;
+    }
+
+    .alert-text {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .background .shape:first-child {
+        width: 250px;
+        height: 250px;
+        top: -50px;
+        left: -50px;
+    }
+
+    .background .shape:last-child {
+        width: 200px;
+        height: 200px;
+        bottom: -30px;
+        right: -30px;
+    }
 }

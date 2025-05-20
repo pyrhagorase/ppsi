@@ -1,0 +1,494 @@
+:root {
+    --primary-color: #0C7FDA;
+    --sidebar-width: 250px;
+    --header-height: 70px;
+    --border-radius: 8px;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column; /* Tambahkan ini */
+    min-height: 100vh;
+    background-color: #f5f5f5;
+}
+
+/* Header Styles */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 15px;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Jarak antara toggle dan judul */
+}
+
+/* Pada tampilan mobile */
+@media (max-width: 768px) {
+    .header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: var(--header-height);
+        z-index: 99;
+        background: white;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    
+    .header-left h1 {
+        font-size: 1.2rem; /* Ukuran lebih kecil di mobile */
+        margin: 0; /* Hilangkan margin default */
+        white-space: nowrap; /* Mencegah text wrapping */
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 200px; /* Sesuaikan dengan kebutuhan */
+    }
+    
+    .menu-toggle {
+        font-size: 1.2rem;
+        margin-right: 0; /* Hilangkan margin kanan */
+    }
+}
+
+/* Sidebar */
+.sidebar {
+    width: var(--sidebar-width);
+    background-color: #fff;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 100;
+    transition: transform 0.3s ease;
+}
+
+.sidebar-logo {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid #eee;
+}
+
+.sidebar-logo .logo-icon {
+    color: var(--primary-color);
+    background-color: #f0e7fe;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    margin-right: 10px;
+}
+
+.sidebar-logo span {
+    font-size: 20px;
+    font-weight: 600;
+    color: #333;
+}
+
+.sidebar-menu {
+    padding: 20px 0;
+}
+
+.menu-item {
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    color: #666;
+    transition: all 0.3s;
+    text-decoration: none;
+}
+
+.menu-item:hover {
+    background-color: #f8f9fa;
+    color: var(--primary-color);
+}
+
+.menu-item.active {
+    background-color: #e9ecef;
+    color: var(--primary-color);
+    font-weight: 500;
+    border-left: 3px solid var(--primary-color);
+}
+
+.menu-item i {
+    margin-right: 10px;
+    width: 20px;
+    text-align: center;
+}
+
+/* Header */
+.header {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: var(--sidebar-width);
+    height: var(--header-height);
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    z-index: 99;
+    transition: left 0.3s ease;
+}
+
+.header h1 {
+    font-size: 24px;
+    color: #333;
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+}
+
+.user-email {
+    margin-right: 10px;
+    color: #333;
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.user-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.dropdown-toggle i {
+    color: #666;
+    margin-left: 5px;
+    transition: transform 0.3s;
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    background-color: #fff;
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    min-width: 160px;
+    overflow: hidden;
+    z-index: 1000;
+    display: none;
+    border: 1px solid #f0f0f0;
+}
+
+.dropdown-menu.show {
+    display: block;
+    animation: fadeIn 0.2s ease;
+}
+
+.dropdown-item {
+    padding: 10px 12px;
+    display: flex;
+    align-items: center;
+    color: #444;
+    text-decoration: none;
+    transition: background-color 0.15s;
+    font-size: 13px;
+}
+
+.dropdown-item:hover {
+    background-color: #f9f9f9;
+}
+
+.dropdown-item i {
+    margin-right: 8px;
+    width: 16px;
+    text-align: center;
+    color: #666;
+    font-size: 14px;
+}
+
+.dropdown-divider {
+    height: 1px;
+    background-color: #f0f0f0;
+    margin: 0;
+}
+
+/* Menu Toggle (Mobile) */
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #333;
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%);
+        box-shadow: none;
+    }
+
+    .sidebar.active {
+        transform: translateX(0);
+        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .header {
+        left: 0;
+    }
+
+    .menu-toggle {
+        display: block;
+        margin-right: 15px;
+    }
+
+    .user-email {
+        display: none;
+    }
+}
+
+/* Main */
+main {
+    overflow-x: auto;
+    background: white;
+    margin-left: var(--sidebar-width);
+    padding-top: var(--header-height);
+    flex: 1;
+    padding: 20px;
+    min-height: calc(100vh - var(--header-height) - 60px); /* 60px is footer height */
+    padding-bottom: 20px;
+  }
+  @media (max-width: 768px) {
+    main {
+      margin-left: 0;
+      padding: 5rem 1rem 3rem;
+      min-height: calc(100vh - var(--header-height) - 60px);
+    }
+  }
+
+  /* Table */
+  table {
+    margin-top: 10px; 
+    box-shadow: var(--shadow);
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+    color: #4b5563; /* gray-600 */
+    text-align: left;
+    border-radius: 8px;
+    background-color: white;
+  }
+
+  thead tr {
+    border-bottom: 1px solid #e5e7eb;
+  }
+  thead th {
+    padding: 0.75rem 1.5rem 0.75rem 0;
+    font-weight: 600;
+    white-space: nowrap;
+    cursor: pointer;
+    color: #374151; /* gray-700 */
+    user-select: none;
+  }
+  thead th:last-child {
+    padding-right: 0;
+  }
+  thead th i {
+    margin-left: 0.25rem;
+    font-size: 0.625rem;
+    color: #9ca3af; /* gray-400 */
+  }
+  tbody tr {
+    border-bottom: 1px solid #f3f4f6; /* gray-100 */
+  }
+  tbody td {
+    padding: 0.75rem 1.5rem 0.75rem 0;
+    white-space: nowrap;
+    vertical-align: middle;
+  }
+  tbody td:last-child {
+    padding-right: 0;
+  }
+  tbody td.text-gray-400 {
+    color: #9ca3af;
+  }
+  tbody td.bg-gray-100 {
+    background-color: #f3f4f6;
+    color: #374151;
+    font-weight: 500;
+  }
+  tbody td.cursor-pointer {
+    cursor: pointer;
+  }
+  /* Status badges */
+  .inline-block {
+    display: inline-block;
+  }
+  .bg-yellow-400 {
+    background-color: #FFB74D;
+  }
+  .bg-yellow-400.text-white {
+    color: white;
+  }
+  .bg-yellow-400.text-white.text-xs {
+    font-size: 0.75rem;
+  }
+  .font-semibold {
+    font-weight: 600;
+  }
+  .rounded-full {
+    border-radius: 9999px;
+  }
+  .px-3 {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+  .py-1 {
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+  }
+  .select-none {
+    user-select: none;
+  }
+
+table th,
+table td {
+  padding: 12px 16px; /* atas-bawah 12px, kiri-kanan 16px */
+}
+
+/* Search Container */
+.search-container {
+    position: relative; /* penting agar z-index bisa berfungsi */
+    z-index: 10; /* pastikan lebih tinggi dari header jika header-nya fixed */
+    margin-top: calc(var(--header-height) + 10px); /* memberi spasi setelah header */
+    margin-bottom: 1rem; /* spasi sebelum tabel */
+  }
+  
+  .search-icon {
+    position: absolute;
+    left: 12px; /* geser ikon ke dalam input */
+    top: 50%;
+    transform: translateY(-50%);
+    color: #9ca3af; /* gray-400 */
+    font-size: 0.875rem;
+    pointer-events: none; /* supaya ikon tidak mengganggu klik input */
+  }
+
+  /* Search Input */
+  .search-input {
+    width: 200px;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    padding-left: 2rem; /* ini menyesuaikan jarak ikon */
+    border: 1px solid #d1d5db; /* gray-300 */
+    border-radius: 0.5rem; /* rounded */
+    box-shadow: var(--shadow);
+    transition: box-shadow 0.2s ease;
+    background-color: white;
+    color: #374151; /* gray-700 */
+  }
+  
+  .search-input:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5); /* focus ring: blue-500 @ 50% */
+  }
+
+  @media (max-width: 768px) {
+    .search-container {
+      margin-top: 1rem; /* cukup 1rem agar tidak terlalu jauh */
+    }
+  }
+  
+  /* Responsive - Full width on small screens */
+  @media (max-width: 768px) {
+    .search-input {
+      width: 100%;
+    }
+  }
+
+
+  /* Beri jarak antara tabel dan pagination */
+.flex-1.px-6.pb-12.overflow-x-auto {
+    margin-bottom: 1.5rem; /* sekitar 24px jarak bawah tabel */
+  }
+  
+  /* Styling pagination container */
+  .pagination {
+    /* sudah pakai flex justify-center dan space-x-2 di kelas html, 
+       tapi kalau kamu pakai plain CSS, bisa ditambah: */
+    display: flex;
+    justify-content: right;
+    gap: 0.5rem; /* jarak antar tombol pagination */
+    font-size: 0.875rem; /* ukuran font sm */
+    margin-top: 1rem; /* jarak atas pagination */
+  }
+  
+  /* Styling tombol pagination */
+  .pagination button {
+    padding: 0.375rem 0.75rem; /* py-1 px-3 */
+    background-color: #e5e7eb; /* bg-gray-200 */
+    border-radius: 0.375rem; /* rounded */
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .pagination button:hover {
+    background-color: #d1d5db; /* bg-gray-300 */
+  }
+  
+  /* Tombol aktif */
+  .pagination button.bg-blue-500 {
+    background-color: #3b82f6; /* blue-500 */
+    color: white;
+  }
+  
+  .pagination button.bg-blue-500:hover {
+    background-color: #2563eb; /* blue-600 */
+  }
+  
+  /* Footer */
+.footer {
+    background-color: #000;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+    width: 100%;
+    margin-top: auto;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    font-size: 14px;
+}

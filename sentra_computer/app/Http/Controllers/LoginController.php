@@ -10,26 +10,26 @@ class LoginController extends Controller
 {
     public function login()
     {
-        if (Auth::check()) {
-            return redirect('home');
-        }else{
-            return view('login');
-        }
+        return view('login');
     }
 
     public function actionlogin(Request $request)
     {
-        $data = [
-            'email' => $request->input('email'),
-            'password' => $request->input('password'),
-        ];
-
-        if (Auth::Attempt($data)) {
-            return redirect('home');
-        }else{
-            Session::flash('error', 'Email atau Password Salah');
-            return redirect('/');
+        $credentials = $request->only('email', 'password');
+    
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+    
+            return match (auth::user()->role) {
+                'admin' => redirect()->route('admin.dashboard'),
+                'user' => redirect()->route('user.homepage'),
+                default => abort(403)
+            };
         }
+    
+        return back()->withErrors([
+            'email' => 'Email atau password salah',
+        ]);
     }
 
     public function actionlogout()

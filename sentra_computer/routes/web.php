@@ -22,7 +22,6 @@ Route::post('actionlogin', [LoginController::class, 'actionlogin'])->name('actio
 Route::get('register', [RegisterController::class, 'register'])->name('register');
 Route::post('actionregister', [RegisterController::class, 'actionregister'])->name('actionregister');
 
-Route::get('home', [HomeController::class, 'index'])->name('home')->middleware('auth');
 Route::get('actionlogout', [LoginController::class, 'actionlogout'])->name('actionlogout')->middleware('auth');
 
 Route::get('/forgot-password', function () {
@@ -65,3 +64,21 @@ Route::post('/reset-password', function (Request $request) {
         ? redirect()->route('login')->with('success', __($status))
         : back()->withErrors(['email' => [__($status)]]);
 })->name('password.update');
+
+// Admin routes
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/admin/dashboard', [HomeController::class, 'adminDashboard'])->name('admin.dashboard');
+    Route::get('/admin/pencatatan', [HomeController::class, 'adminPencatatan'])->name('admin.pencatatan');
+    Route::get('/admin/daftarservis', [HomeController::class, 'adminDaftarServis'])->name('admin.daftarservis');
+    Route::get('/admin/konfirmasibiaya', [HomeController::class, 'adminKonfirmasiBiaya'])->name('admin.konfirmasibiaya');
+    Route::get('/admin/diproses', [HomeController::class, 'adminDiproses'])->name('admin.diproses');
+    Route::get('/admin/selesai', [HomeController::class, 'adminSelesai'])->name('admin.selesai');
+    Route::get('/admin/Lunas', [HomeController::class, 'adminLunas'])->name('admin.lunas');
+    Route::get('/admin/rekap', [HomeController::class, 'adminRekap'])->name('admin.rekap');
+    Route::get('/admin/detail', [HomeController::class, 'adminDetail'])->name('admin.detail');
+});
+
+// User routes
+Route::middleware(['auth', 'role:user'])->group(function () {
+    Route::get('/user/homepage', [HomeController::class, 'userDashboard'])->name('user.homepage');
+});

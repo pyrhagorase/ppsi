@@ -1,0 +1,422 @@
+:root {
+    --primary-color: #0C7FDA;
+    --sidebar-width: 250px;
+    --header-height: 70px;
+    --border-radius: 8px;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column; /* Tambahkan ini */
+    min-height: 100vh;
+    background-color: #f5f5f5;
+}
+
+/* Header Styles */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 15px;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Jarak antara toggle dan judul */
+}
+
+/* Pada tampilan mobile */
+@media (max-width: 768px) {
+    .header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: var(--header-height);
+        z-index: 99;
+        background: white;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    
+    .header-left h1 {
+        font-size: 1.2rem; /* Ukuran lebih kecil di mobile */
+        margin: 0; /* Hilangkan margin default */
+        white-space: nowrap; /* Mencegah text wrapping */
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 200px; /* Sesuaikan dengan kebutuhan */
+    }
+    
+    .menu-toggle {
+        font-size: 1.2rem;
+        margin-right: 0; /* Hilangkan margin kanan */
+    }
+}
+
+/* Sidebar */
+.sidebar {
+    width: var(--sidebar-width);
+    background-color: #fff;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 100;
+    transition: transform 0.3s ease;
+}
+
+.sidebar-logo {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid #eee;
+}
+
+.sidebar-logo .logo-icon {
+    color: var(--primary-color);
+    background-color: #f0e7fe;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    margin-right: 10px;
+}
+
+.sidebar-logo span {
+    font-size: 20px;
+    font-weight: 600;
+    color: #333;
+}
+
+.sidebar-menu {
+    padding: 20px 0;
+}
+
+.menu-item {
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    color: #666;
+    transition: all 0.3s;
+    text-decoration: none;
+}
+
+.menu-item:hover {
+    background-color: #f8f9fa;
+    color: var(--primary-color);
+}
+
+.menu-item.active {
+    background-color: #e9ecef;
+    color: var(--primary-color);
+    font-weight: 500;
+    border-left: 3px solid var(--primary-color);
+}
+
+.menu-item i {
+    margin-right: 10px;
+    width: 20px;
+    text-align: center;
+}
+
+/* Header */
+.header {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: var(--sidebar-width);
+    height: var(--header-height);
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    z-index: 99;
+    transition: left 0.3s ease;
+}
+
+.header h1 {
+    font-size: 24px;
+    color: #333;
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+}
+
+.user-email {
+    margin-right: 10px;
+    color: #333;
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.user-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.dropdown-toggle i {
+    color: #666;
+    margin-left: 5px;
+    transition: transform 0.3s;
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    background-color: #fff;
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    min-width: 160px;
+    overflow: hidden;
+    z-index: 1000;
+    display: none;
+    border: 1px solid #f0f0f0;
+}
+
+.dropdown-menu.show {
+    display: block;
+    animation: fadeIn 0.2s ease;
+}
+
+.dropdown-item {
+    padding: 10px 12px;
+    display: flex;
+    align-items: center;
+    color: #444;
+    text-decoration: none;
+    transition: background-color 0.15s;
+    font-size: 13px;
+}
+
+.dropdown-item:hover {
+    background-color: #f9f9f9;
+}
+
+.dropdown-item i {
+    margin-right: 8px;
+    width: 16px;
+    text-align: center;
+    color: #666;
+    font-size: 14px;
+}
+
+.dropdown-divider {
+    height: 1px;
+    background-color: #f0f0f0;
+    margin: 0;
+}
+
+/* Menu Toggle (Mobile) */
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #333;
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%);
+        box-shadow: none;
+    }
+
+    .sidebar.active {
+        transform: translateX(0);
+        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .header {
+        left: 0;
+    }
+
+    .menu-toggle {
+        display: block;
+        margin-right: 15px;
+    }
+
+    .user-email {
+        display: none;
+    }
+}
+
+  /* Footer */
+  .footer {
+    background-color: #000;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+    width: 100%;
+    margin-top: auto;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    font-size: 14px;
+}
+
+.main-content {
+    background-color: #ffffff;
+    padding: 40px 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    width: 90%;
+    max-width: 600px;
+    text-align: center;
+
+    /* Tetap: posisi tidak diubah */
+    position: absolute;
+    top: calc(var(--header-height) + 20%);
+    left: calc(var(--sidebar-width) + 30%);
+    transform: translateX(-30%);
+}
+
+.main-content {
+    background-color: #ffffff;
+    padding: 40px 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    width: 90%;
+    max-width: 600px;
+    text-align: center;
+
+    /* POSISI - desktop only */
+    position: absolute;
+    top: calc(var(--header-height) + 20px);
+    left: calc(var(--sidebar-width) + 30%);
+    transform: translateX(-30%);
+}
+
+.main-content h1 {
+    margin-bottom: 24px;
+    font-size: 26px;
+    font-weight: 600;
+    color: #222;
+}
+
+.date-picker {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.date-picker label {
+    font-size: 14px;
+    color: #666;
+}
+
+.date-picker input {
+    padding: 10px 14px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+    width: 180px;
+    transition: border 0.3s ease, box-shadow 0.3s ease;
+}
+
+.date-picker input:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.15);
+    outline: none;
+}
+
+.ok-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.ok-button:hover {
+    background-color: #0056b3;
+}
+
+.export-button {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 12px 22px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.export-button:hover {
+    background-color: #c82333;
+}
+
+/* ✅ RESPONSIF UTAMA */
+@media (max-width: 768px) {
+    .main-content {
+        position: static;
+        transform: none;
+        margin: 80px auto 20px;
+        width: 95%;
+        padding: 30px 20px;
+    }
+
+    .main-content h1 {
+        font-size: 22px;
+    }
+
+    .date-picker {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .date-picker input {
+        width: 100%;
+    }
+
+    .ok-button, .export-button {
+        width: 100%;
+    }
+}
