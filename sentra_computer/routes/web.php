@@ -36,8 +36,8 @@ Route::post('/forgot-password', function (Request $request) {
     );
 
     return $status === Password::RESET_LINK_SENT
-                ? back()->with('success', __($status))
-                : back()->withErrors(['email' => __($status)]);
+        ? back()->with('success', __($status))
+        : back()->withErrors(['email' => __($status)]);
 })->name('password.email');
 
 Route::get('/reset-password/{token}', function ($token) {
