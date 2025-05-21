@@ -26,7 +26,7 @@
             <div class="testimonial-card">
                 <h4 class="fw-bold">"Quote"</h4>
                 <div class="testimonial-author">
-                    <img src="/api/placeholder/40/40" alt="Avatar">
+                    <img src="{{ asset('img/avatar.png') }}" alt="Avatar">
                     <div class="testimonial-author-info">
                         <h5>Title</h5>
                         <p>Description</p>
@@ -40,7 +40,7 @@
             <div class="testimonial-card">
                 <h4 class="fw-bold">"Quote"</h4>
                 <div class="testimonial-author">
-                    <img src="/api/placeholder/40/40" alt="Avatar">
+                    <img src="{{ asset('img/avatar.png') }}" alt="Avatar">
                     <div class="testimonial-author-info">
                         <h5>Title</h5>
                         <p>Description</p>
@@ -54,7 +54,7 @@
             <div class="testimonial-card">
                 <h4 class="fw-bold">"Quote"</h4>
                 <div class="testimonial-author">
-                    <img src="/api/placeholder/40/40" alt="Avatar">
+                    <img src="{{ asset('img/avatar.png') }}" alt="Avatar">
                     <div class="testimonial-author-info">
                         <h5>Title</h5>
                         <p>Description</p>
@@ -68,7 +68,7 @@
             <div class="testimonial-card">
                 <h4 class="fw-bold">"Quote"</h4>
                 <div class="testimonial-author">
-                    <img src="/api/placeholder/40/40" alt="Avatar">
+                    <img src="{{ asset('img/avatar.png') }}" alt="Avatar">
                     <div class="testimonial-author-info">
                         <h5>Title</h5>
                         <p>Description</p>
@@ -82,7 +82,7 @@
             <div class="testimonial-card">
                 <h4 class="fw-bold">"Quote"</h4>
                 <div class="testimonial-author">
-                    <img src="/api/placeholder/40/40" alt="Avatar">
+                    <img src="{{ asset('img/avatar.png') }}" alt="Avatar">
                     <div class="testimonial-author-info">
                         <h5>Title</h5>
                         <p>Description</p>
@@ -96,7 +96,7 @@
             <div class="testimonial-card">
                 <h4 class="fw-bold">"Quote"</h4>
                 <div class="testimonial-author">
-                    <img src="/api/placeholder/40/40" alt="Avatar">
+                    <img src="{{ asset('img/avatar.png') }}" alt="Avatar">
                     <div class="testimonial-author-info">
                         <h5>Title</h5>
                         <p>Description</p>

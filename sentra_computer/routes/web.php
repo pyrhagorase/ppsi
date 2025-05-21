@@ -81,4 +81,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 // User routes
 Route::middleware(['auth', 'role:user'])->group(function () {
     Route::get('/user/homepage', [HomeController::class, 'userDashboard'])->name('user.homepage');
+    Route::get('/user/detailservice', [HomeController::class, 'detailservice'])->name('user.detailservice');
+    Route::get('/user/tracking', [HomeController::class, 'tracking'])->name('user.tracking');
+    Route::get('/user/userservice', [HomeController::class, 'userservice'])->name('user.userservice');
 });

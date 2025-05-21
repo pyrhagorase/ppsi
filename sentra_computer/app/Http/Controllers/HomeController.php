@@ -77,4 +77,19 @@ class HomeController extends Controller
     {
         return view('user.homepage');    // pastikan view ini ada
     }
+    
+    public function detailservice() 
+    {
+        return view('user.detailservice');
+    }
+
+    public function tracking() 
+    {
+        return view('user.tracking');
+    }
+
+    public function userservice() 
+    {
+        return view('user.userservice');
+    }
 }
