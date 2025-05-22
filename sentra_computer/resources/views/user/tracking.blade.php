@@ -44,7 +44,7 @@
                         </li>
                     </ul>
                     <div class="d-grid gap-2">
-                        <a href="#" class="btn btn-dark">Details</a>
+                        <a href="{{route('user.detailservice')}}" class="btn btn-dark">Details</a>
                         <button class="btn btn-danger">Hapus</button>
                     </div>
                 </div>

@@ -37,7 +37,7 @@
                         <td>August 2, 2013</td>
                         <td>Laptop</td>
                         <td>Ganti SSD</td>
-                        <td><span class="badge bg-warning text-dark">Menunggu konfirmasi</span></td>
+                        <td><span class="badge bg-warning text-white">Menunggu konfirmasi</span></td>
                     </tr>
                 </tbody>
             </table>

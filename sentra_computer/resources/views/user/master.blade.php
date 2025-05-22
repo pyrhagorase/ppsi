@@ -292,13 +292,13 @@
                     <nav class="navbar navbar-expand">
                         <ul class="navbar-nav mx-auto">
                             <li class="nav-item">
-                                <a class="nav-link active" href="/">Home</a>
+                                <a class="nav-link" href="{{route('user.homepage')}}">Home</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Tracking Services</a>
+                                <a class="nav-link" href="{{route('user.userservice')}}">Tracking Services</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">My Services</a>
+                                <a class="nav-link" href="{{route('user.tracking')}}">My Services</a>
                             </li>
                         </ul>
                     </nav>
@@ -318,7 +318,7 @@
                                 <li><a class="dropdown-item">Level: {{Auth::user()->role ?? 'User'}}</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li>
-                                    <a class="dropdown-item logout-btn" href="#" id="logoutBtn">
+                                    <a class="dropdown-item logout-btn" href="{{route('actionlogout')}}" id="logoutBtn">
                                         <i class="fa-solid fa-power-off"></i> Log Out
                                     </a>
                                 </li>
