@@ -23,6 +23,7 @@ class LoginController extends Controller
             return match (auth::user()->role) {
                 'admin' => redirect()->route('admin.dashboard'),
                 'user' => redirect()->route('user.homepage'),
+                'owner' => redirect()->route('owner.dashboard'),
                 default => abort(403)
             };
         }

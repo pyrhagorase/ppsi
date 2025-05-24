@@ -26,6 +26,7 @@ class HomeController extends Controller
         }
     }
 
+    // Admin 
     public function adminDashboard()
     {
         return view('admin.dashboard');  // pastikan view ini ada
@@ -73,6 +74,67 @@ class HomeController extends Controller
         return view('admin.detail');  // pastikan view ini ada
     }
 
+
+    // Owner
+     public function ownerDashboard()
+    {
+        return view('owner.dashboard');  // pastikan view ini ada
+    }
+
+    public function ownerPencatatan()
+    {
+        return view('owner.pencatatan');  // pastikan view ini ada
+    }
+
+    public function ownerDaftarServis()
+    {
+        return view('owner.daftarservis');  // pastikan view ini ada
+    }
+
+      public function ownerKonfirmasiBiaya()
+    {
+        return view('owner.konfirmasibiaya');  // pastikan view ini ada
+    }
+
+    public function ownerDiproses()
+    {
+        return view('owner.diproses');  // pastikan view ini ada
+    }
+
+     public function ownerSelesai()
+    {
+        return view('owner.selesai');  // pastikan view ini ada
+    }
+
+      public function ownerLunas()
+    {
+        return view('owner.lunas');  // pastikan view ini ada
+    }
+
+    public function ownerRekap()
+    {
+        return view('owner.rekap');  // pastikan view ini ada
+    }
+
+       public function ownerDetail()
+    {
+        return view('owner.detail');  // pastikan view ini ada
+    }
+
+        public function ownerAkunPelanggan()
+    {
+        return view('owner.akunpelanggan');  // pastikan view ini ada
+    }
+
+        public function ownertambahadmin()
+    {
+        return view('owner.tambahadmin');  // pastikan view ini ada
+    }
+
+
+
+
+    // User
     public function userDashboard()
     {
         return view('user.homepage');    // pastikan view ini ada

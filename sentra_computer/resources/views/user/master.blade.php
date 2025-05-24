@@ -356,7 +356,7 @@
             <p>Are you sure you want to logout from your account?</p>
             <div class="overlay-buttons">
                 <button class="btn btn-secondary" id="cancelLogout">Cancel</button>
-                <form action="/logout" method="POST" style="display: inline;">
+                <form action="/" method="GET" style="display: inline;">
                     @csrf
                     <button type="submit" class="btn btn-danger">Logout</button>
                 </form>

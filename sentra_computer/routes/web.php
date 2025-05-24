@@ -78,6 +78,21 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/detail', [HomeController::class, 'adminDetail'])->name('admin.detail');
 });
 
+// Owner routes
+Route::middleware(['auth', 'role:owner'])->group(function () {
+    Route::get('/owner/dashboard', [HomeController::class, 'ownerDashboard'])->name('owner.dashboard');
+    Route::get('/owner/pencatatan', [HomeController::class, 'ownerPencatatan'])->name('owner.pencatatan');
+    Route::get('/owner/daftarservis', [HomeController::class, 'ownerDaftarServis'])->name('owner.daftarservis');
+    Route::get('/owner/konfirmasibiaya', [HomeController::class, 'ownerKonfirmasiBiaya'])->name('owner.konfirmasibiaya');
+    Route::get('/owner/diproses', [HomeController::class, 'ownerDiproses'])->name('owner.diproses');
+    Route::get('/owner/selesai', [HomeController::class, 'ownerSelesai'])->name('owner.selesai');
+    Route::get('/owner/Lunas', [HomeController::class, 'ownerLunas'])->name('owner.lunas');
+    Route::get('/owner/rekap', [HomeController::class, 'ownerRekap'])->name('owner.rekap');
+    Route::get('/owner/detail', [HomeController::class, 'ownerDetail'])->name('owner.detail');
+    Route::get('/owner/akunpelanggan', [HomeController::class, 'ownerAkunPelanggan'])->name('owner.akunpelanggan');
+    Route::get('/owner/tambahadmin', [HomeController::class, 'ownerTambahAdmin'])->name('owner.tambahadmin');
+});
+
 // User routes
 Route::middleware(['auth', 'role:user'])->group(function () {
     Route::get('/user/homepage', [HomeController::class, 'userDashboard'])->name('user.homepage');
