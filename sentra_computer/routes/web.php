@@ -4,6 +4,7 @@ use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\ServisController;
 use App\Http\Controllers\ResetPasswordController;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Http\Request;
@@ -69,6 +70,7 @@ Route::post('/reset-password', function (Request $request) {
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/dashboard', [HomeController::class, 'adminDashboard'])->name('admin.dashboard');
     Route::get('/admin/pencatatan', [HomeController::class, 'adminPencatatan'])->name('admin.pencatatan');
+    Route::post('/servis/store', [ServisController::class, 'store'])->name('servis.store');
     Route::get('/admin/daftarservis', [HomeController::class, 'adminDaftarServis'])->name('admin.daftarservis');
     Route::get('/admin/konfirmasibiaya', [HomeController::class, 'adminKonfirmasiBiaya'])->name('admin.konfirmasibiaya');
     Route::get('/admin/diproses', [HomeController::class, 'adminDiproses'])->name('admin.diproses');
@@ -76,6 +78,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/Lunas', [HomeController::class, 'adminLunas'])->name('admin.lunas');
     Route::get('/admin/rekap', [HomeController::class, 'adminRekap'])->name('admin.rekap');
     Route::get('/admin/detail', [HomeController::class, 'adminDetail'])->name('admin.detail');
+    Route::get('/admin/daftarservis', [ServisController::class, 'index'])->name('admin.daftarservis');
 });
 
 // Owner routes

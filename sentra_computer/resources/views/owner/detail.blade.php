@@ -21,7 +21,7 @@
             <span>Logoipsum</span>
         </div>
         <nav class="sidebar-menu">
-        <a href="{{ route('owner.dashboard') }}" class="menu-item">
+            <a href="{{ route('owner.dashboard') }}" class="menu-item">
                 <i class="fas fa-home"></i>
                 Dashboard
             </a>
@@ -60,7 +60,7 @@
             <a href="{{route('owner.tambahadmin')}}" class="menu-item">
                 <i class="fas fa-user-plus"></i>
                 Tambah Admin
-            </a>      
+            </a>
         </nav>
     </aside>
 
@@ -193,13 +193,14 @@
         </footer>
     </main>
 
-    <script>// Toggle sidebar visibility for mobile
-        document.getElementById('menu-toggle').addEventListener('click', function () {
+    <script>
+        // Toggle sidebar visibility for mobile
+        document.getElementById('menu-toggle').addEventListener('click', function() {
             document.getElementById('sidebar').classList.toggle('active');
         });
 
         // Close sidebar when clicking outside on mobile
-        document.addEventListener('click', function (event) {
+        document.addEventListener('click', function(event) {
             const sidebar = document.getElementById('sidebar');
             const menuToggle = document.getElementById('menu-toggle');
 
@@ -212,7 +213,7 @@
         });
 
         // Responsive adjustments
-        window.addEventListener('resize', function () {
+        window.addEventListener('resize', function() {
             const sidebar = document.getElementById('sidebar');
             if (window.innerWidth > 768) {
                 sidebar.classList.remove('active');
@@ -223,7 +224,7 @@
         const dropdownToggle = document.getElementById('dropdown-toggle');
         const dropdownMenu = document.getElementById('dropdown-menu');
 
-        dropdownToggle.addEventListener('click', function (event) {
+        dropdownToggle.addEventListener('click', function(event) {
             event.stopPropagation();
             dropdownMenu.classList.toggle('show');
             const chevronIcon = this.querySelector('.fa-chevron-down');
@@ -233,7 +234,7 @@
         });
 
         // Close dropdown when clicking outside
-        document.addEventListener('click', function (event) {
+        document.addEventListener('click', function(event) {
             if (!dropdownToggle.contains(event.target) && !dropdownMenu.contains(event.target)) {
                 dropdownMenu.classList.remove('show');
                 const chevronIcon = dropdownToggle.querySelector('.fa-chevron-down');
@@ -243,7 +244,7 @@
             }
         });
 
-        document.getElementById("generateBtn").addEventListener("click", function () {
+        document.getElementById("generateBtn").addEventListener("click", function() {
             const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
             let id = '';
             for (let i = 0; i < 5; i++) {
@@ -254,7 +255,7 @@
         });
 
         // Tampilkan Modal
-        document.getElementById("statusBtn").addEventListener("click", function () {
+        document.getElementById("statusBtn").addEventListener("click", function() {
             document.getElementById("statusModal").style.display = "flex";
         });
 
@@ -266,16 +267,36 @@
         // Ubah isi kotak status
         function ubahStatus() {
             const selected = document.getElementById("statusSelect").value;
-            const box = document.querySelector("div[style*='Konfirmasi Biaya']");
+            const box = document.querySelector(".status-box");
+
+            // Hapus semua class status lama
+            box.classList.remove("status-konfirmasi", "status-diproses", "status-selesai", "status-lunas");
+
+            // Set text dan tambahkan class sesuai status
             box.textContent = selected;
+
+            switch (selected) {
+                case "Konfirmasi Biaya":
+                    box.classList.add("status-konfirmasi");
+                    break;
+                case "Diproses":
+                    box.classList.add("status-diproses");
+                    break;
+                case "Selesai":
+                    box.classList.add("status-selesai");
+                    break;
+                case "Lunas":
+                    box.classList.add("status-lunas");
+                    break;
+            }
+
             closeModal();
         }
 
         // Edit keterangan
-        document.getElementById("editBtn").addEventListener("click", function () {
+        document.getElementById("editBtn").addEventListener("click", function() {
             alert("Keterangan diperbarui: \n\n" + document.getElementById("keterangan").value);
         });
-
     </script>
 
 </body>
