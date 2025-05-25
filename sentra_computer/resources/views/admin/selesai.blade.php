@@ -64,7 +64,7 @@
             <h1>Selesai</h1>
         </div>
         <div class="user-profile">
-            <span class="user-email">admin@gmail.com</span>
+            <span class="user-email">{{Auth::user()->email}}</span>
             <div class="user-dropdown">
                 <button class="dropdown-toggle" id="dropdown-toggle">
                     <div class="user-avatar"></div>
