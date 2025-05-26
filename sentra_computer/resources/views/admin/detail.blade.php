@@ -170,7 +170,8 @@
                     <input type="text">
                 </div>
 
-                <button class="submit-btn">Tambah Data</button>
+                <button class="submit-btn">Update Data</button>
+                <button class="delete-btn">Delete Data</button>
             </div>
         </div>
 
