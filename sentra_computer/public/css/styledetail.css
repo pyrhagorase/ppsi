@@ -426,6 +426,11 @@ h4 {
   text-align: center;
 }
 
+.status-menunggu {
+  background-color: #3b82f6;
+  /* biru */
+}
+
 .status-konfirmasi {
   background-color: #FFB74D;
   /* orange */

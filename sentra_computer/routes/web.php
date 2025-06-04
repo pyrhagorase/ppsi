@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ServisController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ResetPasswordController;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Http\Request;
@@ -77,8 +78,13 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/selesai', [HomeController::class, 'adminSelesai'])->name('admin.selesai');
     Route::get('/admin/Lunas', [HomeController::class, 'adminLunas'])->name('admin.lunas');
     Route::get('/admin/rekap', [HomeController::class, 'adminRekap'])->name('admin.rekap');
-    Route::get('/admin/detail', [HomeController::class, 'adminDetail'])->name('admin.detail');
+    Route::get('/admin/detail/{id_tracking}', [ServisController::class, 'showDetail'])->name('admin.detail');
+    Route::post('/admin/servis/update-status/{id_tracking}', [ServisController::class, 'updateServisStatus'])->name('admin.updateServisStatus');
     Route::get('/admin/daftarservis', [ServisController::class, 'index'])->name('admin.daftarservis');
+    Route::get('/admin/konfirmasibiaya', [AdminController::class, 'adminKonfirmasiBiaya'])->name('admin.konfirmasibiaya');
+    Route::get('/admin/diproses', [AdminController::class, 'diproses'])->name('admin.diproses');
+    Route::get('/admin/selesai', [AdminController::class, 'selesai'])->name('admin.selesai');
+    Route::get('/admin/lunas', [AdminController::class, 'lunas'])->name('admin.lunas');
 });
 
 // Owner routes

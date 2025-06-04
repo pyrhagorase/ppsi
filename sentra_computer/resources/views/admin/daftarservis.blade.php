@@ -86,20 +86,15 @@
     </header>
 
     <main>
-        <!-- Search bar -->
         <div class="search-container">
-            <form action="{{ route('admin.daftarservis') }}" method="GET">
-                <span class="search-icon">
-                    <i class="fas fa-search"></i>
-                </span>
-                <input
-                    type="text"
-                    class="search-input"
-                    placeholder="Search..."
-                    name="search"
-                    value="{{ request('search') }}">
-            </form>
+            <span class="search-icon">
+                <i class="fas fa-search"></i>
+            </span>
+            <form action="{{ route('admin.daftarservis') }}" method="GET" class="flex-grow">
+                <input type="text" name="search" class="search-input" placeholder="Search..." value="{{ request('search') }}">
+                </form>
         </div>
+
         <!-- Table -->
         <section class="flex-1 px-6 pb-12 overflow-x-auto">
             <!-- Ganti bagian tabel dengan ini -->
@@ -142,12 +137,39 @@
                             {{ $item->tipe_barang }}
                         </td>
                         <td class="py-3 pr-6 whitespace-nowrap">
-                            <span class="inline-block bg-blue-400 text-white text-xs font-semibold rounded-full px-3 py-1 select-none">
-                                {{ $item->statusservis }}
+                            <span class="inline-block text-white text-xs font-semibold rounded-full px-3 py-1 select-none
+                                @switch($item->statusservis)
+                                    @case('Menunggu')
+                                        status-menunggu
+                                        @break
+                                    @case('KonfirmasiBiaya') {{-- PASTIKAN INI SESUAI DENGAN ENUM DI DB ANDA (tanpa spasi/dengan spasi) --}}
+                                        status-konfirmasi
+                                        @break
+                                    @case('Diproses')
+                                        status-diproses
+                                        @break
+                                    @case('Selesai')
+                                        status-selesai
+                                        @break
+                                    @case('Lunas')
+                                        status-lunas
+                                        @break
+                                    @default
+                                        bg-gray-400 {{-- Warna default jika status tidak dikenal --}}
+                                @endswitch
+                                ">
+                                {{-- Teks yang ditampilkan ke pengguna. Sesuaikan jika 'KonfirmasiBiaya' perlu ditampilkan 'Konfirmasi Biaya' --}}
+                                @if($item->statusservis == 'KonfirmasiBiaya')
+                                    Konfirmasi Biaya
+                                @else
+                                    {{ $item->statusservis }}
+                                @endif
                             </span>
                         </td>
                         <td class="py-3 whitespace-nowrap text-gray-400 cursor-pointer">
+                            <a href="{{ route('admin.detail', ['id_tracking' => $item->id_tracking]) }}">
                             <i class="fas fa-ellipsis-h"></i>
+                            </a>
                         </td>
                     </tr>
                     @endforeach

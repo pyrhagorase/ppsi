@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Servis;
+use Illuminate\Support\Facades\Log;
 
 class ServisController extends Controller
 {
@@ -31,19 +32,60 @@ class ServisController extends Controller
     // ServisController.php
     public function index(Request $request)
     {
-        $page = $request->input('page', 1); // Ambil parameter page dari URL
-        $perPage = 5; // Jumlah item per halaman
-        $servis = Servis::orderBy('created_at', 'desc')
-            ->offset(($page - 1) * $perPage)
-            ->limit($perPage)
-            ->get();
+        //Inisialisasi query dengan semua data Servis
+        $query = Servis::orderBy('created_at', 'desc'); // Mulai dengan mengurutkan dari yang terbaru
 
-        $total = Servis::count();
+        // Tambahkan logika pencarian
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $query->where(function($q) use ($search) {
+                $q->where('id_tracking', 'like', '%' . $search . '%')
+                  ->orWhere('nama_pelanggan', 'like', '%' . $search . '%')
+                  ->orWhere('tipe_barang', 'like', '%' . $search . '%');
+            });
+        }   
 
+        $servis = $query->paginate(10); // Ambil 10 item per halaman
+
+        // Teruskan data pagination ke view
         return view('admin.daftarservis', [
             'servis' => $servis,
-            'currentPage' => $page,
-            'totalPages' => ceil($total / $perPage)
+            'currentPage' => $servis->currentPage(),
+            'totalPages' => $servis->lastPage()
         ]);
     }
+
+    public function showDetail($id_tracking)
+    {
+        // Mencari servis berdasarkan id_tracking. firstOrFail() akan melempar 404 jika tidak ditemukan.
+        $servis = Servis::where('id_tracking', $id_tracking)->firstOrFail();
+
+        // Melewatkan objek $servis ke view 'admin.detail'
+        return view('admin.detail', compact('servis'));
+    }
+
+    /**
+     * Memperbarui status servis.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param string $id_tracking
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function updateServisStatus(Request $request, $id_tracking)
+    {
+        $request->validate([
+            'statusservis' => 'required|string|in:KonfirmasiBiaya,Diproses,Selesai,Lunas',
+        ]);
+
+        try {
+            $servis = Servis::where('id_tracking', $id_tracking)->firstOrFail();
+            $servis->statusservis = $request->statusservis;
+            $servis->save();
+
+            return response()->json(['success' => true, 'message' => 'Status servis berhasil diperbarui.']);
+        } catch (\Exception $e) {
+            Log::error('Gagal memperbarui status servis: ' . $e->getMessage(), ['id_tracking' => $id_tracking, 'status' => $request->statusservis]);
+            return response()->json(['success' => false, 'message' => 'Gagal memperbarui status servis.'], 500);
+        }
+    }    
 }

@@ -7,12 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detail Admin</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../css/styledetail.css">
-</head>
+    <link rel="stylesheet" href="{{ asset('css/styledetail.css') }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}"> </head>
 
 <body>
 
-    <!-- Sidebar -->
     <aside class="sidebar" id="sidebar">
         <div class="sidebar-logo">
             <div class="logo-icon">
@@ -33,7 +32,7 @@
                 <i class="fas fa-list"></i>
                 Daftar Servis
             </a>
-            <a href="{{route('admin.konfirmasibiaya')}}" class="menu-item active">
+            <a href="{{route('admin.konfirmasibiaya')}}" class="menu-item">
                 <i class="fas fa-credit-card"></i>
                 Konfirmasi Biaya
             </a>
@@ -56,14 +55,12 @@
         </nav>
     </aside>
 
-    <!-- Header -->
     <header class="header">
         <div class="header-left">
             <button class="menu-toggle" id="menu-toggle">
                 <i class="fas fa-bars"></i>
             </button>
-            <h1>Konfirmasi Biaya</h1>
-        </div>
+            <h1>Detail Servis: {{ $servis->id_tracking ?? 'N/A' }}</h1> </div>
         <div class="user-profile">
             <span class="user-email">{{Auth::user()->email}}</span>
             <div class="user-dropdown">
@@ -87,34 +84,28 @@
     </header>
 
     <main class="main-content">
-        <!-- === Konten Tambahan di Atas Form Registrasi === -->
         <div style="margin-bottom: 30px;">
             <h2>Status Servis</h2>
 
-            <!-- Kotak Status Horizontal -->
-            <div class="status-box">
-                Konfirmasi Biaya
-            </div>
+            <div class="status-box" id="currentStatusBox">
+                {{ $servis->statusservis ?? 'Belum Ada Status' }} </div>
 
-            <!-- Keterangan -->
             <h4 style="margin-top: 20px;">Keterangan</h4>
-            <textarea id="keterangan" style="width: 100%; height: 120px; padding: 10px; font-size: 16px;"></textarea>
+            <textarea id="keterangan" style="width: 100%; height: 120px; padding: 10px; font-size: 16px;">{{ $servis->keterangan ?? '' }}</textarea>
 
-            <!-- Tombol Aksi -->
             <div class="button-group">
                 <button class="btn-status" id="statusBtn">Status Servis</button>
                 <button class="btn-keterangan" id="editBtn">Update Keterangan</button>
             </div>
 
-            <!-- Modal Overlay (untuk ubah status servis) -->
             <div id="statusModal" class="modal-overlay">
                 <div class="modal-box">
                     <h3>Ubah Status Servis</h3>
                     <select id="statusSelect">
-                        <option value="Konfirmasi Biaya">Konfirmasi Biaya</option>
-                        <option value="Diproses">Diproses</option>
-                        <option value="Selesai">Selesai</option>
-                        <option value="Lunas">Lunas</option>
+                        <option value="KonfirmasiBiaya" {{ ($servis->statusservis ?? '') == 'KonfirmasiBiaya' ? 'selected' : '' }}>Konfirmasi Biaya</option>
+                        <option value="Diproses" {{ ($servis->statusservis ?? '') == 'Diproses' ? 'selected' : '' }}>Diproses</option>
+                        <option value="Selesai" {{ ($servis->statusservis ?? '') == 'Selesai' ? 'selected' : '' }}>Selesai</option>
+                        <option value="Lunas" {{ ($servis->statusservis ?? '') == 'Lunas' ? 'selected' : '' }}>Lunas</option>
                     </select>
                     <div class="modal-actions">
                         <button class="btn-cancel" onclick="closeModal()">Batal</button>
@@ -125,49 +116,46 @@
 
 
             <div class="form-container">
-                <h2>Formulir Registrasi Pelanggan</h2>
-                <div class="form-group">
-                    <label>Generate id-tracking</label>
-                    <div class="inline-group">
-                        <input type="text" id="trackingId">
-                        <button type="button" id="generateBtn">Generate</button>
+                <h2>Formulir Detail Servis</h2> <input type="hidden" id="trackingId" value="{{ $servis->id_tracking ?? '' }}">
 
-                    </div>
+                <div class="form-group">
+                    <label>ID Tracking</label>
+                    <input type="text" value="{{ $servis->id_tracking ?? '' }}" readonly>
                 </div>
 
                 <div class="form-group">
                     <label>Nama Pelanggan</label>
-                    <input type="text">
+                    <input type="text" value="{{ $servis->nama_pelanggan ?? '' }}">
                 </div>
 
                 <div class="form-group">
                     <label>Kontak Pelanggan</label>
-                    <input type="text">
+                    <input type="text" value="{{ $servis->kontak ?? '' }}">
                 </div>
 
                 <div class="form-group">
                     <label>Waktu Servis</label>
-                    <input type="date">
+                    <input type="date" value="{{ \Carbon\Carbon::parse($servis->waktu_servis ?? now())->format('Y-m-d') }}">
                 </div>
 
                 <div class="form-group">
                     <label>Tipe Barang</label>
-                    <input type="text">
+                    <input type="text" value="{{ $servis->tipe_barang ?? '' }}">
                 </div>
 
                 <div class="form-group">
                     <label>Kerusakan</label>
-                    <input type="text">
+                    <input type="text" value="{{ $servis->kerusakan ?? '' }}">
                 </div>
 
                 <div class="form-group">
                     <label>Estimasi Biaya</label>
-                    <input type="text">
+                    <input type="text" value="{{ $servis->biaya ?? '' }}">
                 </div>
 
                 <div class="form-group">
                     <label>Status Pembayaran</label>
-                    <input type="text">
+                    <input type="text" value="{{ $servis->status_pembayaran ?? '' }}">
                 </div>
 
                 <button class="submit-btn">Update Data</button>
@@ -175,7 +163,6 @@
             </div>
         </div>
 
-        <!-- Footer -->
         <footer class="footer">
             <div class="footer-logo">
                 <div class="logo-icon">
@@ -237,19 +224,23 @@
             }
         });
 
-        document.getElementById("generateBtn").addEventListener("click", function() {
-            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-            let id = '';
-            for (let i = 0; i < 5; i++) {
-                const randomIndex = Math.floor(Math.random() * characters.length);
-                id += characters[randomIndex];
-            }
-            document.getElementById("trackingId").value = id;
-        });
+        // --- HAPUS FUNGSI GENERATE ID TRACKING INI JIKA HANYA UNTUK DETAIL, BUKAN PENCATATAN BARU ---
+        // document.getElementById("generateBtn").addEventListener("click", function() {
+        //     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        //     let id = '';
+        //     for (let i = 0; i < 5; i++) {
+        //         const randomIndex = Math.floor(Math.random() * characters.length);
+        //         id += characters[randomIndex];
+        //     }
+        //     document.getElementById("trackingId").value = id;
+        // });
+        // --- AKHIR HAPUS FUNGSI GENERATE ---
 
         // Tampilkan Modal
         document.getElementById("statusBtn").addEventListener("click", function() {
             document.getElementById("statusModal").style.display = "flex";
+            // Set nilai default select sesuai status saat ini
+            document.getElementById("statusSelect").value = document.getElementById("currentStatusBox").textContent.trim();
         });
 
         // Tutup Modal
@@ -257,38 +248,95 @@
             document.getElementById("statusModal").style.display = "none";
         }
 
-        // Ubah isi kotak status
+        // --- FUNGSI UBBAH STATUS YANG BARU ---
         function ubahStatus() {
-            const selected = document.getElementById("statusSelect").value;
-            const box = document.querySelector(".status-box");
+            const selectedStatus = document.getElementById("statusSelect").value;
+            const trackingId = document.getElementById("trackingId").value; // Ambil ID Tracking dari hidden input
 
-            // Hapus semua class status lama
-            box.classList.remove("status-konfirmasi", "status-diproses", "status-selesai", "status-lunas");
-
-            // Set text dan tambahkan class sesuai status
-            box.textContent = selected;
-
-            switch (selected) {
-                case "Konfirmasi Biaya":
-                    box.classList.add("status-konfirmasi");
-                    break;
-                case "Diproses":
-                    box.classList.add("status-diproses");
-                    break;
-                case "Selesai":
-                    box.classList.add("status-selesai");
-                    break;
-                case "Lunas":
-                    box.classList.add("status-lunas");
-                    break;
+            // Periksa apakah trackingId tersedia
+            if (!trackingId) {
+                alert('ID Tracking tidak ditemukan. Tidak dapat memperbarui status.');
+                closeModal();
+                return;
             }
+
+            fetch("{{ route('admin.updateServisStatus', ['id_tracking' => ':trackingId']) }}".replace(':trackingId', trackingId), {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                body: JSON.stringify({ statusservis: selectedStatus })
+            })
+            .then(response => {
+                if (!response.ok) { // Cek jika respons bukan 2xx (misal 404, 500)
+                    return response.json().then(err => { throw err; });
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    alert('Status servis berhasil diperbarui!');
+                    // Redirect ke halaman yang sesuai
+                    switch (selectedStatus) {
+                        case "KonfirmasiBiaya":
+                            window.location.href = "{{ route('admin.konfirmasibiaya') }}";
+                            break;
+                        case "Diproses":
+                            window.location.href = "{{ route('admin.diproses') }}";
+                            break;
+                        case "Selesai":
+                            window.location.href = "{{ route('admin.selesai') }}";
+                            break;
+                        case "Lunas":
+                            window.location.href = "{{ route('admin.lunas') }}";
+                            break;
+                        default:
+                            window.location.href = "{{ route('admin.daftarservis') }}";
+                            break;
+                    }
+                } else {
+                    alert('Gagal mengubah status servis: ' + (data.message || 'Terjadi kesalahan.'));
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Terjadi kesalahan saat berkomunikasi dengan server: ' + (error.message || 'Tidak diketahui.'));
+            });
 
             closeModal();
         }
+        // --- AKHIR FUNGSI UBBAH STATUS YANG BARU ---
 
-        // Edit keterangan
+        // Edit keterangan (perlu diimplementasikan untuk terhubung ke backend)
         document.getElementById("editBtn").addEventListener("click", function() {
-            alert("Keterangan diperbarui: \n\n" + document.getElementById("keterangan").value);
+            // Logika untuk menyimpan keterangan ke database perlu ditambahkan di sini
+            // Ini juga memerlukan permintaan AJAX (fetch POST) ke endpoint backend baru.
+            alert("Keterangan diperbarui (simulasi): \n\n" + document.getElementById("keterangan").value);
+        });
+
+        // Initialize status box color based on current status (optional, but good for UI)
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentStatus = document.getElementById('currentStatusBox').textContent.trim();
+            const statusBox = document.getElementById('currentStatusBox');
+            statusBox.classList.remove("status-menunggu", "status-konfirmasi", "status-diproses", "status-selesai", "status-lunas"); // Clear existing
+            switch (currentStatus) {
+                case "Menunggu":
+                    statusBox.classList.add("status-menunggu");
+                    break;
+                case "KonfirmasiBiaya":
+                    statusBox.classList.add("status-konfirmasi");
+                    break;
+                case "Diproses":
+                    statusBox.classList.add("status-diproses");
+                    break;
+                case "Selesai":
+                    statusBox.classList.add("status-selesai");
+                    break;
+                case "Lunas":
+                    statusBox.classList.add("status-lunas");
+                    break;
+            }
         });
     </script>
 

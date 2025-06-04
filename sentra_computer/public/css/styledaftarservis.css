@@ -541,3 +541,34 @@ table td {
   padding: 0 20px;
   font-size: 14px;
 }
+
+
+.status-menunggu {
+  background-color: #3b82f6;
+  color: #fff;
+  /* biru */
+}
+
+.status-konfirmasi {
+  background-color: #FFB74D;
+  color: #fff;
+  /* orange */
+}
+
+.status-diproses {
+  background-color: #3b82f6;
+  color: #fff;
+  /* biru */
+}
+
+.status-selesai {
+  background-color: #3b82f6;
+  color: #fff;
+  /* hijau */
+}
+
+.status-lunas {
+  background-color: #388E3C;
+  color: #fff;
+  /* ungu */
+}

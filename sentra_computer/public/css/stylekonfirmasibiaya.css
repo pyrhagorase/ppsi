@@ -440,41 +440,44 @@ table td {
 .flex-1.px-6.pb-12.overflow-x-auto {
     margin-bottom: 1.5rem; /* sekitar 24px jarak bawah tabel */
   }
-  
-  /* Styling pagination container */
-  .pagination {
-    /* sudah pakai flex justify-center dan space-x-2 di kelas html, 
-       tapi kalau kamu pakai plain CSS, bisa ditambah: */
+
+  /* Pagination Styles */
+.pagination {
     display: flex;
     justify-content: right;
-    gap: 0.5rem; /* jarak antar tombol pagination */
-    font-size: 0.875rem; /* ukuran font sm */
-    margin-top: 1rem; /* jarak atas pagination */
-  }
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+}
   
-  /* Styling tombol pagination */
-  .pagination button {
-    padding: 0.375rem 0.75rem; /* py-1 px-3 */
-    background-color: #e5e7eb; /* bg-gray-200 */
-    border-radius: 0.375rem; /* rounded */
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-  }
-  
-  .pagination button:hover {
-    background-color: #d1d5db; /* bg-gray-300 */
-  }
-  
-  /* Tombol aktif */
-  .pagination button.bg-blue-500 {
-    background-color: #3b82f6; /* blue-500 */
+  .pagination a, 
+.pagination span {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 0.25rem;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+}
+
+.pagination a {
+    background-color: #edf2f7;
+    color: #4a5568;
+    text-decoration: none;
+    transition: background-color 0.2s;
+}
+
+.pagination a:hover {
+    background-color: #e2e8f0;
+}
+
+.pagination .bg-blue-500 {
+    background-color: #4299e1;
     color: white;
-  }
-  
-  .pagination button.bg-blue-500:hover {
-    background-color: #2563eb; /* blue-600 */
-  }
+}
+
+.pagination .cursor-not-allowed {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
   
   /* Footer */
 .footer {
