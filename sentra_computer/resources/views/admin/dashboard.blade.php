@@ -87,31 +87,39 @@
     <!-- Main Content -->
     <main class="main-content">
         <div class="dashboard-cards">
-            <!-- Card 1 - Total Pemasukan -->
+             <!-- Card 1 - Total Pemasukan -->
             <div class="card card-purple">
                 <div class="card-title">Total Pemasukan</div>
-                <div class="card-value">Rp 120.000</div>
+                <div class="card-value">
+                    <img src="{{ asset('icons/pemasukan.png') }}" alt="Pemasukan" style="width: 80px; height: 80px;">
+                </div>
                 <div class="card-footer">Per-Bulan</div>
             </div>
 
             <!-- Card 2 - Servis yang diproses -->
             <div class="card card-blue">
                 <div class="card-title">Servis yang diproses</div>
-                <div class="card-value">008</div>
+                <div class="card-value">
+                    <img src="{{ asset('icons/diproses.png') }}" alt="Servis yang diproses" style="width: 80px; height: 80px;">
+                </div>
                 <div class="card-footer">Keseluruhan</div>
             </div>
 
             <!-- Card 3 - Total Servis Selesai -->
             <div class="card card-red">
                 <div class="card-title">Total Servis Selesai</div>
-                <div class="card-value">023</div>
+                <div class="card-value">
+                    <img src="{{ asset('icons/selesai.png') }}" alt="Servis Selesai" style="width: 80px; height: 80px;">
+                </div>
                 <div class="card-footer">Keseluruhan</div>
             </div>
 
             <!-- Card 4 - Total Servis Lunas -->
             <div class="card card-yellow">
                 <div class="card-title">Total Servis Lunas</div>
-                <div class="card-value">123</div>
+                <div class="card-value">
+                    <img src="{{ asset('icons/lunas.png') }}" alt="Servis Lunas" style="width: 80px; height: 80px;">
+                </div>
                 <div class="card-footer">Keseluruhan</div>
             </div>
         </div>
