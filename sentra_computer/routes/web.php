@@ -86,6 +86,8 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/selesai', [AdminController::class, 'selesai'])->name('admin.selesai');
     Route::get('/admin/lunas', [AdminController::class, 'lunas'])->name('admin.lunas');
     Route::post('/admin/update-keterangan/{id_tracking}', [AdminController::class, 'updateKeterangan'])->name('admin.updateKeterangan');
+    Route::post('/admin/servis/update-detail/{id_tracking}', [AdminController::class, 'updateServisDetail'])->name('admin.updateServisDetail');
+
 });
 
 // Owner routes

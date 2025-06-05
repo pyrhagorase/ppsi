@@ -8,7 +8,8 @@
     <title>Detail Admin</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/styledetail.css') }}">
-    <meta name="csrf-token" content="{{ csrf_token() }}"> </head>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+</head>
 
 <body>
 
@@ -60,7 +61,8 @@
             <button class="menu-toggle" id="menu-toggle">
                 <i class="fas fa-bars"></i>
             </button>
-            <h1>Detail Servis: {{ $servis->id_tracking ?? 'N/A' }}</h1> </div>
+            <h1>Detail Servis: {{ $servis->id_tracking ?? 'N/A' }}</h1>
+        </div>
         <div class="user-profile">
             <span class="user-email">{{Auth::user()->email}}</span>
             <div class="user-dropdown">
@@ -88,7 +90,8 @@
             <h2>Status Servis</h2>
 
             <div class="status-box" id="currentStatusBox">
-                {{ $servis->statusservis ?? 'Belum Ada Status' }} </div>
+                {{ $servis->statusservis ?? 'Belum Ada Status' }}
+            </div>
 
             <h4 style="margin-top: 20px;">Keterangan</h4>
             <textarea id="keterangan" style="width: 100%; height: 120px; padding: 10px; font-size: 16px;">{{ $servis->keterangan ?? '' }}</textarea>
@@ -158,7 +161,7 @@
                     <input type="text" value="{{ $servis->status_pembayaran ?? '' }}">
                 </div>
 
-                <button class="submit-btn">Update Data</button>
+                <button class="submit-btn" id="updateDataBtn">Update Data</button>
                 <button class="delete-btn">Delete Data</button>
             </div>
         </div>
@@ -261,48 +264,52 @@
             }
 
             fetch("{{ route('admin.updateServisStatus', ['id_tracking' => ':trackingId']) }}".replace(':trackingId', trackingId), {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                },
-                body: JSON.stringify({ statusservis: selectedStatus })
-            })
-            .then(response => {
-                if (!response.ok) { // Cek jika respons bukan 2xx (misal 404, 500)
-                    return response.json().then(err => { throw err; });
-                }
-                return response.json();
-            })
-            .then(data => {
-                if (data.success) {
-                    alert('Status servis berhasil diperbarui!');
-                    // Redirect ke halaman yang sesuai
-                    switch (selectedStatus) {
-                        case "KonfirmasiBiaya":
-                            window.location.href = "{{ route('admin.konfirmasibiaya') }}";
-                            break;
-                        case "Diproses":
-                            window.location.href = "{{ route('admin.diproses') }}";
-                            break;
-                        case "Selesai":
-                            window.location.href = "{{ route('admin.selesai') }}";
-                            break;
-                        case "Lunas":
-                            window.location.href = "{{ route('admin.lunas') }}";
-                            break;
-                        default:
-                            window.location.href = "{{ route('admin.daftarservis') }}";
-                            break;
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    },
+                    body: JSON.stringify({
+                        statusservis: selectedStatus
+                    })
+                })
+                .then(response => {
+                    if (!response.ok) { // Cek jika respons bukan 2xx (misal 404, 500)
+                        return response.json().then(err => {
+                            throw err;
+                        });
                     }
-                } else {
-                    alert('Gagal mengubah status servis: ' + (data.message || 'Terjadi kesalahan.'));
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Terjadi kesalahan saat berkomunikasi dengan server: ' + (error.message || 'Tidak diketahui.'));
-            });
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.success) {
+                        alert('Status servis berhasil diperbarui!');
+                        // Redirect ke halaman yang sesuai
+                        switch (selectedStatus) {
+                            case "KonfirmasiBiaya":
+                                window.location.href = "{{ route('admin.konfirmasibiaya') }}";
+                                break;
+                            case "Diproses":
+                                window.location.href = "{{ route('admin.diproses') }}";
+                                break;
+                            case "Selesai":
+                                window.location.href = "{{ route('admin.selesai') }}";
+                                break;
+                            case "Lunas":
+                                window.location.href = "{{ route('admin.lunas') }}";
+                                break;
+                            default:
+                                window.location.href = "{{ route('admin.daftarservis') }}";
+                                break;
+                        }
+                    } else {
+                        alert('Gagal mengubah status servis: ' + (data.message || 'Terjadi kesalahan.'));
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Terjadi kesalahan saat berkomunikasi dengan server: ' + (error.message || 'Tidak diketahui.'));
+                });
 
             closeModal();
         }
@@ -352,60 +359,130 @@
 
             // Permintaan AJAX menggunakan Fetch API
             fetch("{{ route('admin.updateKeterangan', ['id_tracking' => ':trackingId']) }}".replace(':trackingId', trackingId), {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                },
-                body: JSON.stringify({ keterangan: keteranganValue })
-            })
-            .then(response => {
-                console.log('Raw server response object:', response); // Untuk melihat objek respons
-                // Baca body respons sebagai teks terlebih dahulu, karena hanya bisa dibaca sekali
-                return response.text().then(responseText => {
-                    console.log('Server response text:', responseText); // Untuk melihat respons dalam bentuk teks
-                    if (!response.ok) { // Jika respons bukan 2xx (misal 404, 500, 422)
-                        try {
-                            const errorData = JSON.parse(responseText); // Coba parse sebagai JSON
-                            console.error('Server error parsed as JSON:', errorData);
-                            throw errorData; // Lempar error JSON untuk ditangkap .catch()
-                        } catch (jsonParseError) {
-                            // Jika tidak bisa di-parse sebagai JSON (misal HTML error page)
-                            console.error('Server error (non-JSON response):', responseText);
-                            throw new Error('Server error: ' + response.status + ' ' + response.statusText + '. Detail di console browser.');
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    },
+                    body: JSON.stringify({
+                        keterangan: keteranganValue
+                    })
+                })
+                .then(response => {
+                    console.log('Raw server response object:', response); // Untuk melihat objek respons
+                    // Baca body respons sebagai teks terlebih dahulu, karena hanya bisa dibaca sekali
+                    return response.text().then(responseText => {
+                        console.log('Server response text:', responseText); // Untuk melihat respons dalam bentuk teks
+                        if (!response.ok) { // Jika respons bukan 2xx (misal 404, 500, 422)
+                            try {
+                                const errorData = JSON.parse(responseText); // Coba parse sebagai JSON
+                                console.error('Server error parsed as JSON:', errorData);
+                                throw errorData; // Lempar error JSON untuk ditangkap .catch()
+                            } catch (jsonParseError) {
+                                // Jika tidak bisa di-parse sebagai JSON (misal HTML error page)
+                                console.error('Server error (non-JSON response):', responseText);
+                                throw new Error('Server error: ' + response.status + ' ' + response.statusText + '. Detail di console browser.');
+                            }
                         }
+                        // Jika respons OK (status 2xx), diasumsikan itu JSON sukses
+                        return JSON.parse(responseText);
+                    });
+                })
+                .then(data => {
+                    console.log('Parsed data (success response):', data);
+                    if (data.success) {
+                        alert('Keterangan berhasil diperbarui!');
+                        // Opsional: refresh halaman atau update UI lainnya
+                        // window.location.reload(); 
+                    } else {
+                        alert('Gagal memperbarui keterangan: ' + (data.message || 'Terjadi kesalahan tidak diketahui.'));
                     }
-                    // Jika respons OK (status 2xx), diasumsikan itu JSON sukses
-                    return JSON.parse(responseText);
+                })
+                .catch(error => {
+                    console.error('Fetch operation failed (catch block):', error);
+                    let errorMessage = 'Terjadi kesalahan saat berkomunikasi dengan server.';
+                    if (error.message) {
+                        errorMessage = error.message;
+                    } else if (error.errors) { // Untuk error validasi dari Laravel
+                        errorMessage = 'Validasi Gagal:\n';
+                        for (const key in error.errors) {
+                            errorMessage += `- ${error.errors[key].join(', ')}\n`;
+                        }
+                    } else if (typeof error === 'string') { // Jika error adalah string sederhana
+                        errorMessage = error;
+                    }
+                    alert(errorMessage + '\nSilakan cek console browser untuk detail.');
                 });
-            })
-            .then(data => {
-                console.log('Parsed data (success response):', data);
-                if (data.success) {
-                    alert('Keterangan berhasil diperbarui!');
-                    // Opsional: refresh halaman atau update UI lainnya
-                    // window.location.reload(); 
-                } else {
-                    alert('Gagal memperbarui keterangan: ' + (data.message || 'Terjadi kesalahan tidak diketahui.'));
-                }
-            })
-            .catch(error => {
-                console.error('Fetch operation failed (catch block):', error);
-                let errorMessage = 'Terjadi kesalahan saat berkomunikasi dengan server.';
-                if (error.message) {
-                    errorMessage = error.message;
-                } else if (error.errors) { // Untuk error validasi dari Laravel
-                    errorMessage = 'Validasi Gagal:\n';
-                    for (const key in error.errors) {
-                        errorMessage += `- ${error.errors[key].join(', ')}\n`;
-                    }
-                } else if (typeof error === 'string') { // Jika error adalah string sederhana
-                    errorMessage = error;
-                }
-                alert(errorMessage + '\nSilakan cek console browser untuk detail.');
-            });
         });
         // --- AKHIR FUNGSI UPDATE KETERANGAN ---
+
+        // Update data pelanggan
+        document.getElementById("updateDataBtn").addEventListener("click", function() {
+            const trackingId = document.getElementById("trackingId").value;
+            if (!trackingId) {
+                alert("ID Tracking tidak ditemukan.");
+                return;
+            }
+
+            // Ambil nilai dari semua input
+            const formContainer = document.querySelector(".form-container");
+            const inputs = formContainer.querySelectorAll("input");
+            const formData = {};
+
+            inputs.forEach(input => {
+                const label = input.previousElementSibling?.innerText?.trim();
+                if (label) {
+                    // Mapping berdasarkan label (pastikan label form sama dengan nama field di controller)
+                    switch (label) {
+                        case "Nama Pelanggan":
+                            formData.nama_pelanggan = input.value;
+                            break;
+                        case "Kontak Pelanggan":
+                            formData.kontak = input.value;
+                            break;
+                        case "Waktu Servis":
+                            formData.waktu_servis = input.value;
+                            break;
+                        case "Tipe Barang":
+                            formData.tipe_barang = input.value;
+                            break;
+                        case "Kerusakan":
+                            formData.kerusakan = input.value;
+                            break;
+                        case "Estimasi Biaya":
+                            formData.biaya = input.value;
+                            break;
+                        case "Status Pembayaran":
+                            formData.status_pembayaran = input.value;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            });
+
+            // Kirim ke controller via route POST
+            fetch("{{ route('admin.updateServisDetail', ['id_tracking' => ':trackingId']) }}".replace(':trackingId', trackingId), {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content")
+                    },
+                    body: JSON.stringify(formData)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert("Data servis berhasil diperbarui.");
+                    } else {
+                        alert("Gagal memperbarui data: " + (data.message || "Terjadi kesalahan."));
+                    }
+                })
+                .catch(error => {
+                    console.error("Fetch error:", error);
+                    alert("Terjadi kesalahan saat mengirim data ke server.");
+                });
+        });
     </script>
 
 </body>

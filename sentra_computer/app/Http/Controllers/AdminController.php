@@ -17,10 +17,10 @@ class AdminController extends Controller
         // Tambahkan logika pencarian
         if ($request->has('search')) {
             $search = $request->input('search');
-            $query->where(function($q) use ($search) {
+            $query->where(function ($q) use ($search) {
                 $q->where('id_tracking', 'like', '%' . $search . '%')
-                  ->orWhere('nama_pelanggan', 'like', '%' . $search . '%')
-                  ->orWhere('tipe_barang', 'like', '%' . $search . '%');
+                    ->orWhere('nama_pelanggan', 'like', '%' . $search . '%')
+                    ->orWhere('tipe_barang', 'like', '%' . $search . '%');
             });
         }
 
@@ -34,17 +34,17 @@ class AdminController extends Controller
         ]);
     }
 
-     public function adminKonfirmasiBiaya(Request $request)
+    public function adminKonfirmasiBiaya(Request $request)
     {
         $query = Servis::where('statusservis', 'KonfirmasiBiaya');
 
         // Tambahkan logika pencarian
         if ($request->has('search')) {
             $search = $request->input('search');
-            $query->where(function($q) use ($search) {
+            $query->where(function ($q) use ($search) {
                 $q->where('id_tracking', 'like', '%' . $search . '%')
-                  ->orWhere('nama_pelanggan', 'like', '%' . $search . '%')
-                  ->orWhere('tipe_barang', 'like', '%' . $search . '%');
+                    ->orWhere('nama_pelanggan', 'like', '%' . $search . '%')
+                    ->orWhere('tipe_barang', 'like', '%' . $search . '%');
             });
         }
 
@@ -65,10 +65,10 @@ class AdminController extends Controller
         // Tambahkan logika pencarian
         if ($request->has('search')) {
             $search = $request->input('search');
-            $query->where(function($q) use ($search) {
+            $query->where(function ($q) use ($search) {
                 $q->where('id_tracking', 'like', '%' . $search . '%')
-                  ->orWhere('nama_pelanggan', 'like', '%' . $search . '%')
-                  ->orWhere('tipe_barang', 'like', '%' . $search . '%');
+                    ->orWhere('nama_pelanggan', 'like', '%' . $search . '%')
+                    ->orWhere('tipe_barang', 'like', '%' . $search . '%');
             });
         }
 
@@ -82,17 +82,17 @@ class AdminController extends Controller
         ]);
     }
 
-     public function lunas(Request $request)
+    public function lunas(Request $request)
     {
         $query = Servis::where('statusservis', 'Lunas');
 
         // Tambahkan logika pencarian
         if ($request->has('search')) {
             $search = $request->input('search');
-            $query->where(function($q) use ($search) {
+            $query->where(function ($q) use ($search) {
                 $q->where('id_tracking', 'like', '%' . $search . '%')
-                  ->orWhere('nama_pelanggan', 'like', '%' . $search . '%')
-                  ->orWhere('tipe_barang', 'like', '%' . $search . '%');
+                    ->orWhere('nama_pelanggan', 'like', '%' . $search . '%')
+                    ->orWhere('tipe_barang', 'like', '%' . $search . '%');
             });
         }
 
@@ -106,7 +106,7 @@ class AdminController extends Controller
         ]);
     }
 
-   public function updateKeterangan(Request $request, $id_tracking)
+    public function updateKeterangan(Request $request, $id_tracking)
     {
         // Baris debugging telah dihapus.
         // Log::info('Method updateKeterangan di AdminController dipanggil.', [
@@ -173,5 +173,25 @@ class AdminController extends Controller
             ], 500);
         }
     }
-}
 
+    public function updateServisDetail(Request $request, $id_tracking)
+    {
+        $servis = Servis::where('id_tracking', $id_tracking)->first();
+
+        if (!$servis) {
+            return response()->json(['success' => false, 'message' => 'Data tidak ditemukan.']);
+        }
+
+        $servis->update([
+            'nama_pelanggan' => $request->nama_pelanggan,
+            'kontak' => $request->kontak,
+            'waktu_servis' => $request->waktu_servis,
+            'tipe_barang' => $request->tipe_barang,
+            'kerusakan' => $request->kerusakan,
+            'biaya' => $request->biaya,
+            'status_pembayaran' => $request->status_pembayaran,
+        ]);
+
+        return response()->json(['success' => true]);
+    }
+}
