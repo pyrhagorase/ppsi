@@ -162,7 +162,7 @@
                 </div>
 
                 <button class="submit-btn" id="updateDataBtn">Update Data</button>
-                <button class="delete-btn">Delete Data</button>
+                <button class="delete-btn" id="deleteDataBtn">Delete Data</button>
             </div>
         </div>
 
@@ -483,6 +483,49 @@
                     alert("Terjadi kesalahan saat mengirim data ke server.");
                 });
         });
+
+        // --- FUNGSI DELETE DATA ---
+        document.getElementById("deleteDataBtn").addEventListener("click", function() {
+            const trackingId = document.getElementById("trackingId").value;
+
+            if (!trackingId) {
+                alert("ID Tracking tidak ditemukan.");
+                return;
+            }
+
+            if (!confirm("Yakin ingin menghapus data ini? Tindakan ini tidak dapat dibatalkan.")) {
+                return;
+            }
+
+            fetch("{{ route('admin.deleteServis', ['id_tracking' => ':trackingId']) }}".replace(':trackingId', trackingId), {
+                    method: 'DELETE',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                        'Content-Type': 'application/json',
+                    }
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(err => {
+                            throw err;
+                        });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.success) {
+                        alert("Data berhasil dihapus.");
+                        window.location.href = "{{ route('admin.daftarservis') }}"; // redirect setelah delete
+                    } else {
+                        alert("Gagal menghapus data: " + (data.message || "Terjadi kesalahan."));
+                    }
+                })
+                .catch(error => {
+                    console.error("Error saat menghapus data:", error);
+                    alert("Terjadi kesalahan saat menghapus data. Cek konsol browser untuk detail.");
+                });
+        });
+        // --- AKHIR FUNGSI DELETE DATA ---
     </script>
 
 </body>

@@ -194,4 +194,18 @@ class AdminController extends Controller
 
         return response()->json(['success' => true]);
     }
+
+    public function deleteServis($id_tracking)
+{
+    $servis = Servis::where('id_tracking', $id_tracking)->first();
+
+    if (!$servis) {
+        return response()->json(['success' => false, 'message' => 'Data tidak ditemukan.'], 404);
+    }
+
+    $servis->delete();
+
+    return response()->json(['success' => true]);
+}
+
 }

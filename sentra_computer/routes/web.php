@@ -87,6 +87,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/lunas', [AdminController::class, 'lunas'])->name('admin.lunas');
     Route::post('/admin/update-keterangan/{id_tracking}', [AdminController::class, 'updateKeterangan'])->name('admin.updateKeterangan');
     Route::post('/admin/servis/update-detail/{id_tracking}', [AdminController::class, 'updateServisDetail'])->name('admin.updateServisDetail');
+    Route::delete('/admin/servis/{id_tracking}/delete', [AdminController::class, 'deleteServis'])->name('admin.deleteServis');
 
 });
 
