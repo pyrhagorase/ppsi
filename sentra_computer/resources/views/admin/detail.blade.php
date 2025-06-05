@@ -308,13 +308,6 @@
         }
         // --- AKHIR FUNGSI UBBAH STATUS YANG BARU ---
 
-        // Edit keterangan (perlu diimplementasikan untuk terhubung ke backend)
-        document.getElementById("editBtn").addEventListener("click", function() {
-            // Logika untuk menyimpan keterangan ke database perlu ditambahkan di sini
-            // Ini juga memerlukan permintaan AJAX (fetch POST) ke endpoint backend baru.
-            alert("Keterangan diperbarui (simulasi): \n\n" + document.getElementById("keterangan").value);
-        });
-
         // Initialize status box color based on current status (optional, but good for UI)
         document.addEventListener('DOMContentLoaded', function() {
             const currentStatus = document.getElementById('currentStatusBox').textContent.trim();
@@ -338,6 +331,81 @@
                     break;
             }
         });
+
+
+        // --- FUNGSI UNTUK UPDATE KETERANGAN ---
+        // Menargetkan tombol dengan ID "editBtn"
+        document.getElementById("editBtn").addEventListener("click", function() {
+            const keteranganValue = document.getElementById("keterangan").value;
+            const trackingId = document.getElementById("trackingId").value;
+
+            // Log untuk debugging: Pastikan nilai-nilai ini ada
+            console.log("Tombol Update Keterangan (ID: editBtn) diklik!");
+            console.log("Keterangan yang akan dikirim:", keteranganValue);
+            console.log("ID Tracking yang akan dikirim:", trackingId);
+
+            // Validasi dasar di frontend
+            if (!trackingId) {
+                alert('ID Tracking tidak ditemukan. Tidak dapat memperbarui keterangan.');
+                return;
+            }
+
+            // Permintaan AJAX menggunakan Fetch API
+            fetch("{{ route('admin.updateKeterangan', ['id_tracking' => ':trackingId']) }}".replace(':trackingId', trackingId), {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                body: JSON.stringify({ keterangan: keteranganValue })
+            })
+            .then(response => {
+                console.log('Raw server response object:', response); // Untuk melihat objek respons
+                // Baca body respons sebagai teks terlebih dahulu, karena hanya bisa dibaca sekali
+                return response.text().then(responseText => {
+                    console.log('Server response text:', responseText); // Untuk melihat respons dalam bentuk teks
+                    if (!response.ok) { // Jika respons bukan 2xx (misal 404, 500, 422)
+                        try {
+                            const errorData = JSON.parse(responseText); // Coba parse sebagai JSON
+                            console.error('Server error parsed as JSON:', errorData);
+                            throw errorData; // Lempar error JSON untuk ditangkap .catch()
+                        } catch (jsonParseError) {
+                            // Jika tidak bisa di-parse sebagai JSON (misal HTML error page)
+                            console.error('Server error (non-JSON response):', responseText);
+                            throw new Error('Server error: ' + response.status + ' ' + response.statusText + '. Detail di console browser.');
+                        }
+                    }
+                    // Jika respons OK (status 2xx), diasumsikan itu JSON sukses
+                    return JSON.parse(responseText);
+                });
+            })
+            .then(data => {
+                console.log('Parsed data (success response):', data);
+                if (data.success) {
+                    alert('Keterangan berhasil diperbarui!');
+                    // Opsional: refresh halaman atau update UI lainnya
+                    // window.location.reload(); 
+                } else {
+                    alert('Gagal memperbarui keterangan: ' + (data.message || 'Terjadi kesalahan tidak diketahui.'));
+                }
+            })
+            .catch(error => {
+                console.error('Fetch operation failed (catch block):', error);
+                let errorMessage = 'Terjadi kesalahan saat berkomunikasi dengan server.';
+                if (error.message) {
+                    errorMessage = error.message;
+                } else if (error.errors) { // Untuk error validasi dari Laravel
+                    errorMessage = 'Validasi Gagal:\n';
+                    for (const key in error.errors) {
+                        errorMessage += `- ${error.errors[key].join(', ')}\n`;
+                    }
+                } else if (typeof error === 'string') { // Jika error adalah string sederhana
+                    errorMessage = error;
+                }
+                alert(errorMessage + '\nSilakan cek console browser untuk detail.');
+            });
+        });
+        // --- AKHIR FUNGSI UPDATE KETERANGAN ---
     </script>
 
 </body>
