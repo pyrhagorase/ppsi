@@ -2,14 +2,7 @@
 
 @section('konten')
 <div class="container-fluid py-4">
-    <div class="row">
-        <!-- Back button -->
-        <div class="col-12 mb-3">
-            <a href="{{ route('user.tracking') }}" class="btn btn-outline-secondary">
-                <i class="fas fa-arrow-left me-2"></i>Kembali ke Tracking
-            </a>
-        </div>
-        
+    <div class="row">    
         <!-- Search bar - Modified to be more rounded with shadow -->
         <div class="col-12 text-end">
             <div class="input-group shadow" style="border-radius: 20px; overflow: hidden; max-width: 350px; float: right;">

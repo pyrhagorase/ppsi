@@ -95,7 +95,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             </li>
                         </ul>
                         <div class="d-grid gap-2">
-                            <a href="{{ route('user.detailservice') }}?id=${service.id_tracking}" class="btn btn-dark">Details</a>
+                            <a href="/user/detailservice/${service.id_tracking}" class="btn btn-dark">Details</a>
                             <button class="btn btn-danger py-2 remove-btn" data-tracking="${service.id_tracking}">
                                 <i class="fas fa-trash"></i> Hapus
                             </button>
