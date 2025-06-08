@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
+use App\Models\Servis;
 
 class HomeController extends Controller
 {
@@ -140,8 +141,21 @@ class HomeController extends Controller
         return view('user.homepage');    // pastikan view ini ada
     }
     
-    public function detailservice() 
+    public function detailservice($id_tracking = null) 
     {
+        // Jika ada ID tracking, ambil data servis
+        if ($id_tracking) {
+            $servis = Servis::where('id_tracking', $id_tracking)->first();
+            
+            if (!$servis) {
+                // Jika data tidak ditemukan, redirect dengan pesan error
+                return redirect()->route('user.tracking')->with('error', 'Service dengan ID Tracking tersebut tidak ditemukan');
+            }
+            
+            return view('user.detailservice', compact('servis'));
+        }
+        
+        // Jika tidak ada ID tracking, tampilkan halaman kosong atau redirect
         return view('user.detailservice');
     }
 

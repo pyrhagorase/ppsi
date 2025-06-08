@@ -46,4 +46,12 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    /**
+     * Relasi dengan MyService
+     */
+    public function myServices()
+    {
+        return $this->hasMany(MyService::class);
+    }
 }

@@ -38,10 +38,10 @@
                                 <a class="nav-link {{ request()->routeIs('user.homepage') ? 'active' : '' }}" href="{{ route('user.homepage') }}">Home</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link {{ request()->routeIs('user.userservice') ? 'active' : '' }}" href="{{ route('user.userservice') }}">Tracking Services</a>
+                                <a class="nav-link {{ request()->routeIs('user.userservice') ? 'active' : '' }}" href="{{ route('user.userservice') }}">My Services</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link {{ request()->routeIs('user.tracking') ? 'active' : '' }}" href="{{ route('user.tracking') }}">My Services</a>
+                                <a class="nav-link {{ request()->routeIs('user.tracking') ? 'active' : '' }}" href="{{ route('user.tracking') }}">Tracking Services</a>
                             </li>
                         </ul>
                     </nav>

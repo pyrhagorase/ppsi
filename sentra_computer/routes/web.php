@@ -1,13 +1,11 @@
 <?php
 
-use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ServisController;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\ResetPasswordController;
-use Illuminate\Auth\Notifications\ResetPassword;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Route;
@@ -109,7 +107,16 @@ Route::middleware(['auth', 'role:owner'])->group(function () {
 // User routes
 Route::middleware(['auth', 'role:user'])->group(function () {
     Route::get('/user/homepage', [HomeController::class, 'userDashboard'])->name('user.homepage');
-    Route::get('/user/detailservice', [HomeController::class, 'detailservice'])->name('user.detailservice');
     Route::get('/user/tracking', [HomeController::class, 'tracking'])->name('user.tracking');
     Route::get('/user/userservice', [HomeController::class, 'userservice'])->name('user.userservice');
+    Route::get('/user/detailservice', [HomeController::class, 'detailservice'])->name('user.detailservice');
+    Route::get('/user/detailservice/{id_tracking}', [HomeController::class, 'detailservice'])->name('user.detailservice.show');
+    
+    // User API routes
+    Route::post('/user/search-tracking', [UserController::class, 'searchTracking'])->name('user.search.tracking');
+    Route::post('/user/save-service', [UserController::class, 'saveToMyServices'])->name('user.save.service');
+    Route::get('/user/my-services', [UserController::class, 'getMyServices'])->name('user.my.services');
+    Route::delete('/user/remove-service', [UserController::class, 'removeFromMyServices'])->name('user.remove.service');
+    Route::post('/user/confirm-payment', [UserController::class, 'confirmPayment'])->name('user.confirm.payment');
+    //Route::get('/user/service-detail/{id_tracking}', [UserController::class, 'getServiceDetail'])->name('user.service.detail');
 });

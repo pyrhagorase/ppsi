@@ -10,8 +10,8 @@
         <div class="col-md-6">
             <div class="d-flex justify-content-end">
                 <div class="input-group" style="max-width: 300px;">
-                    <input type="text" class="form-control" placeholder="Search by ID..." aria-label="Search by ID">
-                    <button class="btn btn-primary" type="button">
+                    <input type="text" class="form-control" id="trackingInput" placeholder="Masukkan ID Tracking" aria-label="Search by ID">
+                    <button class="btn btn-primary" type="button" id="searchBtn">
                         <i class="fas fa-search"></i>
                     </button>
                 </div>
@@ -19,65 +19,171 @@
         </div>
     </div>
 
-    <div class="row g-4">
-        @for ($i = 1; $i <= 8; $i++)
-        <div class="col-md-6 col-lg-3">
-            <div class="card h-100 border-0 shadow-sm">
-                <div class="card-body">
-                    <h5 class="text-muted small mb-2">ID Tracking</h5>
-                    <h3 class="card-title fw-bold mb-3">2dW13</h3>
-                    <ul class="list-unstyled mb-3">
-                        <li class="mb-2">
-                            <i class="fas fa-user-circle text-primary me-2"></i> Arlene McCoy
-                        </li>
-                        <li class="mb-2">
-                            <i class="fas fa-calendar-alt text-primary me-2"></i> August 2, 2023
-                        </li>
-                        <li class="mb-2">
-                            <i class="fas fa-laptop text-primary me-2"></i> Laptop
-                        </li>
-                        <li class="mb-2">
-                            <i class="fas fa-clock text-primary me-2"></i> Status: 
-                            <span class="badge bg-{{ $i % 4 == 0 ? 'success' : ($i % 3 == 0 ? 'warning' : ($i % 2 == 0 ? 'info' : 'danger')) }}">
-                                {{ $i % 4 == 0 ? 'Completed' : ($i % 3 == 0 ? 'In Progress' : ($i % 2 == 0 ? 'Received' : 'Pending')) }}
-                            </span>
-                        </li>
-                    </ul>
-                    <div class="d-grid gap-2">
-                        <a href="{{route('user.detailservice')}}" class="btn btn-dark">Details</a>
-                        <button class="btn btn-danger">Hapus</button>
+    <!-- Alert untuk menampilkan pesan -->
+    <div id="alertContainer"></div>
+
+    <!-- Container untuk menampilkan hasil pencarian -->
+    <div class="row g-4" id="searchResults">
+        <!-- Card akan ditampilkan di sini setelah pencarian -->
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const searchBtn = document.getElementById('searchBtn');
+    const trackingInput = document.getElementById('trackingInput');
+    const searchResults = document.getElementById('searchResults');
+    const alertContainer = document.getElementById('alertContainer');
+
+    // Function to show alert
+    function showAlert(message, type = 'danger') {
+        alertContainer.innerHTML = `
+            <div class="alert alert-${type} alert-dismissible fade show" role="alert">
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        `;
+    }
+
+    // Function to format date
+    function formatDate(dateString) {
+        const date = new Date(dateString);
+        return date.toLocaleDateString('id-ID');
+    }
+
+    // Function to get status badge class
+    function getStatusBadgeClass(status) {
+        switch(status) {
+            case 'Menunggu': return 'bg-secondary';
+            case 'KonfirmasiBiaya': return 'bg-warning';
+            case 'Diproses': return 'bg-info';
+            case 'Selesai': return 'bg-success';
+            case 'Lunas': return 'bg-primary';
+            default: return 'bg-secondary';
+        }
+    }
+
+    // Function to create service card
+    function createServiceCard(service, isSaved = false) {
+        return `
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="text-muted small mb-2">ID Tracking</h5>
+                        <h3 class="card-title fw-bold mb-3">${service.id_tracking}</h3>
+                        <ul class="list-unstyled mb-3">
+                            <li class="mb-2">
+                                <i class="fas fa-user-circle text-primary me-2"></i>${service.nama_pelanggan}
+                            </li>
+                            <li class="mb-2">
+                                <i class="fas fa-calendar-alt text-primary me-2"></i>${formatDate(service.waktu_servis)}
+                            </li>
+                            <li class="mb-2">
+                                <i class="fas fa-laptop text-primary me-2"></i>${service.tipe_barang}
+                            </li>
+                            <li class="mb-2">
+                                <i class="fas fa-clock text-primary me-2"></i> Status: 
+                                <span class="badge ${getStatusBadgeClass(service.statusservis)}">${service.statusservis}</span>
+                            </li>
+                        </ul>
+                        <div class="d-grid gap-2">
+                            <a href="/user/detailservice/${service.id_tracking}" class="btn btn-dark">Details</a>
+                            <button class="btn btn-primary py-2 save-btn" data-tracking="${service.id_tracking}" ${isSaved ? 'disabled' : ''}>
+                                ${isSaved ? 'Tersimpan' : 'Simpan'}
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        @endfor
-    </div>
+        `;
+    }
+
+    // Search function
+    function searchService() {
+        const idTracking = trackingInput.value.trim();
+        
+        if (!idTracking) {
+            showAlert('Mohon masukkan ID Tracking');
+            return;
+        }
+
+        // Show loading
+        searchResults.innerHTML = '<div class="col-12"><div class="text-center"><i class="fas fa-spinner fa-spin"></i> Mencari...</div></div>';
+
+        fetch('{{ route("user.search.tracking") }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify({
+                id_tracking: idTracking
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                searchResults.innerHTML = createServiceCard(data.data, data.is_saved);
+                alertContainer.innerHTML = '';
+            } else {
+                searchResults.innerHTML = '';
+                showAlert(data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            searchResults.innerHTML = '';
+            showAlert('Terjadi kesalahan saat mencari service');
+        });
+    }
+
+    // Event listeners
+    searchBtn.addEventListener('click', searchService);
     
-    <div class="row mt-5">
-        <div class="col-12">
-            <nav aria-label="Page navigation">
-                <ul class="pagination justify-content-center">
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Previous">
-                            <i class="fas fa-chevron-left"></i> Previous
-                        </a>
-                    </li>
-                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item">
-                        <span class="page-link">...</span>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">67</a></li>
-                    <li class="page-item"><a class="page-link" href="#">68</a></li>
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Next">
-                            Next <i class="fas fa-chevron-right"></i>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
-    </div>
-</div>
+    trackingInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            searchService();
+        }
+    });
+
+    // Save to My Services
+    document.addEventListener('click', function(e) {
+        if (e.target.classList.contains('save-btn')) {
+            const trackingId = e.target.getAttribute('data-tracking');
+            const button = e.target;
+            
+            button.disabled = true;
+            button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Menyimpan...';
+            
+            fetch('{{ route("user.save.service") }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({
+                    id_tracking: trackingId
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    button.innerHTML = 'Tersimpan';
+                    showAlert(data.message, 'success');
+                } else {
+                    button.disabled = false;
+                    button.innerHTML = 'Simpan';
+                    showAlert(data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                button.disabled = false;
+                button.innerHTML = 'Simpan';
+                showAlert('Terjadi kesalahan saat menyimpan service');
+            });
+        }
+    });
+});
+</script>
 @endsection
