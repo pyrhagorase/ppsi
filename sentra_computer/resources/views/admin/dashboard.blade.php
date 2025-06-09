@@ -85,43 +85,94 @@
     </header>
 
     <!-- Main Content -->
+    <!-- Main Content -->
     <main class="main-content">
-        <div class="dashboard-cards">
-             <!-- Card 1 - Total Pemasukan -->
-            <div class="card card-purple">
-                <div class="card-title">Total Pemasukan</div>
-                <div class="card-value">
-                    <img src="{{ asset('icons/pemasukan.png') }}" alt="Pemasukan" style="width: 80px; height: 80px;">
+        <!-- Info Cards -->
+        <div class="info-cards">
+            <div class="info-card info-card-blue">
+                <div class="info-content">
+                    <div class="info-icon">
+                        <i class="fas fa-list"></i>
+                    </div>
+                    <div class="info-text">
+                        <h3 class="info-title">Total Daftar Servis</h3>
+                        <p class="info-value">{{ $totalServis }}</p>
+                        <span class="info-subtitle">Keseluruhan</span>
+                    </div>
                 </div>
-                <div class="card-footer">Per-Bulan</div>
             </div>
 
-            <!-- Card 2 - Servis yang diproses -->
-            <div class="card card-blue">
-                <div class="card-title">Servis yang diproses</div>
-                <div class="card-value">
-                    <img src="{{ asset('icons/diproses.png') }}" alt="Servis yang diproses" style="width: 80px; height: 80px;">
+            <div class="info-card info-card-orange">
+                <div class="info-content">
+                    <div class="info-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <div class="info-text">
+                        <h3 class="info-title">Total Servis Diproses</h3>
+                        <p class="info-value">{{ $totalDiproses }}</p>
+                        <span class="info-subtitle">Sedang Berlangsung</span>
+                    </div>
                 </div>
-                <div class="card-footer">Keseluruhan</div>
             </div>
+        </div>
 
-            <!-- Card 3 - Total Servis Selesai -->
-            <div class="card card-red">
-                <div class="card-title">Total Servis Selesai</div>
-                <div class="card-value">
-                    <img src="{{ asset('icons/selesai.png') }}" alt="Servis Selesai" style="width: 80px; height: 80px;">
-                </div>
-                <div class="card-footer">Keseluruhan</div>
-            </div>
+        <div class="nav-grid">
 
-            <!-- Card 4 - Total Servis Lunas -->
-            <div class="card card-yellow">
-                <div class="card-title">Total Servis Lunas</div>
-                <div class="card-value">
-                    <img src="{{ asset('icons/lunas.png') }}" alt="Servis Lunas" style="width: 80px; height: 80px;">
+            <!-- Pencatatan -->
+            <a href="{{route('admin.pencatatan')}}" class="nav-item">
+                <div class="nav-icon">
+                    <i class="fas fa-file-alt"></i>
                 </div>
-                <div class="card-footer">Keseluruhan</div>
-            </div>
+                <span class="nav-label">Pencatatan</span>
+            </a>
+
+            <!-- Daftar Servis -->
+            <a href="{{route('admin.daftarservis')}}" class="nav-item">
+                <div class="nav-icon">
+                    <i class="fas fa-list"></i>
+                </div>
+                <span class="nav-label">Daftar Servis</span>
+            </a>
+
+            <!-- Konfirmasi Biaya -->
+            <a href="{{route('admin.konfirmasibiaya')}}" class="nav-item">
+                <div class="nav-icon">
+                    <i class="fas fa-credit-card"></i>
+                </div>
+                <span class="nav-label">Konfirmasi Biaya</span>
+            </a>
+
+            <!-- Diproses -->
+            <a href="{{route('admin.diproses')}}" class="nav-item">
+                <div class="nav-icon">
+                    <i class="fas fa-cogs"></i>
+                </div>
+                <span class="nav-label">Diproses</span>
+            </a>
+
+            <!-- Selesai -->
+            <a href="{{route('admin.selesai')}}" class="nav-item">
+                <div class="nav-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <span class="nav-label">Selesai</span>
+            </a>
+
+            <!-- Lunas -->
+            <a href="{{route('admin.lunas')}}" class="nav-item">
+                <div class="nav-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <span class="nav-label">Lunas</span>
+            </a>
+
+            <!-- Rekap Pemasukan -->
+            <a href="{{route('admin.rekap')}}" class="nav-item">
+                <div class="nav-icon">
+                    <i class="fas fa-file-invoice"></i>
+                </div>
+                <span class="nav-label">Rekap Pemasukan</span>
+            </a>
         </div>
 
         <!-- Footer -->
@@ -135,56 +186,57 @@
         </footer>
     </main>
 
-<script>// Toggle sidebar visibility for mobile
-    document.getElementById('menu-toggle').addEventListener('click', function () {
-        document.getElementById('sidebar').classList.toggle('active');
-    });
+    <script>
+        // Toggle sidebar visibility for mobile
+        document.getElementById('menu-toggle').addEventListener('click', function() {
+            document.getElementById('sidebar').classList.toggle('active');
+        });
 
-    // Close sidebar when clicking outside on mobile
-    document.addEventListener('click', function (event) {
-        const sidebar = document.getElementById('sidebar');
-        const menuToggle = document.getElementById('menu-toggle');
+        // Close sidebar when clicking outside on mobile
+        document.addEventListener('click', function(event) {
+            const sidebar = document.getElementById('sidebar');
+            const menuToggle = document.getElementById('menu-toggle');
 
-        if (window.innerWidth <= 768 &&
-            !sidebar.contains(event.target) &&
-            !menuToggle.contains(event.target) &&
-            sidebar.classList.contains('active')) {
-            sidebar.classList.remove('active');
-        }
-    });
-
-    // Responsive adjustments
-    window.addEventListener('resize', function () {
-        const sidebar = document.getElementById('sidebar');
-        if (window.innerWidth > 768) {
-            sidebar.classList.remove('active');
-        }
-    });
-
-    // User Dropdown Menu Toggle
-    const dropdownToggle = document.getElementById('dropdown-toggle');
-    const dropdownMenu = document.getElementById('dropdown-menu');
-
-    dropdownToggle.addEventListener('click', function (event) {
-        event.stopPropagation();
-        dropdownMenu.classList.toggle('show');
-        const chevronIcon = this.querySelector('.fa-chevron-down');
-        if (chevronIcon) {
-            chevronIcon.style.transform = dropdownMenu.classList.contains('show') ? 'rotate(180deg)' : 'rotate(0)';
-        }
-    });
-
-    // Close dropdown when clicking outside
-    document.addEventListener('click', function (event) {
-        if (!dropdownToggle.contains(event.target) && !dropdownMenu.contains(event.target)) {
-            dropdownMenu.classList.remove('show');
-            const chevronIcon = dropdownToggle.querySelector('.fa-chevron-down');
-            if (chevronIcon) {
-                chevronIcon.style.transform = 'rotate(0)';
+            if (window.innerWidth <= 768 &&
+                !sidebar.contains(event.target) &&
+                !menuToggle.contains(event.target) &&
+                sidebar.classList.contains('active')) {
+                sidebar.classList.remove('active');
             }
-        }
-    });
-</script>
+        });
+
+        // Responsive adjustments
+        window.addEventListener('resize', function() {
+            const sidebar = document.getElementById('sidebar');
+            if (window.innerWidth > 768) {
+                sidebar.classList.remove('active');
+            }
+        });
+
+        // User Dropdown Menu Toggle
+        const dropdownToggle = document.getElementById('dropdown-toggle');
+        const dropdownMenu = document.getElementById('dropdown-menu');
+
+        dropdownToggle.addEventListener('click', function(event) {
+            event.stopPropagation();
+            dropdownMenu.classList.toggle('show');
+            const chevronIcon = this.querySelector('.fa-chevron-down');
+            if (chevronIcon) {
+                chevronIcon.style.transform = dropdownMenu.classList.contains('show') ? 'rotate(180deg)' : 'rotate(0)';
+            }
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!dropdownToggle.contains(event.target) && !dropdownMenu.contains(event.target)) {
+                dropdownMenu.classList.remove('show');
+                const chevronIcon = dropdownToggle.querySelector('.fa-chevron-down');
+                if (chevronIcon) {
+                    chevronIcon.style.transform = 'rotate(0)';
+                }
+            }
+        });
+    </script>
 
 </body>
 
