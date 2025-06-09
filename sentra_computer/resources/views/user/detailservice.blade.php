@@ -1,7 +1,7 @@
 @extends('user.master')
 
 @section('konten')
-<div class="container-fluid py-4">
+<div class="container py-4">
     <div class="row">    
         <!-- Search bar - Modified to be more rounded with shadow -->
         <div class="col-12 text-end">
