@@ -86,74 +86,79 @@
     </header>
 
     <main>
-    <div class="main-content">
-        <h1>Rekap Pemasukan</h1>
-        <div class="date-picker">
-            <label for="date">Enter date:</label>
-            <input type="date" id="date" placeholder="mm/dd/yyyy">
-            <button class="ok-button">OK</button>
+        <div class="main-content">
+            <form action="{{ route('admin.rekap.export') }}" method="POST" class="flex items-center gap-2">
+                @csrf
+                <label for="start_date">Dari:</label>
+                <input type="date" name="start_date" id="start_date" required>
+
+                <label for="end_date">Sampai:</label>
+                <input type="date" name="end_date" id="end_date" required>
+
+                <button type="submit" class="export-button">Export .pdf</button>
+            </form>
         </div>
-        <button class="export-button">Export .pdf</button>
     </main>
 
 
-        <!-- Footer -->
-        <footer class="footer">
-            <div class="footer-content">
-                © 2025 Sentra Computer. All rights reserved.
-            </div>
-        </footer>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            © 2025 Sentra Computer. All rights reserved.
+        </div>
+    </footer>
 
-        <script>// Toggle sidebar visibility for mobile
-            document.getElementById('menu-toggle').addEventListener('click', function () {
-                document.getElementById('sidebar').classList.toggle('active');
-            });
+    <script>
+        // Toggle sidebar visibility for mobile
+        document.getElementById('menu-toggle').addEventListener('click', function() {
+            document.getElementById('sidebar').classList.toggle('active');
+        });
 
-            // Close sidebar when clicking outside on mobile
-            document.addEventListener('click', function (event) {
-                const sidebar = document.getElementById('sidebar');
-                const menuToggle = document.getElementById('menu-toggle');
+        // Close sidebar when clicking outside on mobile
+        document.addEventListener('click', function(event) {
+            const sidebar = document.getElementById('sidebar');
+            const menuToggle = document.getElementById('menu-toggle');
 
-                if (window.innerWidth <= 768 &&
-                    !sidebar.contains(event.target) &&
-                    !menuToggle.contains(event.target) &&
-                    sidebar.classList.contains('active')) {
-                    sidebar.classList.remove('active');
-                }
-            });
+            if (window.innerWidth <= 768 &&
+                !sidebar.contains(event.target) &&
+                !menuToggle.contains(event.target) &&
+                sidebar.classList.contains('active')) {
+                sidebar.classList.remove('active');
+            }
+        });
 
-            // Responsive adjustments
-            window.addEventListener('resize', function () {
-                const sidebar = document.getElementById('sidebar');
-                if (window.innerWidth > 768) {
-                    sidebar.classList.remove('active');
-                }
-            });
+        // Responsive adjustments
+        window.addEventListener('resize', function() {
+            const sidebar = document.getElementById('sidebar');
+            if (window.innerWidth > 768) {
+                sidebar.classList.remove('active');
+            }
+        });
 
-            // User Dropdown Menu Toggle
-            const dropdownToggle = document.getElementById('dropdown-toggle');
-            const dropdownMenu = document.getElementById('dropdown-menu');
+        // User Dropdown Menu Toggle
+        const dropdownToggle = document.getElementById('dropdown-toggle');
+        const dropdownMenu = document.getElementById('dropdown-menu');
 
-            dropdownToggle.addEventListener('click', function (event) {
-                event.stopPropagation();
-                dropdownMenu.classList.toggle('show');
-                const chevronIcon = this.querySelector('.fa-chevron-down');
+        dropdownToggle.addEventListener('click', function(event) {
+            event.stopPropagation();
+            dropdownMenu.classList.toggle('show');
+            const chevronIcon = this.querySelector('.fa-chevron-down');
+            if (chevronIcon) {
+                chevronIcon.style.transform = dropdownMenu.classList.contains('show') ? 'rotate(180deg)' : 'rotate(0)';
+            }
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!dropdownToggle.contains(event.target) && !dropdownMenu.contains(event.target)) {
+                dropdownMenu.classList.remove('show');
+                const chevronIcon = dropdownToggle.querySelector('.fa-chevron-down');
                 if (chevronIcon) {
-                    chevronIcon.style.transform = dropdownMenu.classList.contains('show') ? 'rotate(180deg)' : 'rotate(0)';
+                    chevronIcon.style.transform = 'rotate(0)';
                 }
-            });
-
-            // Close dropdown when clicking outside
-            document.addEventListener('click', function (event) {
-                if (!dropdownToggle.contains(event.target) && !dropdownMenu.contains(event.target)) {
-                    dropdownMenu.classList.remove('show');
-                    const chevronIcon = dropdownToggle.querySelector('.fa-chevron-down');
-                    if (chevronIcon) {
-                        chevronIcon.style.transform = 'rotate(0)';
-                    }
-                }
-            });
-        </script>
+            }
+        });
+    </script>
 
 </body>
 

@@ -6,6 +6,7 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ServisController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\RekapController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Route;
@@ -88,6 +89,8 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::delete('/admin/servis/{id_tracking}/delete', [AdminController::class, 'deleteServis'])->name('admin.deleteServis');
     // routes/web.php
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+    Route::get('/admin/rekap', [RekapController::class, 'index'])->name('admin.rekap');
+    Route::post('/admin/rekap/export', [RekapController::class, 'exportPDF'])->name('admin.rekap.export');
 });
 
 // Owner routes
