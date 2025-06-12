@@ -76,4 +76,9 @@ class Servis extends Model
                 return $this->statusservis;
         }
     }
+
+    public function nota()
+    {
+        return $this->hasOne(Nota::class, 'id_tracking', 'id_tracking');
+    }
 }

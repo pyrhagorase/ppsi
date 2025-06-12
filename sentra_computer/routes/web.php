@@ -7,6 +7,8 @@ use App\Http\Controllers\ServisController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RekapController;
+use App\Http\Controllers\NotaController;
+use App\Http\Controllers\NotaUserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Route;
@@ -91,6 +93,8 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('/admin/rekap', [RekapController::class, 'index'])->name('admin.rekap');
     Route::post('/admin/rekap/export', [RekapController::class, 'exportPDF'])->name('admin.rekap.export');
+    // nota
+    Route::post('/nota/simpan', [NotaController::class, 'simpan'])->name('nota.simpan');
 });
 
 // Owner routes
@@ -122,4 +126,6 @@ Route::middleware(['auth', 'role:user'])->group(function () {
     Route::get('/user/my-services', [UserController::class, 'getMyServices'])->name('user.my.services');
     Route::delete('/user/remove-service', [UserController::class, 'removeFromMyServices'])->name('user.remove.service');
     Route::post('/user/confirm-payment', [UserController::class, 'confirmPayment'])->name('user.confirm.payment');
+    // Nota
+    Route::get('/user/nota/{id_tracking}/unduh', [NotaController::class, 'unduhNota'])->name('user.unduh.nota');
 });

@@ -99,6 +99,7 @@
             <div class="button-group">
                 <button class="btn-status" id="statusBtn">Status Servis</button>
                 <button class="btn-keterangan" id="editBtn">Update Keterangan</button>
+                <button class="btn-nota" id="notaBtn">Tambah Nota</button>
             </div>
 
             <div id="statusModal" class="modal-overlay">
@@ -117,6 +118,101 @@
                 </div>
             </div>
 
+            <form id="notaForm" method="POST" action="/nota/simpan">
+                @csrf
+                <!-- Modal Nota -->
+                <div id="notaModal" class="modal-overlay">
+                    <div class="nota-modal-box">
+                        <div class="nota-form">
+                            <div class="nota-header">
+                                <h3>SENTRA COMPUTER</h3>
+                                <p>Jl. Pattimura RT 06 Kel. Kenali Besar</p>
+                                <p>Kec. Alam Barajo, Kota Jambi</p>
+                                <p>WA: 08xxxxxxxx</p>
+                            </div>
+
+                            <div class="nota-form-inputs">
+                                <div style="display: flex; gap: 15px;">
+                                    <div style="flex: 1;">
+                                        <label>ID Tracking:</label>
+                                        <input type="text" name="id_tracking" value="{{ $servis->id_tracking ?? '' }}" readonly id="notaTrackingIdInput">
+                                    </div>
+                                    <div style="flex: 1;">
+                                        <label>Tanggal:</label>
+                                        <input type="date" name="tanggal" id="notaTanggal">
+                                    </div>
+                                </div>
+                                <label>Kasir:</label>
+                                <input type="text" name="kasir" id="notaKasir" value="">
+                            </div>
+
+                            <div class="nota-divider"></div>
+
+                            <div class="nota-section">
+                                <strong>ITEM:</strong>
+                                <div class="nota-items" id="notaItems">
+                                    <div class="nota-item">
+                                        <input type="text" name="items[0][nama]" placeholder="Nama barang/jasa" class="item-name">
+                                        <input type="number" name="items[0][harga]" placeholder="0" class="item-price" min="0">
+                                        <button class="remove-item-btn" onclick="removeItem(this)">Hapus</button>
+                                    </div>
+                                </div>
+                                <button class="add-item-btn" type="button" onclick="addItem()">Tambah Item</button>
+                            </div>
+
+                            <div class="nota-divider"></div>
+
+                            <div class="nota-form-inputs">
+                                <div style="display: flex; gap: 15px;">
+                                    <div style="flex: 1;">
+                                        <label>Status:</label>
+                                        <select name="status" id="notaStatus">
+                                            <option value="Lunas">Lunas</option>
+                                            <option value="Belum Lunas">Belum Lunas</option>
+                                            <option value="DP">DP</option>
+                                        </select>
+                                    </div>
+                                    <div style="flex: 1;">
+                                        <label>Metode Bayar:</label>
+                                        <select name="metode_bayar" id="notaMetodeBayar">
+                                            <option value="Cash">Cash</option>
+                                            <option value="Transfer">Transfer</option>
+                                            <option value="QRIS">QRIS</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="nota-section">
+                                <div class="nota-row nota-total">
+                                    <span>Total:</span>
+                                    <span id="notaTotal">Rp 0</span>
+                                    <input type="hidden" name="total" id="notaTotalInput">
+                                </div>
+                                <div class="nota-row">
+                                    <span>Dibayar:</span>
+                                    <input type="number" name="dibayar" id="notaDibayar" placeholder="0" min="0" style="width: 120px; text-align: right;">
+                                </div>
+                                <div class="nota-row">
+                                    <span>Kembalian:</span>
+                                    <span id="notaKembalian">Rp 0</span>
+                                    <input type="hidden" name="kembalian" id="notaKembalianInput">
+                                </div>
+                            </div>
+
+                            <div class="nota-footer">
+                                <p>Thank You For Your Trust</p>
+                                <p>We Always Provide The Best</p>
+                            </div>
+                        </div>
+
+                        <div class="modal-actions">
+                            <button class="btn-cancel" type="button" onclick="closeNotaModal()">Batal</button>
+                            <button class="btn-save" type="button" onclick="saveNota()">Simpan</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
 
             <div class="form-container">
                 <h2>Formulir Detail Servis</h2> <input type="hidden" id="trackingId" value="{{ $servis->id_tracking ?? '' }}">
@@ -526,6 +622,222 @@
                 });
         });
         // --- AKHIR FUNGSI DELETE DATA ---
+
+
+        // Fungsi Nota BTN 
+        document.getElementById('notaBtn').addEventListener('click', function() {
+            document.getElementById('notaModal').style.display = 'block';
+        });
+
+        // Fungsi untuk menutup modal
+        function closeNotaModal() {
+            document.getElementById('notaModal').style.display = 'none';
+        }
+
+        // Fungsi Nota BTN untuk menampilkan modal
+        document.getElementById('notaBtn').addEventListener('click', function() {
+            // Ambil ID Tracking dari elemen yang sudah ada di halaman (di luar modal)
+            // Pastikan input ID Tracking ini selalu ada dan memiliki ID 'trackingId'
+            const trackingIdDariServis = document.getElementById('trackingId').value;
+
+            // Set nilai ID Tracking di dalam modal nota
+            // Kita akan menambahkan ID ke input ID Tracking di modal nota
+            document.getElementById('notaTrackingIdInput').value = trackingIdDariServis;
+
+            // Opsional: Set tanggal default ke hari ini
+            const today = new Date();
+            const dd = String(today.getDate()).padStart(2, '0');
+            const mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+            const yyyy = today.getFullYear();
+            document.getElementById('notaTanggal').value = `${yyyy}-${mm}-${dd}`;
+
+            // Opsional: Set kasir default dengan email user yang login
+            // Kamu perlu memastikan `Auth::user()->email` tersedia di HTML sebagai data JavaScript
+            // Misalnya, tambahkan meta tag atau data attribute di body/header
+            // <body data-user-email="{{ Auth::user()->email }}">
+            // Atau bisa juga ambil dari span .user-email
+            const userEmail = document.querySelector('.user-email')?.textContent.trim();
+            if (userEmail) {
+                document.getElementById('notaKasir').value = userEmail;
+            } else {
+                document.getElementById('notaKasir').value = 'Admin'; // Default jika tidak ditemukan
+            }
+
+
+            document.getElementById('notaModal').style.display = 'block';
+            calculateTotal(); // Pastikan total dihitung ulang saat modal dibuka (jika ada item default)
+        });
+
+        // Fungsi untuk menutup modal
+        function closeNotaModal() {
+            document.getElementById('notaModal').style.display = 'none';
+            // Opsional: Reset form nota saat ditutup
+            document.getElementById('notaForm').reset();
+            document.getElementById('notaItems').innerHTML = `
+        <div class="nota-item">
+            <input type="text" name="items[0][nama]" placeholder="Nama barang/jasa" class="item-name">
+            <input type="number" name="items[0][harga]" placeholder="0" class="item-price" min="0">
+            <button class="remove-item-btn" type="button" onclick="removeItem(this)">Hapus</button>
+        </div>
+    `;
+            itemIndex = 1; // Reset index untuk item baru
+            calculateTotal(); // Reset total
+        }
+
+        // Global index untuk item nota
+        let itemIndex = 1;
+
+        // Fungsi untuk menambahkan item baru ke nota
+        function addItem() {
+            const container = document.getElementById('notaItems');
+            const itemDiv = document.createElement('div');
+            itemDiv.classList.add('nota-item');
+
+            itemDiv.innerHTML = `
+        <input type="text" name="items[${itemIndex}][nama]" placeholder="Nama barang/jasa" class="item-name">
+        <input type="number" name="items[${itemIndex}][harga]" placeholder="0" class="item-price" min="0">
+        <button type="button" class="remove-item-btn" onclick="removeItem(this)">Hapus</button>
+    `;
+
+            container.appendChild(itemDiv);
+            // Tambahkan event listener untuk input harga yang baru ditambahkan
+            itemDiv.querySelector('.item-price').addEventListener('input', calculateTotal);
+            itemIndex++;
+            calculateTotal(); // Hitung ulang total setelah menambah item baru
+        }
+
+        // Fungsi untuk menghapus item dari nota
+        function removeItem(button) {
+            button.parentElement.remove();
+            calculateTotal(); // agar total juga ikut update kalau item dihapus
+        }
+
+        // Fungsi untuk menghitung total dan kembalian
+        function calculateTotal() {
+            let total = 0;
+            // Iterasi semua input harga item dan jumlahkan
+            document.querySelectorAll('.nota-item .item-price').forEach(input => {
+                total += parseInt(input.value) || 0; // Pastikan konversi ke integer
+            });
+
+            // Perbarui tampilan total
+            document.getElementById('notaTotal').innerText = 'Rp ' + total.toLocaleString('id-ID');
+            // Perbarui hidden input total untuk dikirim ke backend
+            document.getElementById('notaTotalInput').value = total;
+
+            // Hitung kembalian
+            const dibayar = parseInt(document.getElementById('notaDibayar').value) || 0;
+            const kembalian = dibayar - total;
+
+            // Perbarui tampilan kembalian
+            document.getElementById('notaKembalian').innerText = 'Rp ' + kembalian.toLocaleString('id-ID');
+            // Perbarui hidden input kembalian untuk dikirim ke backend
+            document.getElementById('notaKembalianInput').value = kembalian;
+        }
+
+        // Event listener untuk update total & kembalian secara live
+        // Ini akan mendengarkan perubahan pada semua input harga item dan input "dibayar"
+        document.addEventListener('input', function(e) {
+            if (e.target.classList.contains('item-price') || e.target.id === 'notaDibayar') {
+                calculateTotal();
+            }
+        });
+
+
+        // Saat dokumen selesai dimuat, panggil calculateTotal untuk inisialisasi awal
+        document.addEventListener('DOMContentLoaded', function() {
+            // Pastikan semua input harga awal memiliki event listener
+            document.querySelectorAll('.nota-item .item-price').forEach(input => {
+                input.addEventListener('input', calculateTotal);
+            });
+            // Pastikan input dibayar memiliki event listener
+            document.getElementById('notaDibayar').addEventListener('input', calculateTotal);
+            calculateTotal(); // Hitung total awal jika ada item default di modal
+        });
+
+
+        // Save Nota (Menggunakan fetch API)
+        // Penting: Ubah tombol "Simpan" di HTML menjadi type="button" dan panggil saveNota()
+        // <button class="btn-save" type="button" onclick="saveNota()">Simpan</button>
+        function saveNota() {
+            // Ambil data dari form nota
+            const idTracking = document.getElementById('notaTrackingIdInput').value;
+            const tanggal = document.getElementById('notaTanggal').value;
+            const kasir = document.getElementById('notaKasir').value;
+            const statusPembayaran = document.getElementById('notaStatus').value; // Mengganti 'status' menjadi 'statusPembayaran' agar lebih spesifik
+            const metodeBayar = document.getElementById('notaMetodeBayar').value;
+            const total = parseInt(document.getElementById('notaTotalInput').value) || 0;
+            const dibayar = parseInt(document.getElementById('notaDibayar').value) || 0;
+            const kembalian = parseInt(document.getElementById('notaKembalianInput').value) || 0;
+            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+            const itemElements = document.querySelectorAll('.nota-item');
+            const items = Array.from(itemElements).map((el) => {
+                return {
+                    nama_item: el.querySelector('.item-name').value, // ubah ke 'nama_item'
+                    harga: parseInt(el.querySelector('.item-price').value) || 0
+                };
+            });
+
+            const dataToSend = {
+                id_tracking: idTracking,
+                tanggal: tanggal,
+                kasir: kasir,
+                status: statusPembayaran,
+                metode_bayar: metodeBayar,
+                total: total,
+                dibayar: dibayar,
+                kembalian: kembalian,
+                items: items,
+                _token: csrfToken
+            };
+
+
+            fetch('/nota/simpan', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': csrfToken,
+                    },
+                    body: JSON.stringify(dataToSend)
+                })
+                .then(async response => {
+                    const contentType = response.headers.get("content-type");
+
+                    if (!response.ok) {
+                        let errorMessage = `Error ${response.status}: ${response.statusText}`;
+
+                        if (contentType && contentType.includes("application/json")) {
+                            const errorData = await response.json();
+                            console.error('Server response JSON error:', errorData);
+                            errorMessage = errorData.message || errorMessage;
+                        } else {
+                            const errorText = await response.text();
+                            console.error('Server response non-JSON error:', errorText);
+                            errorMessage = errorText || errorMessage;
+                        }
+
+                        throw new Error(errorMessage);
+                    }
+
+                    const data = await response.json();
+                    return data;
+                })
+                .then(data => {
+                    if (data.success) {
+                        alert("Nota berhasil disimpan!");
+                        closeNotaModal();
+                        window.location.reload();
+                    } else {
+                        alert("Gagal menyimpan nota: " + (data.message || "Terjadi kesalahan."));
+                    }
+                })
+                .catch(error => {
+                    console.error('Fetch error:', error);
+                    alert("Terjadi kesalahan saat menyimpan nota: " + error.message);
+                });
+
+        }
     </script>
 
 </body>

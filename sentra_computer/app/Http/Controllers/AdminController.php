@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Servis; // Pastikan ini ada dan sesuai dengan nama model Anda
+use App\Models\Nota;
 use Carbon\Carbon; // Pastikan ini ada jika Anda menggunakan Carbon untuk format tanggal
 use Illuminate\Support\Facades\Log;
 
@@ -215,4 +216,4 @@ class AdminController extends Controller
 
         return view('admin.dashboard', compact('totalServis', 'totalDiproses'));
     }
-}
+}   

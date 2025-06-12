@@ -31,7 +31,6 @@ body {
   display: flex;
   align-items: center;
   gap: 15px;
-  /* Jarak antara toggle dan judul */
 }
 
 /* Pada tampilan mobile */
@@ -49,21 +48,16 @@ body {
 
   .header-left h1 {
     font-size: 1.2rem;
-    /* Ukuran lebih kecil di mobile */
     margin: 0;
-    /* Hilangkan margin default */
     white-space: nowrap;
-    /* Mencegah text wrapping */
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 200px;
-    /* Sesuaikan dengan kebutuhan */
   }
 
   .menu-toggle {
     font-size: 1.2rem;
     margin-right: 0;
-    /* Hilangkan margin kanan */
   }
 }
 
@@ -285,9 +279,7 @@ body {
   background: #fff;
   padding: 40px;
   margin-left: 30px;
-  /* spasi di kanan sidebar */
   margin-right: 30px;
-  /* beri jarak kanan agar tidak terlalu mepet */
   box-shadow: var(--shadow);
   border-radius: var(--border-radius);
   flex: 1;
@@ -355,7 +347,6 @@ body {
 .main-content {
   margin-left: calc(var(--sidebar-width) + 10px);
   margin-top: calc(var(--header-height) + 10px);
-  /* spasi di bawah header */
   flex: 1;
   padding: 0px;
 }
@@ -408,7 +399,6 @@ body {
   margin-right: 10px;
 }
 
-
 h2,
 h3,
 h4 {
@@ -428,29 +418,23 @@ h4 {
 
 .status-menunggu {
   background-color: #3b82f6;
-  /* biru */
 }
 
 .status-konfirmasi {
   background-color: #FFB74D;
-  /* orange */
 }
 
 .status-diproses {
   background-color: #3b82f6;
-  /* biru */
 }
 
 .status-selesai {
   background-color: #3b82f6;
-  /* hijau */
 }
 
 .status-lunas {
   background-color: #388E3C;
-  /* ungu */
 }
-
 
 textarea {
   width: 100%;
@@ -470,7 +454,8 @@ textarea {
 }
 
 .btn-status,
-.btn-keterangan {
+.btn-keterangan,
+.btn-nota {
   margin-bottom: 30px;
   padding: 10px 16px;
   font-size: 14px;
@@ -483,7 +468,8 @@ textarea {
 }
 
 .btn-status:hover,
-.btn-keterangan:hover {
+.btn-keterangan:hover,
+.btn-nota:hover {
   background-color: #004d40;
   transform: translateY(-1px);
 }
@@ -491,7 +477,6 @@ textarea {
 /* Modal overlay */
 .modal-overlay {
   display: none;
-  /* Hidden by default */
   position: fixed;
   top: 0;
   left: 0;
@@ -512,6 +497,152 @@ textarea {
   max-width: 340px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
   animation: fadeIn 0.2s ease-in-out;
+}
+
+/* Nota Modal Styles */
+.nota-modal-box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  width: 95%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.nota-form {
+  font-family: 'Courier New', monospace;
+}
+
+.nota-header {
+  text-align: center;
+  border-bottom: 2px solid #333;
+  padding-bottom: 15px;
+  margin-bottom: 20px;
+}
+
+.nota-header h3 {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.nota-header p {
+  font-size: 12px;
+  margin: 2px 0;
+  line-height: 1.4;
+}
+
+.nota-section {
+  margin-bottom: 20px;
+}
+
+.nota-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.nota-divider {
+  border-top: 1px dashed #666;
+  margin: 15px 0;
+}
+
+.nota-items {
+  margin: 15px 0;
+}
+
+.nota-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  padding: 5px 0;
+  border-bottom: 1px dotted #ccc;
+}
+
+.nota-item input[type="text"] {
+  border: 1px solid #ddd;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  width: 200px;
+}
+
+.nota-item input[type="number"] {
+  border: 1px solid #ddd;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  width: 100px;
+  text-align: right;
+}
+
+.add-item-btn {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  margin-top: 10px;
+}
+
+.remove-item-btn {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 10px;
+  margin-left: 10px;
+}
+
+.nota-total {
+  font-weight: bold;
+  font-size: 16px;
+  border-top: 2px solid #333;
+  padding-top: 10px;
+}
+
+.nota-footer {
+  text-align: center;
+  margin-top: 20px;
+  padding-top: 15px;
+  border-top: 2px solid #333;
+  font-style: italic;
+  font-size: 12px;
+}
+
+.nota-form-inputs {
+  margin-bottom: 15px;
+}
+
+.nota-form-inputs label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.nota-form-inputs input,
+.nota-form-inputs select {
+  width: 100%;
+  padding: 6px 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 12px;
+  margin-bottom: 10px;
 }
 
 /* Dropdown */
@@ -577,11 +708,27 @@ textarea {
 @media (max-width: 480px) {
 
   .modal-box,
+  .nota-modal-box,
   .status-box,
   .btn-status,
   .btn-keterangan,
   textarea {
     margin-left: 16px;
     margin-right: 16px;
+  }
+
+  .nota-modal-box {
+    padding: 20px;
+    width: 98%;
+  }
+
+  .nota-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+
+  .nota-item input[type="text"] {
+    width: 100%;
   }
 }
