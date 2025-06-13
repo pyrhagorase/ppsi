@@ -1,75 +1,126 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="utf-8">
     <title>Nota Servis</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            font-size: 11px; /* Ukuran font sedikit lebih kecil untuk kesan struk */
-            margin: 10px; /* Margin lebih kecil */
+            font-size: 11px;
+            /* Ukuran font sedikit lebih kecil untuk kesan struk */
+            margin: 10px;
+            /* Margin lebih kecil */
             color: #000;
         }
+
         .header {
             text-align: center;
-            border-bottom: 1px dashed #000; /* Garis putus-putus untuk kesan struk */
-            padding-bottom: 5px; /* Padding lebih kecil */
-            margin-bottom: 10px; /* Margin lebih kecil */
+            border-bottom: 1px dashed #000;
+            /* Garis putus-putus untuk kesan struk */
+            padding-bottom: 5px;
+            /* Padding lebih kecil */
+            margin-bottom: 10px;
+            /* Margin lebih kecil */
         }
+
         .header h2 {
             margin: 0;
-            font-size: 16px; /* Ukuran font header lebih kecil */
+            font-size: 16px;
+            /* Ukuran font header lebih kecil */
         }
+
         .header p {
-            margin: 1px 0; /* Margin lebih kecil */
-            font-size: 10px; /* Ukuran font detail header lebih kecil */
+            margin: 1px 0;
+            /* Margin lebih kecil */
+            font-size: 10px;
+            /* Ukuran font detail header lebih kecil */
         }
-        .info-table, .item-table, .totals-table {
+
+        .info-table,
+        .item-table,
+        .totals-table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 10px; /* Margin lebih kecil */
+            margin-bottom: 10px;
+            /* Margin lebih kecil */
         }
+
         .info-table td {
-            padding: 2px; /* Padding lebih kecil */
+            padding: 2px;
+            /* Padding lebih kecil */
             vertical-align: top;
         }
-        .item-table th, .item-table td {
-            border: none; /* Hilangkan border penuh */
-            border-bottom: 1px dashed #DDD; /* Garis putus-putus di bawah setiap baris item */
-            padding: 4px; /* Padding lebih kecil */
+
+        .item-table th,
+        .item-table td {
+            border: none;
+            /* Hilangkan border penuh */
+            border-bottom: 1px dashed #DDD;
+            /* Garis putus-putus di bawah setiap baris item */
+            padding: 4px;
+            /* Padding lebih kecil */
         }
+
         .item-table th {
-            background-color: transparent; /* Hilangkan background abu-abu */
-            text-align: left; /* Biarkan rata kiri untuk No dan Nama Item */
+            background-color: transparent;
+            /* Hilangkan background abu-abu */
+            text-align: left;
+            /* Biarkan rata kiri untuk No dan Nama Item */
         }
-        .item-table th.right, .item-table td.right {
-            text-align: right; /* Tetap rata kanan untuk harga */
+
+        .item-table th.right,
+        .item-table td.right {
+            text-align: right;
+            /* Tetap rata kanan untuk harga */
         }
+
         .totals-table td {
-            padding: 2px; /* Padding lebih kecil */
-            border-top: 1px dashed #000; /* Garis putus-putus di atas total */
-            border-bottom: 1px dashed #000; /* Garis putus-putus di bawah kembalian */
+            padding: 2px;
+            /* Padding lebih kecil */
+            border-top: 1px dashed #000;
+            /* Garis putus-putus di atas total */
+            border-bottom: 1px dashed #000;
+            /* Garis putus-putus di bawah kembalian */
         }
+
         .totals-table .label {
             width: 70%;
             font-weight: bold;
         }
-        .signature {
-            margin-top: 15px; /* Margin lebih kecil */
-            text-align: center; /* Rata tengah untuk footer */
-            font-size: 10px; /* Ukuran font footer lebih kecil */
+
+        .totals-table tr td:last-child {
+            /* Target the last td in each row of totals-table */
+            text-align: right;
+            /* Ensure it's right-aligned */
+            font-weight: bold;
+            /* Keep the numbers bold */
         }
+
+        .signature {
+            margin-top: 15px;
+            /* Margin lebih kecil */
+            text-align: center;
+            /* Rata tengah untuk footer */
+            font-size: 10px;
+            /* Ukuran font footer lebih kecil */
+        }
+
         /* Style baru untuk footer */
         .nota-footer {
             text-align: center;
-            margin-top: 20px; /* Jarak dari konten atas */
+            margin-top: 20px;
+            /* Jarak dari konten atas */
             font-size: 10px;
         }
+
         .nota-footer p {
-            margin: 2px 0; /* Margin antar baris pesan */
+            margin: 2px 0;
+            /* Margin antar baris pesan */
         }
     </style>
 </head>
+
 <body>
 
     <div class="header">
@@ -134,4 +185,5 @@
     </div>
 
 </body>
+
 </html>
