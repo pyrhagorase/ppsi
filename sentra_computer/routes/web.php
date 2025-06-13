@@ -9,6 +9,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\RekapController;
 use App\Http\Controllers\NotaController;
 use App\Http\Controllers\NotaUserController;
+use App\Http\Controllers\OwnerController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Route;
@@ -113,6 +114,8 @@ Route::middleware(['auth', 'role:owner'])->group(function () {
     Route::get('/owner/akunpelanggan', [HomeController::class, 'ownerAkunPelanggan'])->name('owner.akunpelanggan');
     Route::get('/owner/tambahadmin', [HomeController::class, 'ownerTambahAdmin'])->name('owner.tambahadmin');
     Route::get('/owner/ulasan', [HomeController::class, 'ownerUlasan'])->name('owner.ulasan');
+    // dashboard
+    Route::get('/owner/dashboard', [OwnerController::class, 'dashboard'])->name('owner.dashboard');
 });
 
 // User routes

@@ -89,7 +89,6 @@
     </header>
 
     <!-- Main Content -->
-    <!-- Main Content -->
     <main class="main-content">
         <!-- Info Cards -->
         <div class="info-cards">
@@ -183,7 +182,7 @@
                 <div class="nav-icon">
                     <i class="fas fa-comment-dots"></i>
                 </div>
-                <span class="nav-label">Rekap Pemasukan</span>
+                <span class="nav-label">Kelola Ulasan</span>
             </a>
         </div>
 

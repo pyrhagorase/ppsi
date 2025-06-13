@@ -96,44 +96,118 @@
         </div>
     </header>
 
-    <!-- Main Content -->
+   <!-- Main Content -->
     <main class="main-content">
-        <div class="dashboard-cards">
-            <!-- Card 1 - Total Pemasukan -->
-            <div class="card card-purple">
-                <div class="card-title">Total Pemasukan</div>
-                <div class="card-value">
-                    <img src="{{ asset('icons/pemasukan.png') }}" alt="Pemasukan" style="width: 80px; height: 80px;">
+        <!-- Info Cards -->
+        <div class="info-cards">
+            <div class="info-card info-card-blue">
+                <div class="info-content">
+                    <div class="info-icon">
+                        <i class="fas fa-list"></i>
+                    </div>
+                    <div class="info-text">
+                        <h3 class="info-title">Total Daftar Servis</h3>
+                        <p class="info-value">{{ $totalServis }}</p>
+                        <span class="info-subtitle">Keseluruhan</span>
+                    </div>
                 </div>
-                <div class="card-footer">Per-Bulan</div>
             </div>
 
-            <!-- Card 2 - Servis yang diproses -->
-            <div class="card card-blue">
-                <div class="card-title">Servis yang diproses</div>
-                <div class="card-value">
-                    <img src="{{ asset('icons/diproses.png') }}" alt="Servis yang diproses" style="width: 80px; height: 80px;">
+            <div class="info-card info-card-orange">
+                <div class="info-content">
+                    <div class="info-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <div class="info-text">
+                        <h3 class="info-title">Total Servis Diproses</h3>
+                        <p class="info-value">{{ $totalDiproses }}</p>
+                        <span class="info-subtitle">Sedang Berlangsung</span>
+                    </div>
                 </div>
-                <div class="card-footer">Keseluruhan</div>
             </div>
+        </div>
 
-            <!-- Card 3 - Total Servis Selesai -->
-            <div class="card card-red">
-                <div class="card-title">Total Servis Selesai</div>
-                <div class="card-value">
-                    <img src="{{ asset('icons/selesai.png') }}" alt="Servis Selesai" style="width: 80px; height: 80px;">
-                </div>
-                <div class="card-footer">Keseluruhan</div>
-            </div>
+        <div class="nav-grid">
 
-            <!-- Card 4 - Total Servis Lunas -->
-            <div class="card card-yellow">
-                <div class="card-title">Total Servis Lunas</div>
-                <div class="card-value">
-                    <img src="{{ asset('icons/lunas.png') }}" alt="Servis Lunas" style="width: 80px; height: 80px;">
+            <!-- Pencatatan -->
+            <a href="{{route('owner.pencatatan')}}" class="nav-item">
+                <div class="nav-icon">
+                    <i class="fas fa-file-alt"></i>
                 </div>
-                <div class="card-footer">Keseluruhan</div>
-            </div>
+                <span class="nav-label">Pencatatan</span>
+            </a>
+
+            <!-- Daftar Servis -->
+            <a href="{{route('owner.daftarservis')}}" class="nav-item">
+                <div class="nav-icon">
+                    <i class="fas fa-list"></i>
+                </div>
+                <span class="nav-label">Daftar Servis</span>
+            </a>
+
+            <!-- Konfirmasi Biaya -->
+            <a href="{{route('owner.konfirmasibiaya')}}" class="nav-item">
+                <div class="nav-icon">
+                    <i class="fas fa-credit-card"></i>
+                </div>
+                <span class="nav-label">Konfirmasi Biaya</span>
+            </a>
+
+            <!-- Diproses -->
+            <a href="{{route('owner.diproses')}}" class="nav-item">
+                <div class="nav-icon">
+                    <i class="fas fa-cogs"></i>
+                </div>
+                <span class="nav-label">Diproses</span>
+            </a>
+
+            <!-- Selesai -->
+            <a href="{{route('owner.selesai')}}" class="nav-item">
+                <div class="nav-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <span class="nav-label">Selesai</span>
+            </a>
+
+            <!-- Lunas -->
+            <a href="{{route('owner.lunas')}}" class="nav-item">
+                <div class="nav-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <span class="nav-label">Lunas</span>
+            </a>
+
+            <!-- Rekap Pemasukan -->
+            <a href="{{route('owner.rekap')}}" class="nav-item">
+                <div class="nav-icon">
+                    <i class="fas fa-file-invoice"></i>
+                </div>
+                <span class="nav-label">Rekap Pemasukan</span>
+            </a>
+
+            <!-- Kelola Ulasan dan Rating -->
+            <a href="{{route('owner.ulasan')}}" class="nav-item">
+                <div class="nav-icon">
+                    <i class="fas fa-comment-dots"></i>
+                </div>
+                <span class="nav-label">Kelola Ulasan</span>
+            </a>
+
+            <!-- Akun Pelanggan -->
+            <a href="{{route('owner.akunpelanggan')}}" class="nav-item">
+                <div class="nav-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <span class="nav-label">Akun Pelanggan</span>
+            </a>
+
+            <!-- Tambah Admin -->
+            <a href="{{route('owner.tambahadmin')}}" class="nav-item">
+                <div class="nav-icon">
+                    <i class="fas fa-user-plus"></i>
+                </div>
+                <span class="nav-label">Tambah Admin</span>
+            </a>
         </div>
 
         <!-- Footer -->
