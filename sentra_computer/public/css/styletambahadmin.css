@@ -276,19 +276,32 @@ body {
     }
 }
 
-  /* Footer */
-  .footer {
-    background-color: #000;
-    color: #fff;
-    padding: 20px 0;
+ /* --- Footer --- */
+.footer {
+    /* Menggunakan nilai konkret dari stylerekap.css */
+    background-color: #333; /* Warna teks dark dari stylerekap.css */
+    color: #e0e0e0;
+    padding: 20px 0; /* Setara dengan calc(2.5 * var(--spacing-unit)) */
     text-align: center;
-    width: 100%;
-    margin-top: auto;
+    /* Penyesuaian lebar dan margin untuk sejajar dengan main content */
+    width: calc(100% - 250px); /* 250px adalah --sidebar-width */
+    margin-left: 250px; /* 250px adalah --sidebar-width */
+    transition: margin-left 0.3s ease;
+    font-size: 14px;
+    margin-top: auto; /* Penting: Mendorong footer ke bagian bawah halaman */
 }
 
 .footer-content {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 20px;
-    font-size: 14px;
+    padding: 0 20px; /* Setara dengan calc(2.5 * var(--spacing-unit)) */
+}
+
+/* --- Mobile Responsive untuk Footer --- */
+@media (max-width: 768px) {
+    .footer {
+        margin-left: 0; /* Di mobile, footer mengambil seluruh lebar */
+        width: 100%;
+        padding: 16px 0; /* Setara dengan calc(2 * var(--spacing-unit)) */
+    }
 }

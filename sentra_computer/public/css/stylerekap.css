@@ -128,9 +128,8 @@ body {
 }
 
 .header h1 {
-    font-size: 26px;
-    color: var(--text-dark);
-    font-weight: 600;
+    font-size: 24px;
+    color: #333;
 }
 
 .user-profile {
@@ -148,7 +147,7 @@ body {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background-color: var(--primary-color);
+    background-color: #000;
     display: flex;
     align-items: center;
     justify-content: center;
