@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\OwnerServisController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ServisController;
 use App\Http\Controllers\AdminController;
@@ -103,8 +104,12 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 // Owner routes
 Route::middleware(['auth', 'role:owner'])->group(function () {
     Route::get('/owner/dashboard', [HomeController::class, 'ownerDashboard'])->name('owner.dashboard');
+    // pencatatan
     Route::get('/owner/pencatatan', [HomeController::class, 'ownerPencatatan'])->name('owner.pencatatan');
+    Route::post('/servis/store', [OwnerServisController::class, 'store'])->name('servis.store');
     Route::get('/owner/daftarservis', [HomeController::class, 'ownerDaftarServis'])->name('owner.daftarservis');
+    Route::get('/owner/daftarservis', [OwnerServisController::class, 'index'])->name('owner.daftarservis');
+
     Route::get('/owner/konfirmasibiaya', [HomeController::class, 'ownerKonfirmasiBiaya'])->name('owner.konfirmasibiaya');
     Route::get('/owner/diproses', [HomeController::class, 'ownerDiproses'])->name('owner.diproses');
     Route::get('/owner/selesai', [HomeController::class, 'ownerSelesai'])->name('owner.selesai');
@@ -116,6 +121,17 @@ Route::middleware(['auth', 'role:owner'])->group(function () {
     Route::get('/owner/ulasan', [HomeController::class, 'ownerUlasan'])->name('owner.ulasan');
     // dashboard
     Route::get('/owner/dashboard', [OwnerController::class, 'dashboard'])->name('owner.dashboard');
+    // detail servis
+    Route::get('/owner/detail/{id_tracking}', [OwnerServisController::class, 'showDetail'])->name('owner.detail');
+    Route::post('/owner/servis/update-status/{id_tracking}', [OwnerServisController::class, 'updateServisStatus'])->name('owner.updateServisStatus');
+    Route::get('/owner/konfirmasibiaya', [OwnerController::class, 'ownerKonfirmasiBiaya'])->name('owner.konfirmasibiaya');
+    Route::get('/owner/diproses', [OwnerController::class, 'diproses'])->name('owner.diproses');
+    Route::get('/owner/selesai', [OwnerController::class, 'selesai'])->name('owner.selesai');
+    Route::get('/owner/lunas', [OwnerController::class, 'lunas'])->name('owner.lunas');
+    Route::post('/owner/update-keterangan/{id_tracking}', [OwnerController::class, 'updateKeterangan'])->name('owner.updateKeterangan');
+    Route::post('/owner/servis/update-detail/{id_tracking}', [OwnerController::class, 'updateServisDetail'])->name('owner.updateServisDetail');
+    Route::delete('/owner/servis/{id_tracking}/delete', [OwnerController::class, 'deleteServis'])->name('owner.deleteServis');
+     Route::post('/nota/simpan', [NotaController::class, 'simpan'])->name('nota.simpan');
 });
 
 // User routes

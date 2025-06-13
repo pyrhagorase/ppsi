@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>konfirmasi Biaya Owner</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../css/stylekonfirmasibiaya.css">
+    <link rel="stylesheet" href="{{ asset('css/stylekonfirmasibiaya.css') }}"> </head>
 </head>
 
 <body>
@@ -98,15 +98,16 @@
     </header>
 
     <main>
-        <!-- Search bar -->
         <div class="search-container">
             <span class="search-icon">
                 <i class="fas fa-search"></i>
             </span>
-            <input type="text" class="search-input" placeholder="Search...">
+            <form action="{{ route('owner.konfirmasibiaya') }}" method="GET" class="flex-grow">
+                <input type="text" name="search" class="search-input" placeholder="Search..." value="{{ request('search') }}">
+                </form>
         </div>
 
-        <!-- Table -->
+         <!-- Table -->
         <section class="flex-1 px-6 pb-12 overflow-x-auto">
             <table class="w-full border-collapse text-sm text-left text-gray-600">
                 <thead>
@@ -131,73 +132,73 @@
                         </th>
                     </tr>
                 </thead>
-                <tr class="border-b border-gray-100">
-                    <td class="py-3 pr-6 whitespace-nowrap text-gray-400">
-                        F1er45
-                    </td>
-                    <td class="py-3 pr-6 whitespace-nowrap text-gray-700 font-medium">
-                        Crocodilo
-                    </td>
-                    <td class="py-3 pr-6 whitespace-nowrap text-gray-400">
-                        Desember 9, 2025
-                    </td>
-                    <td class="py-3 pr-6 whitespace-nowrap">
-                        Laptop
-                    </td>
-                    <td class="py-3 pr-6 whitespace-nowrap">
-                        <span
-                            class="inline-block bg-yellow-400 text-white text-xs font-semibold rounded-full px-3 py-1 select-none">
-                            Konfirmasi Biaya
-                        </span>
-                    </td>
-                    <td class="py-3 whitespace-nowrap text-gray-400 cursor-pointer">
-                        <a href="{{route('owner.detail')}}">
-                        <i class="fas fa-ellipsis-h">
-                        </i>
-                        </a>
-                    </td>
-                </tr>
-                <!-- Baris 2-5 - Kosong -->
-                <tr class="border-b border-gray-100">
-                    <td colspan="6" class="py-3 pr-6 text-center text-gray-300">-</td>
-                </tr>
-                <tr class="border-b border-gray-100">
-                    <td colspan="6" class="py-3 pr-6 text-center text-gray-300">-</td>
-                </tr>
-                <tr class="border-b border-gray-100">
-                    <td colspan="6" class="py-3 pr-6 text-center text-gray-300">-</td>
-                </tr>
-                <tr class="border-b border-gray-100">
-                    <td colspan="6" class="py-3 pr-6 text-center text-gray-300">-</td>
-                </tr>
-                <tr class="border-b border-gray-100">
-                    <td colspan="6" class="py-3 pr-6 text-center text-gray-300">-</td>
-                </tr>
-                <tr class="border-b border-gray-100">
-                    <td colspan="6" class="py-3 pr-6 text-center text-gray-300">-</td>
-                </tr>
+                <tbody>
+                    @forelse($servis as $item)
+                    <tr class="border-b border-gray-100">
+                        <td class="py-3 pr-6 whitespace-nowrap text-gray-700 font-medium">
+                            {{ $item->id_tracking }}
+                        </td>
+                        <td class="py-3 pr-6 whitespace-nowrap text-gray-700 font-medium">
+                            {{ $item->nama_pelanggan }}
+                        </td>
+                        <td class="py-3 pr-6 whitespace-nowrap text-gray-400">
+                            {{ \Carbon\Carbon::parse($item->waktu_servis)->format('F j, Y') }}
+                        </td>
+                        <td class="py-3 pr-6 whitespace-nowrap">
+                            {{ $item->tipe_barang }}
+                        </td>
+                        <td class="py-3 pr-6 whitespace-nowrap">
+                            <span class="inline-block bg-yellow-400 text-white text-xs font-semibold rounded-full px-3 py-1 select-none">
+                                {{ $item->statusservis }}
+                            </span>
+                        </td>
+                        <td class="py-3 whitespace-nowrap text-gray-400 cursor-pointer">
+                            <a href="{{ route('owner.detail', ['id_tracking' => $item->id_tracking]) }}">
+                                <i class="fas fa-ellipsis-h"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    @empty
+                    <tr>
+                        <td colspan="6" class="py-3 pr-6 text-center text-gray-500">Tidak ada servis dengan status "Konfirmasi Biaya".</td>
+                    </tr>
+                    @endforelse
                 </tbody>
             </table>
         </section>
 
         <!-- Pagination -->
         <div class="pagination mt-6 flex justify-center space-x-2 text-sm">
-            <button class="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded">Previous</button>
-            <button class="px-3 py-1 bg-blue-500 text-white rounded">1</button>
-            <button class="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded">2</button>
-            <button class="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded">3</button>
-            <button class="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded">Next</button>
+            @if($servis->onFirstPage())
+            <span class="px-3 py-1 bg-gray-200 rounded cursor-not-allowed">Previous</span>
+            @else
+            <a href="{{ $servis->previousPageUrl() . (request('search') ? '&search=' . request('search') : '') }}" class="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded">Previous</a>
+            @endif
+
+            @foreach ($servis->getUrlRange(max(1, $servis->currentPage() - 1), min($servis->lastPage(), $servis->currentPage() + 1)) as $page => $url)
+            @if ($page == $servis->currentPage())
+            <span class="px-3 py-1 bg-blue-500 text-white rounded">{{ $page }}</span>
+            @else
+            <a href="{{ $url . (request('search') ? '&search=' . request('search') : '') }}" class="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded">{{ $page }}</a>
+            @endif
+            @endforeach
+
+            @if($servis->hasMorePages())
+            <a href="{{ $servis->nextPageUrl() . (request('search') ? '&search=' . request('search') : '') }}" class="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded">Next</a>
+            @else
+            <span class="px-3 py-1 bg-gray-200 rounded cursor-not-allowed">Next</span>
+            @endif
         </div>
     </main>
 
-    <!-- Footer -->
     <footer class="footer">
         <div class="footer-content">
             © 2025 Sentra Computer. All rights reserved.
         </div>
     </footer>
 
-    <script>// Toggle sidebar visibility for mobile
+    <script>
+        // Toggle sidebar visibility for mobile
         document.getElementById('menu-toggle').addEventListener('click', function () {
             document.getElementById('sidebar').classList.toggle('active');
         });
@@ -249,5 +250,4 @@
     </script>
 
 </body>
-
 </html>

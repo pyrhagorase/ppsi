@@ -95,7 +95,7 @@
             <span class="search-icon">
                 <i class="fas fa-search"></i>
             </span>
-            <form action="{{ route('admin.selesai') }}" method="GET" class="flex-grow">
+            <form action="{{ route('admin.lunas') }}" method="GET" class="flex-grow">
                 <input type="text" name="search" class="search-input" placeholder="Search..." value="{{ request('search') }}">
                 </form>
         </div>
