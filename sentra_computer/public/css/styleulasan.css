@@ -1,0 +1,323 @@
+:root {
+    --primary-color: #0C7FDA; /* Biru cerah */
+    --accent-color: #dc3545; /* Merah untuk tombol export */
+    --background-light: #f5f5f5;
+    --background-card: #ffffff;
+    --text-dark: #333;
+    --text-medium: #666;
+    --text-light: #999;
+    --border-color: #e0e0e0;
+    --shadow-light: 0 4px 6px rgba(0, 0, 0, 0.05);
+    --shadow-medium: 0 8px 16px rgba(0, 0, 0, 0.1);
+    --border-radius-small: 6px;
+    --border-radius-medium: 10px;
+    --spacing-unit: 8px; /* Untuk konsistensi padding/margin */
+
+    /* Existing variables */
+    --sidebar-width: 250px;
+    --header-height: 70px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Menggunakan Inter sebagai font modern */
+}
+
+body {
+    display: flex;
+    flex-direction: column; /* Ini penting! Membuat body menjadi flex container */
+    min-height: 100vh; /* Pastikan body setidaknya setinggi viewport */
+    background-color: var(--background-light);
+    color: var(--text-dark);
+}
+
+/* --- Sidebar --- (No significant changes needed here for footer) */
+.sidebar {
+    width: var(--sidebar-width);
+    background-color: var(--background-card);
+    box-shadow: var(--shadow-light);
+    position: fixed; /* Sidebar tetap fixed */
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 100;
+    transition: transform 0.3s ease;
+}
+
+.sidebar-logo {
+    display: flex;
+    align-items: center;
+    padding: calc(2 * var(--spacing-unit)) calc(2.5 * var(--spacing-unit));
+    border-bottom: 1px solid var(--border-color);
+}
+
+.sidebar-logo .logo-icon {
+    color: var(--primary-color);
+    background-color: #e6f0fa;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    margin-right: var(--spacing-unit);
+}
+
+.sidebar-logo span {
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+.sidebar-menu {
+    padding: calc(2.5 * var(--spacing-unit)) 0;
+}
+
+.menu-item {
+    padding: calc(1.5 * var(--spacing-unit)) calc(2.5 * var(--spacing-unit));
+    display: flex;
+    align-items: center;
+    color: var(--text-medium);
+    transition: all 0.2s ease-in-out;
+    text-decoration: none;
+    font-size: 15px;
+}
+
+.menu-item:hover {
+    background-color: #f0f4f7;
+    color: var(--primary-color);
+}
+
+.menu-item.active {
+    background-color: #eaf1f7;
+    color: var(--primary-color);
+    font-weight: 600;
+    border-left: 4px solid var(--primary-color);
+}
+
+.menu-item i {
+    margin-right: var(--spacing-unit);
+    width: 20px;
+    text-align: center;
+}
+
+/* --- Header --- */
+.header {
+    position: fixed; /* Header tetap fixed */
+    top: 0;
+    right: 0;
+    left: var(--sidebar-width);
+    height: var(--header-height);
+    background-color: var(--background-card);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 calc(2.5 * var(--spacing-unit));
+    box-shadow: var(--shadow-light);
+    z-index: 99;
+    transition: left 0.3s ease;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: calc(1.5 * var(--spacing-unit));
+}
+
+.header h1 {
+    font-size: 26px;
+    color: var(--text-dark);
+    font-weight: 600;
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+}
+
+.user-email {
+    margin-right: var(--spacing-unit);
+    color: var(--text-dark);
+    font-size: 15px;
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 600;
+}
+
+.user-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: var(--spacing-unit) calc(0.5 * var(--spacing-unit));
+    border-radius: var(--border-radius-small);
+    transition: background-color 0.2s ease;
+}
+
+.dropdown-toggle:hover {
+    background-color: #f0f0f0;
+}
+
+.dropdown-toggle i {
+    color: var(--text-medium);
+    margin-left: calc(0.5 * var(--spacing-unit));
+    transition: transform 0.3s;
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+    position: absolute;
+    top: calc(100% + var(--spacing-unit));
+    right: 0;
+    background-color: var(--background-card);
+    border-radius: var(--border-radius-medium);
+    box-shadow: var(--shadow-medium);
+    min-width: 180px;
+    overflow: hidden;
+    z-index: 1000;
+    display: none;
+    border: 1px solid var(--border-color);
+}
+
+.dropdown-menu.show {
+    display: block;
+    animation: fadeIn 0.2s ease forwards;
+}
+
+.dropdown-item {
+    padding: calc(1.2 * var(--spacing-unit)) calc(1.5 * var(--spacing-unit));
+    display: flex;
+    align-items: center;
+    color: var(--text-dark);
+    text-decoration: none;
+    transition: background-color 0.15s ease;
+    font-size: 14px;
+}
+
+.dropdown-item:hover {
+    background-color: #f6f8fa;
+}
+
+.dropdown-item i {
+    margin-right: var(--spacing-unit);
+    width: 18px;
+    text-align: center;
+    color: var(--text-medium);
+    font-size: 15px;
+}
+
+.dropdown-divider {
+    height: 1px;
+    background-color: var(--border-color);
+    margin: 0;
+}
+
+/* Menu Toggle (Mobile) */
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 26px;
+    cursor: pointer;
+    color: var(--text-dark);
+}
+
+/* --- Main Content Area --- */
+main {
+    flex-grow: 1; /* Ini sangat penting! Membuat main mengisi semua ruang yang tersedia */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: calc(var(--header-height) + 40px) 20px 40px; /* Padding top disesuaikan dengan header */
+    /* min-height dan width dihapus dari sini karena flex-grow akan menanganinya */
+    margin-left: var(--sidebar-width);
+    transition: margin-left 0.3s ease;
+    width: calc(100% - var(--sidebar-width));
+}
+
+
+/* --- Footer --- */
+.footer {
+    background-color: var(--text-dark);
+    color: #e0e0e0;
+    padding: calc(2.5 * var(--spacing-unit)) 0;
+    text-align: center;
+    width: calc(100% - var(--sidebar-width));
+    margin-left: var(--sidebar-width);
+    transition: margin-left 0.3s ease;
+    font-size: 14px;
+    /* margin-top: auto; */ /* Hapus ini karena flex-grow pada main sudah menangani */
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 calc(2.5 * var(--spacing-unit));
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Mobile Responsive --- */
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%);
+        box-shadow: none;
+    }
+
+    .sidebar.active {
+        transform: translateX(0);
+        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.15);
+    }
+
+    .header {
+        left: 0;
+        padding: 0 15px;
+    }
+
+    .header-left h1 {
+        font-size: 1.3rem;
+        margin: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 180px;
+    }
+
+    .menu-toggle {
+        display: block;
+        margin-right: 0;
+        font-size: 1.4rem;
+    }
+
+    .user-email {
+        display: none;
+    }
+
+    .footer {
+        margin-left: 0;
+        width: 100%;
+        padding: 15px 0;
+    }
+}

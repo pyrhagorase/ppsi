@@ -112,6 +112,7 @@ Route::middleware(['auth', 'role:owner'])->group(function () {
     Route::get('/owner/detail', [HomeController::class, 'ownerDetail'])->name('owner.detail');
     Route::get('/owner/akunpelanggan', [HomeController::class, 'ownerAkunPelanggan'])->name('owner.akunpelanggan');
     Route::get('/owner/tambahadmin', [HomeController::class, 'ownerTambahAdmin'])->name('owner.tambahadmin');
+    Route::get('/owner/ulasan', [HomeController::class, 'ownerUlasan'])->name('owner.ulasan');
 });
 
 // User routes

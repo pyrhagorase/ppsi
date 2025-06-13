@@ -122,6 +122,10 @@ class HomeController extends Controller
         return view('owner.rekap');  // pastikan view ini ada
     }
 
+     public function ownerUlasan()
+    {
+        return view('owner.ulasan');  // pastikan view ini ada
+    }
        public function ownerDetail()
     {
         return view('owner.detail');  // pastikan view ini ada

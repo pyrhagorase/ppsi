@@ -53,6 +53,10 @@
                 <i class="fas fa-file-invoice"></i>
                 Rekap Pemasukan
             </a>
+             <a href="{{route('owner.ulasan')}}" class="menu-item">
+                <i class="fas fa-comment-dots"></i>
+                Kelola Ulasan
+            </a>
             <a href="{{route('owner.akunpelanggan')}}" class="menu-item">
                 <i class="fas fa-users"></i>
                 Akun Pelanggan

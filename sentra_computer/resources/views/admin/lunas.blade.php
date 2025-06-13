@@ -153,7 +153,7 @@
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="6" class="py-3 pr-6 text-center text-gray-500">Tidak ada servis dengan status "Konfirmasi Biaya".</td>
+                        <td colspan="6" class="py-3 pr-6 text-center text-gray-500">Tidak ada servis dengan status "Lunas".</td>
                     </tr>
                     @endforelse
                 </tbody>

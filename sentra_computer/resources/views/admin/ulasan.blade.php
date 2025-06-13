@@ -5,9 +5,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rekap Admin</title>
+    <title>Kelola Ulasan Admin</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../css/stylerekap.css">
+    <link rel="stylesheet" href="../css/styleulasan.css">
 </head>
 
 <body>
@@ -65,7 +65,7 @@
             <button class="menu-toggle" id="menu-toggle">
                 <i class="fas fa-bars"></i>
             </button>
-            <h1>Rekap Pemasukan</h1>
+            <h1>Kelola Ulasan Pelanggan</h1>
         </div>
         <div class="user-profile">
             <span class="user-email">{{Auth::user()->email}}</span>
