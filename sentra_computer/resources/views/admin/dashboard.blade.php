@@ -51,6 +51,10 @@
                 <i class="fas fa-file-invoice"></i>
                 Rekap Pemasukan
             </a>
+            <a href="{{route('admin.ulasan')}}" class="menu-item">
+                <i class="fas fa-comment-dots"></i>
+                Kelola Ulasan
+            </a>
         </nav>
     </aside>
 
@@ -170,6 +174,14 @@
             <a href="{{route('admin.rekap')}}" class="nav-item">
                 <div class="nav-icon">
                     <i class="fas fa-file-invoice"></i>
+                </div>
+                <span class="nav-label">Rekap Pemasukan</span>
+            </a>
+
+            <!-- Kelola Ulasan dan Rating -->
+            <a href="{{route('admin.ulasan')}}" class="nav-item">
+                <div class="nav-icon">
+                    <i class="fas fa-comment-dots"></i>
                 </div>
                 <span class="nav-label">Rekap Pemasukan</span>
             </a>

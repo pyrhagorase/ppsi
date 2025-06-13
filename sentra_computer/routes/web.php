@@ -79,6 +79,8 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/selesai', [HomeController::class, 'adminSelesai'])->name('admin.selesai');
     Route::get('/admin/Lunas', [HomeController::class, 'adminLunas'])->name('admin.lunas');
     Route::get('/admin/rekap', [HomeController::class, 'adminRekap'])->name('admin.rekap');
+    // kelola rating dan ulasan
+    Route::get('/admin/ulasan', [HomeController::class, 'adminUlasan'])->name('admin.ulasan');
     Route::get('/admin/detail/{id_tracking}', [ServisController::class, 'showDetail'])->name('admin.detail');
     Route::post('/admin/servis/update-status/{id_tracking}', [ServisController::class, 'updateServisStatus'])->name('admin.updateServisStatus');
     Route::get('/admin/daftarservis', [ServisController::class, 'index'])->name('admin.daftarservis');

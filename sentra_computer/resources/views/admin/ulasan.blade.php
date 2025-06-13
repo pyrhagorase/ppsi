@@ -5,9 +5,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Diproses Admin</title>
+    <title>Rekap Admin</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../css/stylediproses.css">
+    <link rel="stylesheet" href="../css/stylerekap.css">
 </head>
 
 <body>
@@ -36,7 +36,7 @@
                 <i class="fas fa-credit-card"></i>
                 Konfirmasi Biaya
             </a>
-            <a href="{{route('admin.diproses')}}" class="menu-item active">
+            <a href="{{route('admin.diproses')}}" class="menu-item">
                 <i class="fas fa-cogs"></i>
                 Diproses
             </a>
@@ -52,7 +52,7 @@
                 <i class="fas fa-file-invoice"></i>
                 Rekap Pemasukan
             </a>
-            <a href="{{route('admin.ulasan')}}" class="menu-item">
+            <a href="{{route('admin.ulasan')}}" class="menu-item active">
                 <i class="fas fa-comment-dots"></i>
                 Kelola Ulasan
             </a>
@@ -65,7 +65,7 @@
             <button class="menu-toggle" id="menu-toggle">
                 <i class="fas fa-bars"></i>
             </button>
-            <h1>Diproses</h1>
+            <h1>Rekap Pemasukan</h1>
         </div>
         <div class="user-profile">
             <span class="user-email">{{Auth::user()->email}}</span>
@@ -90,104 +90,9 @@
     </header>
 
     <main>
-        <!-- Search bar -->
-        <div class="search-container">
-            <form action="{{ route('admin.diproses') }}" method="GET">
-                <span class="search-icon">
-                    <i class="fas fa-search"></i>
-                </span>
-                <input
-                    type="text"
-                    class="search-input"
-                    placeholder="Search..."
-                    name="search"
-                    value="{{ request('search') }}">
-            </form>
-        </div>
-
-        <!-- Table -->
-        <section class="flex-1 px-6 pb-12 overflow-x-auto">
-            <table class="w-full border-collapse text-sm text-left text-gray-600">
-                <thead>
-                    <tr class="border-b border-gray-200">
-                        <th class="py-3 pr-6 font-semibold whitespace-nowrap cursor-pointer">
-                            ID_Tracking
-                        </th>
-                        <th class="py-3 pr-6 font-semibold whitespace-nowrap">
-                            Name
-                        </th>
-                        <th class="py-3 pr-6 font-semibold whitespace-nowrap">
-                            Tanggal
-                        </th>
-                        <th class="py-3 pr-6 font-semibold whitespace-nowrap">
-                            Tipe Barang
-                        </th>
-                        <th class="py-3 pr-6 font-semibold whitespace-nowrap">
-                            Status
-                        </th>
-                        <th class="py-3 font-semibold whitespace-nowrap">
-                            Act
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse($servis as $item)
-                    <tr class="border-b border-gray-100">
-                        <td class="py-3 pr-6 whitespace-nowrap text-gray-700 font-medium">
-                            {{ $item->id_tracking }}
-                        </td>
-                        <td class="py-3 pr-6 whitespace-nowrap text-gray-700 font-medium">
-                            {{ $item->nama_pelanggan }}
-                        </td>
-                        <td class="py-3 pr-6 whitespace-nowrap text-gray-400">
-                            {{ \Carbon\Carbon::parse($item->waktu_servis)->format('F j, Y') }}
-                        </td>
-                        <td class="py-3 pr-6 whitespace-nowrap">
-                            {{ $item->tipe_barang }}
-                        </td>
-                        <td class="py-3 pr-6 whitespace-nowrap">
-                            <span class="inline-block bg-blue-400 text-white text-xs font-semibold rounded-full px-3 py-1 select-none">
-                                {{ $item->statusservis }}
-                            </span>
-                        </td>
-                        <td class="py-3 whitespace-nowrap text-gray-400 cursor-pointer">
-                            <a href="{{ route('admin.detail', ['id_tracking' => $item->id_tracking]) }}">
-                                <i class="fas fa-ellipsis-h"></i>
-                            </a>
-                        </td>
-                    </tr>
-                    @empty
-                    <tr>
-                        <td colspan="6" class="py-3 pr-6 text-center text-gray-500">Tidak ada servis dengan status "Diproses".</td>
-                    </tr>
-                    @endforelse
-                </tbody>
-            </table>
-        </section>
-
-        <!-- Pagination -->
-        <div class="pagination mt-6 flex justify-center space-x-2 text-sm">
-            @if($servis->onFirstPage())
-            <span class="px-3 py-1 bg-gray-200 rounded cursor-not-allowed">Previous</span>
-            @else
-            <a href="{{ $servis->previousPageUrl() . (request('search') ? '&search=' . request('search') : '') }}" class="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded">Previous</a>
-            @endif
-
-            @foreach ($servis->getUrlRange(max(1, $servis->currentPage() - 1), min($servis->lastPage(), $servis->currentPage() + 1)) as $page => $url)
-            @if ($page == $servis->currentPage())
-            <span class="px-3 py-1 bg-blue-500 text-white rounded">{{ $page }}</span>
-            @else
-            <a href="{{ $url . (request('search') ? '&search=' . request('search') : '') }}" class="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded">{{ $page }}</a>
-            @endif
-            @endforeach
-
-            @if($servis->hasMorePages())
-            <a href="{{ $servis->nextPageUrl() . (request('search') ? '&search=' . request('search') : '') }}" class="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded">Next</a>
-            @else
-            <span class="px-3 py-1 bg-gray-200 rounded cursor-not-allowed">Next</span>
-            @endif
-        </div>
+        // isi bagian ini
     </main>
+
 
     <!-- Footer -->
     <footer class="footer">

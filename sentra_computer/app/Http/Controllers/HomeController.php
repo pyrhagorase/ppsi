@@ -70,6 +70,11 @@ class HomeController extends Controller
         return view('admin.rekap');  // pastikan view ini ada
     }
 
+    public function adminUlasan()
+    {
+        return view('admin.ulasan');  // pastikan view ini ada
+    }
+
     public function adminDetail()
     {
         return view('admin.detail');  // pastikan view ini ada
