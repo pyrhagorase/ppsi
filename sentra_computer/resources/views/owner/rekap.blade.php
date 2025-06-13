@@ -97,15 +97,19 @@
         </div>
     </header>
 
-    <main>
+   <main>
         <div class="main-content">
-            <h1>Rekap Pemasukan</h1>
-            <div class="date-picker">
-                <label for="date">Enter date:</label>
-                <input type="date" id="date" placeholder="mm/dd/yyyy">
-                <button class="ok-button">OK</button>
-            </div>
-            <button class="export-button">Export .pdf</button>
+            <form action="{{ route('owner.rekap.export') }}" method="POST" class="flex items-center gap-2">
+                @csrf
+                <label for="start_date">Dari:</label>
+                <input type="date" name="start_date" id="start_date" required>
+
+                <label for="end_date">Sampai:</label>
+                <input type="date" name="end_date" id="end_date" required>
+
+                <button type="submit" class="export-button">Export .pdf</button>
+            </form>
+        </div>
     </main>
 
 

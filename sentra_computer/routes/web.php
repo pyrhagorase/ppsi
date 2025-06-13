@@ -11,6 +11,7 @@ use App\Http\Controllers\RekapController;
 use App\Http\Controllers\NotaController;
 use App\Http\Controllers\NotaUserController;
 use App\Http\Controllers\OwnerController;
+use App\Http\Controllers\OwnerRekapController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Route;
@@ -131,7 +132,9 @@ Route::middleware(['auth', 'role:owner'])->group(function () {
     Route::post('/owner/update-keterangan/{id_tracking}', [OwnerController::class, 'updateKeterangan'])->name('owner.updateKeterangan');
     Route::post('/owner/servis/update-detail/{id_tracking}', [OwnerController::class, 'updateServisDetail'])->name('owner.updateServisDetail');
     Route::delete('/owner/servis/{id_tracking}/delete', [OwnerController::class, 'deleteServis'])->name('owner.deleteServis');
-     Route::post('/nota/simpan', [NotaController::class, 'simpan'])->name('nota.simpan');
+    Route::post('/nota/simpan', [NotaController::class, 'simpan'])->name('nota.simpan');
+    Route::get('/owner/rekap', [OwnerRekapController::class, 'index'])->name('owner.rekap');
+    Route::post('/owner/rekap/export', [OwnerRekapController::class, 'exportPDF'])->name('owner.rekap.export');
 });
 
 // User routes
