@@ -98,8 +98,51 @@
     </header>
 
     <main>
+    <div class="registration-form-container">
+        <h2>Registrasi Admin Baru</h2>
 
-    </main>
+        {{-- Menampilkan pesan sukses --}}
+        @if (session('success'))
+            <div class="alert alert-success" style="background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; padding: 10px; border-radius: 5px; margin-bottom: 20px;">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        <form action="{{ route('owner.register.admin') }}" method="POST">
+            @csrf
+            <div class="form-group">
+                <label for="full-name">Nama Lengkap</label>
+                <input type="text" id="full-name" name="full_name" placeholder="Masukkan nama lengkap" required value="{{ old('full_name') }}">
+                @error('full_name')
+                    <div class="text-danger" style="color: #dc3545; font-size: 0.875em; margin-top: 5px;">{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="Masukkan email" required value="{{ old('email') }}">
+                @error('email')
+                    <div class="text-danger" style="color: #dc3545; font-size: 0.875em; margin-top: 5px;">{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Masukkan password" required>
+                <i class="far fa-eye-slash toggle-password" id="togglePassword"></i>
+                @error('password')
+                    <div class="text-danger" style="color: #dc3545; font-size: 0.875em; margin-top: 5px;">{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="form-group">
+                <label for="confirm-password">Konfirmasi Password</label>
+                <input type="password" id="confirm-password" name="password_confirmation" placeholder="Konfirmasi password" required> {{-- INI PERUBAHAN UTAMA --}}
+                <i class="far fa-eye-slash toggle-password" id="toggleConfirmPassword"></i>
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="submit-button">Daftar Admin</button>
+            </div>
+        </form>
+    </div>
+</main>
 
     <!-- Footer -->
     <footer class="footer">
@@ -157,6 +200,22 @@
                     chevronIcon.style.transform = 'rotate(0)';
                 }
             }
+        });
+
+        // Password Toggle Functionality
+        document.querySelectorAll('.toggle-password').forEach(toggle => {
+            toggle.addEventListener('click', function () {
+                const targetId = this.id === 'togglePassword' ? 'password' : 'confirm-password';
+                const passwordInput = document.getElementById(targetId);
+
+                // Toggle the type attribute
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+
+                // Toggle the eye icon
+                this.classList.toggle('fa-eye');
+                this.classList.toggle('fa-eye-slash');
+            });
         });
     </script>
 

@@ -276,6 +276,119 @@ body {
     }
 }
 
+/* CSS for main section and form */
+        main {
+            flex-grow: 1; /* Allow main to take up available space */
+            margin-left: var(--sidebar-width);
+            padding: calc(var(--header-height) + 20px) 20px 20px 20px; /* Adjust padding to account for fixed header */
+            background-color: #f5f5f5;
+            transition: margin-left 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Align content to the top */
+        }
+
+        @media (max-width: 768px) {
+            main {
+                margin-left: 0;
+                padding-top: calc(var(--header-height) + 15px); /* Smaller padding for mobile */
+            }
+        }
+
+        .registration-form-container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            width: 100%;
+            max-width: 450px; /* Max width for the form container */
+            margin-top: 20px; /* Space from the header */
+        }
+
+        .registration-form-container h2 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+            position: relative; /* Added for icon positioning */
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #555;
+            font-size: 14px;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 15px;
+            color: #333;
+            transition: border-color 0.2s ease-in-out;
+            padding-right: 40px; /* Added space for the icon */
+        }
+
+        .form-group input[type="text"]:focus,
+        .form-group input[type="email"]:focus,
+        .form-group input[type="password"]:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(12, 127, 218, 0.2);
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 15px;
+            top: calc(50% + 8px);/* Adjust based on label height */
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #888;
+            font-size: 18px;
+            z-index: 10;
+        }
+        /* Adjust toggle-password position for password fields */
+        .form-group input[type="password"] + .toggle-password {
+            top: calc(50% + 8px); /* Adjust based on label height and input padding */
+        }
+
+
+        .form-actions {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .submit-button {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out, transform 0.1s ease;
+            width: 100%;
+        }
+
+        .submit-button:hover {
+            background-color: #0a6bb8; /* Slightly darker primary color */
+            transform: translateY(-1px);
+        }
+
+        .submit-button:active {
+            transform: translateY(0);
+        }
+
  /* --- Footer --- */
 .footer {
     /* Menggunakan nilai konkret dari stylerekap.css */

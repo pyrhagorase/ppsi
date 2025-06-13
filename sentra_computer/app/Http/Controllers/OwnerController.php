@@ -7,6 +7,9 @@ use App\Models\Servis; // Pastikan ini ada dan sesuai dengan nama model Anda
 use App\Models\Nota;
 use Carbon\Carbon; // Pastikan ini ada jika Anda menggunakan Carbon untuk format tanggal
 use Illuminate\Support\Facades\Log;
+use App\Models\User; // Import model User
+use Illuminate\Support\Facades\Hash; // Import facade Hash
+use Illuminate\Validation\ValidationException; // Import ValidationException
 
 class OwnerController extends Controller
 {
@@ -215,4 +218,53 @@ class OwnerController extends Controller
 
         return response()->json(['success' => true]);
     }
+
+    /**
+     * Menampilkan formulir registrasi admin baru.
+     * Mungkin sudah ada jika Anda menggunakan route GET untuk form.
+     */
+    public function create()
+    {
+        return view('owner.tambahadmin'); // Sesuaikan dengan nama view Blade Anda
+    }
+
+    /**
+     * Menyimpan data admin baru dari formulir registrasi.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        // 1. Validasi Data Input
+        try {
+            $validatedData = $request->validate([
+                'full_name' => ['required', 'string', 'max:255'],
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                'password' => ['required', 'string', 'min:8', 'confirmed'], // 'confirmed' akan otomatis memeriksa 'password_confirmation'
+            ], [
+                'full_name.required' => 'Nama lengkap wajib diisi.',
+                'email.required' => 'Email wajib diisi.',
+                'email.email' => 'Format email tidak valid.',
+                'email.unique' => 'Email ini sudah terdaftar.',
+                'password.required' => 'Password wajib diisi.',
+                'password.min' => 'Password minimal 8 karakter.',
+                'password.confirmed' => 'Konfirmasi password tidak cocok.',
+            ]);
+        } catch (ValidationException $e) {
+            return redirect()->back()->withErrors($e->errors())->withInput();
+        }
+
+        // 2. Buat User Baru dengan Role "admin"
+        User::create([
+            'name' => $validatedData['full_name'], // Sesuaikan dengan nama kolom 'name' di tabel users
+            'email' => $validatedData['email'],
+            'password' => Hash::make($validatedData['password']), // Hash password sebelum disimpan
+            'role' => 'admin', // Otomatis set role menjadi 'admin'
+        ]);
+
+        // 3. Redirect Setelah Berhasil Registrasi
+        return redirect()->route('owner.tambahadmin')->with('success', 'Admin baru berhasil didaftarkan!');
+    }
+
 }

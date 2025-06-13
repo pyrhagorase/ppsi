@@ -136,6 +136,8 @@ Route::middleware(['auth', 'role:owner'])->group(function () {
     Route::post('/owner/nota/simpan', [OwnerNotaController::class, 'simpan'])->name('owner.nota.simpan');
     Route::get('/owner/rekap', [OwnerRekapController::class, 'index'])->name('owner.rekap');
     Route::post('/owner/rekap/export', [OwnerRekapController::class, 'exportPDF'])->name('owner.rekap.export');
+    // Route untuk memproses registrasi admin baru
+    Route::post('/owner/register-admin', [OwnerController::class, 'store'])->name('owner.register.admin');
 });
 
 // User routes
