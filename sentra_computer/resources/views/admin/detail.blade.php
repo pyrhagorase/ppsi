@@ -122,7 +122,7 @@
                 </div>
             </div>
 
-            <form id="notaForm" method="POST" action="/nota/simpan">
+            <form id="notaForm" method="POST" action="/admin/nota/simpan">
                 @csrf
                 <!-- Modal Nota -->
                 <div id="notaModal" class="modal-overlay">
@@ -797,7 +797,7 @@
             };
 
 
-            fetch('/nota/simpan', {
+            fetch('/admin/nota/simpan', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

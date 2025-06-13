@@ -76,7 +76,7 @@ Route::post('/reset-password', function (Request $request) {
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/dashboard', [HomeController::class, 'adminDashboard'])->name('admin.dashboard');
     Route::get('/admin/pencatatan', [HomeController::class, 'adminPencatatan'])->name('admin.pencatatan');
-    Route::post('/servis/store', [ServisController::class, 'store'])->name('servis.store');
+    Route::post('admin/servis/store', [ServisController::class, 'store'])->name('admin.servis.store');
     Route::get('/admin/daftarservis', [HomeController::class, 'adminDaftarServis'])->name('admin.daftarservis');
     Route::get('/admin/konfirmasibiaya', [HomeController::class, 'adminKonfirmasiBiaya'])->name('admin.konfirmasibiaya');
     Route::get('/admin/diproses', [HomeController::class, 'adminDiproses'])->name('admin.diproses');
@@ -100,7 +100,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/rekap', [RekapController::class, 'index'])->name('admin.rekap');
     Route::post('/admin/rekap/export', [RekapController::class, 'exportPDF'])->name('admin.rekap.export');
     // nota
-    Route::post('/nota/simpan', [NotaController::class, 'simpan'])->name('nota.simpan');
+    Route::post('/admin/nota/simpan', [NotaController::class, 'simpan'])->name('admin.nota.simpan');
 });
 
 // Owner routes
@@ -108,7 +108,7 @@ Route::middleware(['auth', 'role:owner'])->group(function () {
     Route::get('/owner/dashboard', [HomeController::class, 'ownerDashboard'])->name('owner.dashboard');
     // pencatatan
     Route::get('/owner/pencatatan', [HomeController::class, 'ownerPencatatan'])->name('owner.pencatatan');
-    Route::post('/servis/store', [OwnerServisController::class, 'store'])->name('servis.store');
+    Route::post('owner/servis/store', [OwnerServisController::class, 'store'])->name('owner.servis.store');
     Route::get('/owner/daftarservis', [HomeController::class, 'ownerDaftarServis'])->name('owner.daftarservis');
     Route::get('/owner/daftarservis', [OwnerServisController::class, 'index'])->name('owner.daftarservis');
 
@@ -133,7 +133,7 @@ Route::middleware(['auth', 'role:owner'])->group(function () {
     Route::post('/owner/update-keterangan/{id_tracking}', [OwnerController::class, 'updateKeterangan'])->name('owner.updateKeterangan');
     Route::post('/owner/servis/update-detail/{id_tracking}', [OwnerController::class, 'updateServisDetail'])->name('owner.updateServisDetail');
     Route::delete('/owner/servis/{id_tracking}/delete', [OwnerController::class, 'deleteServis'])->name('owner.deleteServis');
-    Route::post('/owner/nota/simpan', [OwnerNotaController::class, 'simpan'])->name('nota.simpan');
+    Route::post('/owner/nota/simpan', [OwnerNotaController::class, 'simpan'])->name('owner.nota.simpan');
     Route::get('/owner/rekap', [OwnerRekapController::class, 'index'])->name('owner.rekap');
     Route::post('/owner/rekap/export', [OwnerRekapController::class, 'exportPDF'])->name('owner.rekap.export');
 });

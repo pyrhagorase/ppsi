@@ -102,7 +102,7 @@
         <div class="form-container">
             <h2>Formulir Registrasi Pelanggan</h2>
 
-            <form action="{{ route('servis.store') }}" method="POST">
+            <form action="{{ route('owner.servis.store') }}" method="POST">
                 @csrf
 
                 <div class="form-group">
