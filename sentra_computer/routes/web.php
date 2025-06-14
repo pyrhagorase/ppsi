@@ -141,6 +141,12 @@ Route::middleware(['auth', 'role:owner'])->group(function () {
     Route::post('/owner/rekap/export', [OwnerRekapController::class, 'exportPDF'])->name('owner.rekap.export');
     // Route untuk memproses registrasi admin baru
     Route::post('/owner/register-admin', [OwnerController::class, 'store'])->name('owner.register.admin');
+    Route::get('/owner/akunpelanggan', [OwnerController::class, 'akunPelanggan'])->name('owner.akunpelanggan');
+    // Pastikan ada rute DELETE untuk penghapusan
+    Route::delete('/owner/akunpelanggan/{user}', [OwnerController::class, 'destroy'])
+        ->name('owner.akunpelanggan.destroy');
+    Route::get('/riwayat-servis/{user}', [OwnerController::class, 'showRiwayat'])
+     ->name('riwayat.servis');
 });
 
 // User routes

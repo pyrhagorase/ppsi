@@ -54,4 +54,11 @@ class User extends Authenticatable
     {
         return $this->hasMany(MyService::class);
     }
+
+    public function riwayatServis()
+    {
+        return $this->belongsToMany(Servis::class, 'my_services', 'user_id', 'id_tracking')
+            ->withTimestamps()
+            ->orderBy('waktu_servis', 'desc');
+    }
 }

@@ -276,362 +276,145 @@ body {
     }
 }
 
-/* Main Content Styles */
+/* Main Content */
 main {
-    margin-top: var(--header-height);
     margin-left: var(--sidebar-width);
+    margin-top: var(--header-height);
     padding: 20px;
     flex: 1;
     transition: margin-left 0.3s ease;
+    min-height: calc(100vh - var(--header-height) - 60px); /* 60px adalah tinggi footer */
+    overflow-y: auto; /* Untuk konten yang panjang */
 }
 
+/* Container untuk konten */
 .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
-    background-color: #fff;
+    background: white;
     border-radius: var(--border-radius);
     box-shadow: var(--shadow);
-}
-
-.table-container {
-    overflow-x: auto;
-}
-
-.customer-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-
-.customer-table th,
-.customer-table td {
-    padding: 12px 15px;
-    text-align: left;
-    border-bottom: 1px solid #eee;
-}
-
-.customer-table th {
-    background-color: #f8f9fa;
-    font-weight: 600;
-    color: #333;
-}
-
-.customer-table tr:hover {
-    background-color: #f9f9f9;
-}
-
-.action-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-    margin: 0 5px;
-    padding: 5px;
-    border-radius: 4px;
-    transition: all 0.2s;
-}
-
-.edit-btn {
-    color: var(--primary-color);
-}
-
-.edit-btn:hover {
-    background-color: rgba(12, 127, 218, 0.1);
-}
-
-.delete-btn {
-    color: #dc3545;
-}
-
-.delete-btn:hover {
-    background-color: rgba(220, 53, 69, 0.1);
-}
-
-/* Responsive adjustments for main content */
-@media (max-width: 768px) {
-    .container {
-        padding: 15px;
-    }
-    
-    .customer-table th,
-    .customer-table td {
-        padding: 8px 10px;
-        font-size: 14px;
-    }
-}
-
-/* Main Content */
-main {
-    background: white;
-    margin-left: var(--sidebar-width);
-    padding-top: var(--header-height);
-    flex: 1;
-    padding: 5px;
-    min-height: calc(100vh - var(--header-height) - 60px); /* 60px for footer */
-    transition: margin-left 0.3s ease;
-    overflow-x: hidden;
-}
-
-@media (max-width: 768px) {
-    main {
-        margin-left: 0;
-        padding: calc(var(--header-height)) 1rem 2rem;
-    }
 }
 
 /* Table Container */
 .table-container {
-    margin: 20px 0;
     overflow-x: auto;
-    background: white;
-    border-radius: var(--border-radius);
-    box-shadow: var(--shadow);
+    margin-top: 20px;
 }
 
 /* Table Styles */
-table {
+.riwayat-table {
     width: 100%;
     border-collapse: collapse;
     font-size: 0.875rem;
-    color: #4b5563;
 }
 
-thead {
+.riwayat-table th {
     background-color: #f8fafc;
-}
-
-thead tr {
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 600;
+    color: #334155;
     border-bottom: 1px solid #e2e8f0;
 }
 
-thead th {
+.riwayat-table td {
     padding: 12px 16px;
-    font-weight: 600;
-    color: #334155;
-    text-align: center;
-    white-space: nowrap;
-}
-
-tbody tr {
     border-bottom: 1px solid #f1f5f9;
-    transition: background-color 0.2s;
 }
 
-tbody tr:hover {
+.riwayat-table tr:hover {
     background-color: #f8fafc;
 }
 
-tbody td {
-    padding: 12px 16px;
-    vertical-align: middle;
-    text-align: center;
-}
-/* Action Buttons Container */
-.action-buttons {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-}
-
-/* Base Button Styles */
-.action-btn {
-    padding: 8px 12px;
-    border-radius: 6px;
-    transition: all 0.2s ease;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    font-size: 0.875rem;
+/* Biaya Format */
+.riwayat-table td:nth-child(6) {
     font-weight: 500;
-    border: none;
-    cursor: pointer;
+    color: #065f46;
 }
 
-/* History Button */
-.history-btn {
-    color: #6b7280; /* gray-500 */
-    background-color: rgba(107, 114, 128, 0.1);
-    border: 1px solid rgba(107, 114, 128, 0.2);
-}
-
-.history-btn:hover {
-    background-color: rgba(107, 114, 128, 0.2);
-    transform: translateY(-1px);
-}
-
-.history-btn i {
+/* No Data State */
+.no-data {
+    padding: 40px;
+    text-align: center;
     color: #6b7280;
 }
 
-/* Delete Button */
-.delete-btn {
-    color: #ef4444; /* red-500 */
-    background-color: rgba(239, 68, 68, 0.1);
-    border: 1px solid rgba(239, 68, 68, 0.2);
-    padding: 8px;
-}
-
-.delete-btn:hover {
-    background-color: rgba(239, 68, 68, 0.2);
-    transform: translateY(-1px);
-}
-
-.action-buttons {
-    justify-content: center; /* Tengah-kan isi tombol */
-}
-
-
-
-/* Responsive Adjustments */
-@media (max-width: 768px) {
-    .action-btn {
-        padding: 6px 10px;
-        font-size: 0.8125rem;
-    }
-    
-    .delete-btn {
-        padding: 6px;
-    }
-}
-
-/* Search Container */
-.search-container {
-    margin: 20px 0;
-    position: relative;
-    max-width: 400px;
-}
-
-.search-icon {
-    position: absolute;
-    left: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #94a3b8;
-}
-
-.search-input {
-    width: 100%;
-    padding: 10px 16px 10px 36px;
-    border: 1px solid #e2e8f0;
-    border-radius: var(--border-radius);
-    font-size: 0.875rem;
-    transition: all 0.2s;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-}
-
-.search-input:focus {
-    outline: none;
-    border-color: #3b82f6;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-}
-/* Modern Pagination Styles */
-.pagination {
+.no-data-content {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    gap: 8px;
-    margin: 2rem 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    gap: 10px;
 }
 
-.pagination a, 
-.pagination span {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 36px;
-    height: 36px;
-    padding: 0 12px;
-    border-radius: 6px;
-    font-size: 14px;
-    font-weight: 500;
-    text-decoration: none;
-    transition: all 0.2s ease;
+.no-data-content i {
+    font-size: 2rem;
+    color: #d1d5db;
 }
 
-/* Page links */
-.pagination a {
-    color: #3b82f6;
-    background-color: white;
-    border: 1px solid #e5e7eb;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-}
-
-.pagination a:hover {
-    background-color: #f8fafc;
-    border-color: #d1d5db;
-    transform: translateY(-1px);
-}
-
-/* Current page */
-.pagination .active {
-    background-color: #3b82f6;
-    color: white;
-    border-color: #3b82f6;
-    box-shadow: 0 1px 2px rgba(59, 130, 246, 0.3);
-}
-
-/* Disabled items */
-.pagination .disabled {
-    color: #9ca3af;
-    background-color: #f9fafb;
-    border-color: #e5e7eb;
-    cursor: not-allowed;
-    opacity: 0.7;
-}
-
-/* Navigation arrows */
-.pagination .arrow {
-    padding: 0 12px;
+/* Status Badge Styles */
+.status-badge {
+    display: inline-block;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
     font-weight: 600;
+    text-transform: capitalize;
 }
 
-.pagination .arrow:hover {
-    background-color: #f3f4f6;
+/* Warna untuk setiap status */
+.status-badge.menunggu {
+    background-color: #fef3c7;
+    color: #92400e;
 }
 
-/* Mobile responsiveness */
-@media (max-width: 640px) {
-    .pagination {
-        gap: 4px;
-    }
-    
-    .pagination a, 
-    .pagination span {
-        min-width: 32px;
-        height: 32px;
-        padding: 0 8px;
-        font-size: 13px;
-    }
-    
-    .pagination .arrow {
-        padding: 0 8px;
+.status-badge.konfirmasibiaya {
+    background-color: #dbeafe;
+    color: #1e40af;
+}
+
+.status-badge.diproses {
+    background-color: #bfdbfe;
+    color: #1e3a8a;
+}
+
+.status-badge.selesai {
+    background-color: #d1fae5;
+    color: #065f46;
+}
+
+.status-badge.lunas {
+    background-color: #ede9fe;
+    color: #5b21b6;
+}
+
+@media (max-width: 768px) {
+    .status-badge {
+        padding: 4px 8px;
+        font-size: 0.7rem;
     }
 }
 
 /* Responsive Adjustments */
 @media (max-width: 768px) {
-    .search-container {
-        margin: 15px 0;
+    main {
+        margin-left: 0;
+        padding: 15px;
+        min-height: calc(100vh - var(--header-height) - 50px);
     }
     
-    .pagination {
-        justify-content: center;
+    .container {
+        padding: 15px;
     }
     
-    table {
-        font-size: 0.8125rem;
-    }
-    
-    thead th, 
-    tbody td {
+    .riwayat-table th, 
+    .riwayat-table td {
         padding: 10px 12px;
     }
 }
 
-  /* --- Footer --- */
+ /* --- Footer --- */
 .footer {
     /* Menggunakan nilai konkret dari stylerekap.css */
     background-color: #333; /* Warna teks dark dari stylerekap.css */

@@ -267,4 +267,55 @@ class OwnerController extends Controller
         return redirect()->route('owner.tambahadmin')->with('success', 'Admin baru berhasil didaftarkan!');
     }
 
+    public function akunPelanggan(Request $request)
+    {
+        $query = User::where('role', 'user'); // Only get users with 'user' role
+
+        // Search logic
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', '%' . $search . '%')
+                    ->orWhere('email', 'like', '%' . $search . '%');
+            });
+        }
+
+        $users = $query->paginate(10); // 10 items per page
+
+        return view('owner.akunpelanggan', [
+            'users' => $users, // Changed from 'pelanggan' to 'users'
+            'currentPage' => $users->currentPage(),
+            'totalPages' => $users->lastPage()
+        ]);
+    }
+
+    public function destroy(User $user)
+    {
+        // Pastikan hanya user biasa yang bisa dihapus
+        if ($user->role !== 'user') {
+            return back()->with('error', 'Hanya akun pelanggan biasa yang dapat dihapus!');
+        }
+
+        $user->delete();
+        return back()->with('success', 'Data pelanggan berhasil dihapus!');
+    }
+    public function showRiwayat(User $user)
+    {
+        $riwayatServis = $user->riwayatServis()
+            ->select([
+                'servis.id_tracking',
+                'servis.nama_pelanggan',
+                'servis.kontak',
+                'servis.waktu_servis',
+                'servis.kerusakan',
+                'servis.biaya',
+                'servis.statusservis' // Kolom baru
+            ])
+            ->get();
+
+        return view('owner.riwayatservis', [
+            'user' => $user,
+            'riwayatServis' => $riwayatServis
+        ]);
+    }
 }

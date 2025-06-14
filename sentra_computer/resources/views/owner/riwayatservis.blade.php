@@ -5,9 +5,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Akun Pelanggan Owner</title>
+    <title>Riawayat Servis-Owner</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../css/styleakunpelanggan.css">
+    <link rel="stylesheet" href="../css/riwayatservis.css">
 </head>
 
 <body>
@@ -73,7 +73,7 @@
             <button class="menu-toggle" id="menu-toggle">
                 <i class="fas fa-bars"></i>
             </button>
-            <h1>Daftar Akun Pelanggan</h1>
+            <h1>Riwayat Servis</h1>
         </div>
         <div class="user-profile">
             <span class="user-email">{{Auth::user()->email}}</span>
@@ -98,95 +98,49 @@
     </header>
 
     <main>
-        <!-- Search bar -->
-        <div class="search-container">
-            <span class="search-icon">
-                <i class="fas fa-search"></i>
-            </span>
-            <form action="{{ route('owner.akunpelanggan') }}" method="GET" class="flex-grow">
-                <input type="text" name="search" class="search-input" placeholder="Cari nama atau email..." value="{{ request('search') }}">
-            </form>
+        <div class="container">
+            <div class="table-container">
+                <table class="riwayat-table">
+                    <thead>
+                        <tr>
+                            <th>ID Tracking</th>
+                            <th>Nama Pelanggan</th>
+                            <th>Nomor Telepon</th>
+                            <th>Tanggal Servis</th>
+                            <th>Kerusakan</th>
+                            <th>Biaya</th>
+                            <th>Status Servis</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($riwayatServis as $servis)
+                        <tr>
+                            <td>{{ $servis->id_tracking }}</td>
+                            <td>{{ $servis->nama_pelanggan }}</td>
+                            <td>{{ $servis->kontak }}</td>
+                            <td>{{ date('d/m/Y', strtotime($servis->waktu_servis)) }}</td>
+                            <td>{{ $servis->kerusakan }}</td>
+                            <td>Rp {{ number_format($servis->biaya, 0, ',', '.') }}</td>
+                            <td>
+                                <span class="status-badge {{ strtolower($servis->statusservis) }}">
+                                    {{ $servis->statusservis }}
+                                </span>
+                            </td>
+                        </tr>
+                        @empty
+                        <tr>
+                            <td colspan="6" class="no-data">
+                                <div class="no-data-content">
+                                    <i class="fas fa-clipboard-list"></i>
+                                    <p>Tidak ada riwayat servis ditemukan</p>
+                                </div>
+                            </td>
+                        </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
         </div>
-
-        <!-- Table -->
-        <section class="flex-1 px-6 pb-12 overflow-x-auto">
-            <table class="w-full border-collapse text-sm text-left text-gray-600">
-                <thead>
-                    <tr class="border-b border-gray-200">
-                        <th class="py-3 pr-6 font-semibold whitespace-nowrap">
-                            Nama
-                        </th>
-                        <th class="py-3 pr-6 font-semibold whitespace-nowrap">
-                            Email
-                        </th>
-                        <th class="py-3 font-semibold whitespace-nowrap">
-                            Act
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse($users as $user)
-                    <tr class="border-b border-gray-100 hover:bg-gray-50">
-                        <td class="py-3 pr-6 whitespace-nowrap text-gray-700 font-medium">
-                            {{ $user->name }}
-                        </td>
-                        <td class="py-3 pr-6 whitespace-nowrap text-gray-700">
-                            {{ $user->email }}
-                        </td>
-                        <td class="py-3 whitespace-nowrap">
-                            <div class="action-buttons">
-                                <!-- Ganti button dengan link -->
-                                <a href="{{ route('riwayat.servis', $user->id) }}"
-                                    class="action-btn history-btn">
-                                    <i class="fas fa-history"></i> Riwayat
-                                </a>
-                                <!-- Form Delete dengan Confirmation -->
-                                <form action="{{ route('owner.akunpelanggan.destroy', $user->id) }}" method="POST"
-                                    onsubmit="return confirm('Apakah Anda yakin ingin menghapus?')">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="action-btn delete-btn">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </button>
-                                </form>
-                            </div>
-                        </td>
-                    </tr>
-                    @empty
-                    <tr>
-                        <td colspan="3" class="py-3 pr-6 text-center text-gray-500">Tidak ada data pengguna ditemukan.</td>
-                    </tr>
-                    @endforelse
-                </tbody>
-            </table>
-        </section>
-
-        @if($users->lastPage() > 1)
-        <div class="pagination">
-            {{-- Previous Page Link --}}
-            @if($users->currentPage() > 1)
-            <a href="{{ $users->previousPageUrl() }}" class="arrow">&laquo;</a>
-            @else
-            <span class="disabled arrow">&laquo;</span>
-            @endif
-
-            {{-- Pagination Numbers --}}
-            @for ($i = 1; $i <= $users->lastPage(); $i++)
-                @if($i == $users->currentPage())
-                <span class="active">{{ $i }}</span>
-                @else
-                <a href="{{ $users->url($i) }}">{{ $i }}</a>
-                @endif
-                @endfor
-
-                {{-- Next Page Link --}}
-                @if($users->hasMorePages())
-                <a href="{{ $users->nextPageUrl() }}" class="arrow">&raquo;</a>
-                @else
-                <span class="disabled arrow">&raquo;</span>
-                @endif
-        </div>
-        @endif
     </main>
 
     <!-- Footer -->
@@ -245,6 +199,22 @@
                     chevronIcon.style.transform = 'rotate(0)';
                 }
             }
+        });
+
+        // Password Toggle Functionality
+        document.querySelectorAll('.toggle-password').forEach(toggle => {
+            toggle.addEventListener('click', function() {
+                const targetId = this.id === 'togglePassword' ? 'password' : 'confirm-password';
+                const passwordInput = document.getElementById(targetId);
+
+                // Toggle the type attribute
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+
+                // Toggle the eye icon
+                this.classList.toggle('fa-eye');
+                this.classList.toggle('fa-eye-slash');
+            });
         });
     </script>
 

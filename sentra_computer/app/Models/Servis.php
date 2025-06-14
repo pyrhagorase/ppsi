@@ -81,4 +81,10 @@ class Servis extends Model
     {
         return $this->hasOne(Nota::class, 'id_tracking', 'id_tracking');
     }
+
+    // Relasi ke user
+    public function pengguna()
+    {
+        return $this->belongsToMany(User::class, 'my_services', 'id_tracking', 'user_id');
+    }
 }
