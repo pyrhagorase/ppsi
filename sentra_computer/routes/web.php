@@ -10,6 +10,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\RekapController;
 use App\Http\Controllers\NotaController;
 use App\Http\Controllers\NotaUserController;
+use App\Http\Controllers\UlasanController;
 use App\Http\Controllers\OwnerController;
 use App\Http\Controllers\OwnerNotaController;
 use App\Http\Controllers\OwnerRekapController;
@@ -83,8 +84,10 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/selesai', [HomeController::class, 'adminSelesai'])->name('admin.selesai');
     Route::get('/admin/Lunas', [HomeController::class, 'adminLunas'])->name('admin.lunas');
     Route::get('/admin/rekap', [HomeController::class, 'adminRekap'])->name('admin.rekap');
-    // kelola rating dan ulasan
-    Route::get('/admin/ulasan', [HomeController::class, 'adminUlasan'])->name('admin.ulasan');
+    // Route untuk admin kelola ulasan
+    Route::get('/admin/ulasan', [UlasanController::class, 'adminIndex'])->name('admin.ulasan');
+    Route::delete('/admin/ulasan/{id}', [UlasanController::class, 'destroy'])->name('admin.ulasan.delete');
+    Route::post('/admin/ulasan/{id}/toggle-approval', [UlasanController::class, 'toggleApproval'])->name('admin.ulasan.toggle');
     Route::get('/admin/detail/{id_tracking}', [ServisController::class, 'showDetail'])->name('admin.detail');
     Route::post('/admin/servis/update-status/{id_tracking}', [ServisController::class, 'updateServisStatus'])->name('admin.updateServisStatus');
     Route::get('/admin/daftarservis', [ServisController::class, 'index'])->name('admin.daftarservis');
@@ -156,4 +159,6 @@ Route::middleware(['auth', 'role:user'])->group(function () {
     Route::post('/user/confirm-payment', [UserController::class, 'confirmPayment'])->name('user.confirm.payment');
     // Nota
     Route::get('/user/nota/{id_tracking}/unduh', [NotaController::class, 'unduhNota'])->name('user.unduh.nota');
+    // Route untuk submit ulasan
+    Route::post('/user/submit-ulasan', [UlasanController::class, 'store'])->name('user.submit.ulasan');
 });

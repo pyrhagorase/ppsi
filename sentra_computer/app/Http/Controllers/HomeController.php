@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use App\Models\Servis;
+use App\Models\Ulasan;
 
 class HomeController extends Controller
 {
@@ -146,9 +147,16 @@ class HomeController extends Controller
 
     // User
     public function userDashboard()
-    {
-        return view('user.homepage');    // pastikan view ini ada
-    }
+{
+    // Ambil ulasan yang disetujui untuk ditampilkan di testimoni
+    $ulasan = Ulasan::approved()
+                   ->with('servis')
+                   ->orderBy('created_at', 'desc')
+                   ->limit(6)
+                   ->get();
+
+    return view('user.homepage', compact('ulasan'));
+}
     
     public function detailservice($id_tracking = null) 
     {
