@@ -6,7 +6,7 @@
     <div class="container text-center">
         <h1>Sentra Computer</h1>
         <p>"Sentra Computer – Cepat, Tepat, dan Terpercaya!"</p>
-        <a href="{{route('user.userservice')}}" class="btn btn-primary">Start Tracking</a>
+        <a href="{{route('user.tracking')}}" class="btn btn-primary">Start Tracking</a>
     </div>
 </div>
 
