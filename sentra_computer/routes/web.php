@@ -14,6 +14,7 @@ use App\Http\Controllers\UlasanController;
 use App\Http\Controllers\OwnerController;
 use App\Http\Controllers\OwnerNotaController;
 use App\Http\Controllers\OwnerRekapController;
+use App\Http\Controllers\GuestController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Route;
@@ -23,7 +24,17 @@ Route::get('/welcome', function () {
     return view('welcome');
 });
 
-Route::get('/', [LoginController::class, 'login'])->name('login');
+// guest
+Route::get('/', [GuestController::class, 'guestHomepage'])->name('guest.homepage');
+Route::get('/tracking', [GuestController::class, 'tracking'])->name('guest.tracking');
+// User API routes
+Route::post('/guest/search-tracking', [GuestController::class, 'searchTracking'])->name('guest.search.tracking');
+Route::get('/guest/detailservice', [GuestController::class, 'detailservice'])->name('guest.detailservice');
+Route::get('/guest/detailservice/{id_tracking}', [GuestController::class, 'detailservice'])->name('guest.detailservice.show');
+
+
+// login
+Route::get('/login', [LoginController::class, 'login'])->name('login');
 Route::post('actionlogin', [LoginController::class, 'actionlogin'])->name('actionlogin');
 
 // Registration Routes
