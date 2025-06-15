@@ -239,18 +239,34 @@ body {
     color: var(--text-dark);
 }
 
-/* --- Main Content Area --- */
 main {
-    flex-grow: 1; /* Ini sangat penting! Membuat main mengisi semua ruang yang tersedia */
+    flex-grow: 1;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: calc(var(--header-height) + 40px) 20px 40px; /* Padding top disesuaikan dengan header */
-    /* min-height dan width dihapus dari sini karena flex-grow akan menanganinya */
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    padding: 3px 24px 24px; /* Ganti ke 80px atau langsung angka agar bisa dikontrol */
     margin-left: var(--sidebar-width);
-    transition: margin-left 0.3s ease;
     width: calc(100% - var(--sidebar-width));
+    transition: margin-left 0.3s ease;
+    margin-bottom: 20px;
 }
+
+main .container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 16px;
+}
+
+@media (max-width: 768px) {
+    main {
+        margin-left: 0;
+        width: 100%;
+        padding: 0px 16px 24px;
+    }
+}
+
 
 
 /* --- Footer --- */
@@ -319,4 +335,9 @@ main {
         width: 100%;
         padding: 15px 0;
     }
+}
+
+
+.dropdown-toggle::after {
+    display: none !important;
 }
