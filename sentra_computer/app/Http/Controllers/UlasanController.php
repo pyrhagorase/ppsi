@@ -68,6 +68,14 @@ class UlasanController extends Controller
 
         return view('admin.ulasan', compact('ulasan'));
     }
+    public function ownerIndex()
+    {
+        $ulasan = Ulasan::with(['user', 'servis'])
+                       ->orderBy('created_at', 'desc')
+                       ->paginate(10);
+
+        return view('owner.ulasan', compact('ulasan'));
+    }
 
     // Method untuk admin menghapus ulasan
     public function destroy($id)

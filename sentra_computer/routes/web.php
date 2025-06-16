@@ -134,7 +134,10 @@ Route::middleware(['auth', 'role:owner'])->group(function () {
     Route::get('/owner/detail', [HomeController::class, 'ownerDetail'])->name('owner.detail');
     Route::get('/owner/akunpelanggan', [HomeController::class, 'ownerAkunPelanggan'])->name('owner.akunpelanggan');
     Route::get('/owner/tambahadmin', [HomeController::class, 'ownerTambahAdmin'])->name('owner.tambahadmin');
-    Route::get('/owner/ulasan', [HomeController::class, 'ownerUlasan'])->name('owner.ulasan');
+    // Route owner kelola ulasan
+    Route::get('/owner/ulasan', [UlasanController::class, 'ownerIndex'])->name('owner.ulasan');
+    Route::delete('/owner/ulasan/{id}', [UlasanController::class, 'destroy'])->name('owner.ulasan.delete');
+    Route::post('/owner/ulasan/{id}/toggle-approval', [UlasanController::class, 'toggleApproval'])->name('owner.ulasan.toggle');
     // dashboard
     Route::get('/owner/dashboard', [OwnerController::class, 'dashboard'])->name('owner.dashboard');
     // detail servis
